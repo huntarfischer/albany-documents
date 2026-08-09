@@ -1,0 +1,277 @@
+Preliminary to a recital of this fatal event, I would make the following statement for a right understanding of the case.
+
+Abraham A. Lansing was the guardian of Elsie D. Lansing, who was the daughter of his deceased brother [son] and his only prospective heir. Elsie was set to inherit a large amount of real estate from her mother and herself. Her mother died some years before this murder, so Elsie became the sole heir of the estate.
+
+At about the age of fifteen years, Elsie had become a wild, frolicsome girl who loved to play and have fun with other girls and boys. She was not proficient in her studies, being a scholar in the same select school as myself. She lived nearly opposite the school house on what was then old Court Street (now South Market Street) in Albany, N.Y.
+
+Elsie was so strictly under the surveillance of her guardian and the members of the family with whom he boarded, that she was seldom seen alone outside their front door, except when going to and returning from school. Her play ground was the backyard and stable, where she invited her playmates, who entered through the back way.
+
+So strict was the family in their ill-advised and merciless treatment of the truly beautiful and spirited Elsie, that they even nailed the windows and doors at night to keep her secure from flight. They denied her the least sociable intercourse with company of her own rank in life.
+
+Thus inhibited, it was not strange for a girl like her, full of life and vivacity and panting for the liberty, freeness and sociability that others so lovingly enjoyed, to become alienated in her affections for her relatives.
+
+She began to form and foster the conception to leave her imprisonment and to become lecherous, if that were the only means to her freedom, which lewdness soon followed to an awful and fearful degree, as the sequel will too plainly show.
+
+Mr. Whipple, the final victim of her engendered lust, was a gentleman in all respects - an honest, upright, intelligent and laborious man, highly respected and admired by all who knew him. He boarded with his brother, a gentleman of like character, who lived next door to the residence of Elsie's guardian.
+
+Here, in the process of time, Mr. Whipple became amorously acquainted with Elsie, the then prisoner of hope, and adapted means for her escape and elopement, which was peaceably effected one night as they went to Troy, six miles north of Albany, where the knot between the lovers was effectively tied.
+
+The guardian and my father were familiar old cronies. The next morning after the escapement of his protégé and after breakfast time, the old gent came on horseback to my father's house and told him the sad story of Elsie's elopement.
+
+Upon consultation, they agreed to have my brother Cornelius straddle the pony and go to Troy to intercept the fugitives. Five minutes after he had started, they got me to run after my brother and tell him to come back, as they rightfully concluded the thing was done and the play ended. They then each took a nip of gin and sugar, lit their pipes, and puffed away severely in their perplexity.
+
+Philip P. Van Rensselaer, who was related to the Lansing family and who was the proprietor of the house where the guardian boarded, subsequent to the elopement of Elsie, sold out and bought and removed to a place called "Cherry Hill" about two and a half miles from the center of the city, south on the west bank of the Hudson River.
+
+This was one of the most delightful locations about Albany. Here, the guardian also lived, and as Mr. Whipple was a skipper (master and owner of a sloop) and plied his occupation between Albany and New York, he was absent on his voyages many days at a time. Mrs. Whipple boarded at Cherry Hill, as did Whipple on his return voyages.
+
+Here, after about one year's residence of Mr. Van Rensselaer, Strang (the murderer) entered the family as a laborer under the feigned name of Joseph Orton. In this character, he seduced the affections of Mrs. Whipple and won her to his lusts. She had one boy, then about eight years old.
+
+Strang bought a rifle in the city, with which he shot Whipple one night while Whipple was sitting at his desk in an upper room at Cherry Hill, adjusting the accounts of his last voyage. Strang mounted the shed in the rear of the house and fired diagonally through a pane of glass.
+
+Whipple arose, walked about six feet to the descending stairs, and when on the first step, fell backwards and died on the spot. Young Abraham Lansing Van Rensselaer was sitting beside him at the time. I afterwards saw the mark of his blood on the floor where he fell.
+
+One picture more and I have done. Mrs. Whipple was not more than 26 years of age, possessed of beauty and fortune, though without much education, and miserably defective in principle.
+
+Vain, weak, frivolous, wanton and inconstant in character, and in conduct, imprudent, silly, lewd, presumptuous, treacherous and guilty, no doubt, to some extent, for the murder of her husband in the eye of the law. She was a fit instrument in Strang's hands, an artful and designing villain.
+
+Strang was tried and convicted of this murder on August 2, 1827, and was subsequently hanged near the jail. En passant, I will here remark that Strang was the son of a respectable farmer of Dutchess County, N.Y., was then about thirty years of age, and was a married man who had deserted his wife.
+
+I took a drawing of the glass through which he fired in its shattered condition, and it was pronounced a facsimile of a side view of his face. He was a dastardly looking fellow and did not belie his incentive for blood.
+
+On the 3rd day of August 1827 (the next day after Strang's conviction), Elsie D. Whipple was brought into court and arraigned under a similar indictment as particeps criminis, or accessory before the murder. The District Attorney made a motion to have Strang sworn and examined as a witness against Mrs. Whipple.
+
+This motion was opposed, and it being then argued pro and con, Judge Duer, at a subsequent day, decided against the motion, upon the ground that Strang, having been convicted of an infamous crime, was thereby incompetent as a witness, and that he could only be admitted from necessity or policy, and at the discretion of the court. Both of these points were promptly decided against him.
+
+Mrs. Whipple then went scot-free, but the prevailing opinion was entertained that she was equally guilty and ought to have suffered the severe penalty of the law.
+
+I was at the trial.
+
+Mrs. Whipple afterwards went off and got married again, but her second husband being dead, she lived miserably and died unhappy. This last account was given me by information.
+
+There are many other incidents connected with this infamous and bloody transaction which might be given, showing the animus of the detestable parties, but let this suffice.
+
+R. W. Lansing
+
+Madison, Wisconsin
+
+Sep, 15. 1878
+
+P.S.
+
+The preceding narrative is, I believe, all you asked me for; and, although incomplete and imperfect, and greatly wanting in the elements of a clear and comprehensive narration; yet, I send it to you, as a more desultory Emenation of a poor old man, whose pretensions to writing anything of merit or interesting, is mere mediocre, and of little or no value to others.
+
+I have said nothing about my finally leaving Albany in 1816, and the more interesting period of my life, since then, and up to the present time, supposing you were well posted in many if not all of their incidents; but, should you wish to know them, I will have pleasure in making another effort, in that direction.
+
+In reviewing the narrative, I feel almost ashamed to enclose it to you, because I am fully aware of its unmethodical manner and that therefore it is of no account to any one but myself.
+
+I am honest in this opinion, and I hope you will not think I am, indirectly, praising my Effort, the most simple undertaking of my life, I know. I may revise it, at some time hence, if you will preserve it, or, you may do so, if you do not criticise it too severely.
+
+I can make it read some smoother, and perhaps, with additional items, make it more acceptable to the general reader. Keep the foregoing narration for future use, if need. It is imperfect, I know, and has but little form or order. I wrote this at one sitting and am weary. Receive it as it is, as the best offering of your well-meaning, but somewhat distressed, Daddy.
+
+## Tuesday, September 12, 1905
+
+Albany Evening Journal
+
+Last Public Execution Took Place in Hudson Avenue Ravine
+
+One of the most famous localities in Albany is the neighborhood of the Albany Medical College on Eagle Street, between Lancaster and Jay streets. The old college building is itself one of the most prominent landmarks of the town. But it was on this site, or, more correctly, in the Hudson Avenue ravine just south of the college building, that the public gallows was located early in the nineteenth century. And it was there also that the last public hanging in this city took place. The unfortunate man was Jesse Strang, the self-confessed murderer of John Whipple, of Cherry Hill, on South Pearl Street.
+
+The execution of Jesse Strang, which occurred on August 24, 1827, was one of the most sensational events in the early history of Albany. The unfortunate man was put to death in the then Hudson Street ravine, a few rods above Eagle Street. The hills which flanked each side of the street were densely crowded with spectators, there being fully forty thousand people present. All day long, people had streamed into the city from the country, and it is said that by actual count, there were one thousand one hundred vehicles in the streets adjacent to the scaffold. A large number of women were in attendance.
+
+His Coffin in the Procession
+
+At one o'clock, Strang was taken from the jail and escorted by the Albany Artillery Company, the sheriff, the jailor, and the Reverend William B. Lacy, and was led to the gibbet. Preceding him was a wagon drawn by two black horses upon which Strang's coffin was placed. Strang wore a long white robe trimmed with black, black gloves, and a white cap trimmed with black.
+
+At half-past one, the drop fell, but owing to a mismanagement in adjusting the cord around the murderer's throat, the knot slipped to the back of his neck, and Strang fell but four inches. His neck was not broken, and as a result, his sufferings were long and painful before he died. His body was cut down after it had hung for 29 minutes, and after having been placed in a coffin, it was sent to his family in Dutchess County, where it was given a Christian burial.
+
+Strang shot Whipple in order that he might marry the latter's wife. Although Strang was only a farm laborer and had deserted his family in Dutchess County, Mrs. Whipple had become enamored of him, and he had agreed to the killing of her husband. She was a member of one of Albany's most aristocratic families. She was acquitted of the charge of complicity before the fact and subsequently married again.
+
+Medical College Building Once Used for Public School Purposes Erected in 1816-17
+
+The Medical College building had been erected years before the execution of Strang. It was built in 1816-17 by the Common Council at a cost of $2,400. It was opened with much ceremony on April 18, 1817, and was used as a free school on the Lancasterian plan until 1834. It was then superseded by the new "common school system of the state."
+
+The old building is really the oldest structure in the city ever used for public school purposes. Such old-time Albanians as William Sawyer can well remember attending school there.
+
+The Albany Medical College was founded by Drs. Alden March and James H. Armsby and was organized in 1833, succeeding a medical class taught by Dr. March since 1821. The old Lancasterian school building was leased, rent-free, by the Common Council to the college, and the trustees at once expended $5,000 for repairs. The title of the building was purchased in 1877 and now rests with the board of trustees.
+
+# Chapter X.
+
+The Pictorial Life and Adventures of Mrs. Whipple & Jesse Strang 1848
+
+On the morning succeeding the almost miraculous acquittal of the widow, and before the strange infatuation of the public had a chance to cool, her unfortunate paramour was conducted into court to receive the sentence of the law for his share in their conjunctive crime. He entered, chained and guarded between two constables. His head drooped upon his bosom, his eyes were profoundly downcast, and his whole demeanor spoke a sense of guilt and a predominating apprehension of his fate. He had been hitherto sustained by the excitement of the occasion, the lapses and fluctuations in the testimony, and by the revengeful stimulations of the prospect of appearing as a witness against Mrs. Whipple; but the unexpected exclusion of his testimony, the perverse hypothesis of the judge that he had been the tempter instead of the betrayed, and the consequent prompt acquittal of the widow, had revolutionized the scene and completely dissipated and abased all the hopes and hates in which he had so feverishly indulged. The heavy curtain in life's drama had fallen between him and the future, but though there was no solace left him but to walk through the valley and shadow of his fate with decent composure, his craven composition was not equal to the task. He wept aloud as he advanced feebly up the aisle, and during the interval between the coming in and the organization of the court, his handkerchief was scarcely a moment from his eyes.
+
+At eleven o'clock, the district attorney moved for the sentence of the prisoner, and upon the motion, the Court rose and thus addressed itself to the condemned:
+
+"Jesse Strang, you have been indicted by the grand inquest of Albany county for the murder of John Whipple. To that indictment you pleaded 'not guilty,' but a jury of your country have passed upon the issue, and have found against you. It now remains for you, if you have anything to say why the sentence of the law should not be pronounced against you, to offer it to the consideration of the court."
+
+A profound pause here ensued, but the prisoner gave no sign of his intention to speak. The judge resumed and proceeded to address him at length on his past course of life, remarking that in respect to the feelings of his aged and respectable parents, whose bosoms he had so deeply lacerated by his misconduct and his crimes, his body would not be delivered over to the surgeons for dissection but would be given into the charge of the old people for burial.
+
+Then, with an additional solemnity to his manner, he concluded: "The sentence of the law is, that you, Jesse Strang, otherwise called Joseph Orton, be taken hence to the place whence you came, there to remain in the custody of the sheriff of Albany until Friday, the 24th of August, instant, on which day, between the hours of twelve at noon and of three thereafter, you are to be brought forth by the said sheriff to some proper place, to be by him selected for the purpose, and there to be hung by the neck till you are dead! And may God have mercy on your immortal soul."
+
+The unhappy man received the sentence standing, and holding a handkerchief to his face, while every now and then a low convulsive sob would obtrude upon the solemn tones of the sentence. The court itself, and likewise the auditory were sensibly affected, and when the impressive ceremony was over and the prisoner, amid a universal silence, had been led out of court, the throngs silently and decently dispersed.
+
+In a few days after this sentence, Mrs. Whipple, now possessed of a large fortune by the death of her husband, left a few directions with her lawyer as to matters of business, and took passage for New York. Her money acquired for her a respect which she could not otherwise have obtained, and she secured a decent refuge in the house of a relation. There she received the visits of her lover Freeman without restraint; and while her convicted dupe and paramour was sinking on the ebb of life, nearer and nearer to the gallows, she was improving the rapid interim for the main object of her hopes, by evening strolls along the crowded promenades and pleasant gardens of the metropolis. Unscrupulous and inflexible utilitarian! The first great obstacle overcome by a murder; the second and subordinate obstruction, in the person of her instrument, swept from her path by the remorseless sharpness of the law, and already ere the season of blood had fully passed, she was busy in making preparations for her harvest-moon.
+
+For some time after the sentence, Strang remained sullen and abstracted, denying all consolation, and refusing even to listen to the voices of those who proffered themselves as his spiritual comforters; but during the few days immediately preceding his execution, his manner changed, and he became accessible to spiritual counsel. The labors of the clergymen were at length attended with full success, and the wretched man, in addition to expressing a profound penitence for his crimes, made to one of them, the Rev. Mr. Lacy, a full and minute confession of all the circumstances connected with his illicit intercourse with Mrs. Whipple, and of the remorseless murder to which she had instigated him. Having thus unburdened his soul, he resigned himself to his fate, and earnestly prepared for death.
+
+THE EXECUTION.
+
+The 24th of August, 1825, the day set for the finale of the tragedy, at length came round. The city of Albany was filled with strangers, who had been flocking in from all directions for several days previous. Early in the morning, and until the hour of execution, every avenue leading to the city was thronged with vehicles. The steamboats that came up during the morning, as well as the ferry-boats from the other side of the river, were, to use the expression of the Argus, "literally crammed with human life;" while the streets and the side-walks were so filled by the passing crowds, as to render it impossible for tradesmen and mechanics to pursue their ordinary avocations out of doors. So immense indeed, was the concourse, that it was deemed expedient by the sheriff to call out a military force, and accordingly, between eleven and twelve in the forenoon, thirteen companies formed and marched to the place of execution.
+
+The scaffold was erected in the valley which stood at the head of Beaver street, directly west of the jail, and about a quarter of a mile from the capitol. From this valley, which then formed a narrow flat, the hills upon three sides rose abruptly to a considerable height, forming by their position and connection a vast and convenient amphitheatre. The scaffold in the center could therefore be observed from all sides, and every movement connected with the awful performance of the day distinctly seen by every member of the multitudes that filled the sides and swarmed to the summits of the surrounding eminences. The numbers present were variously estimated at thirty and fifty thousand, while all agree that at least one-fifth were females. Around the immediate vicinity of the scaffold was drawn a circle of considerable magnitude, the inner line of which was guarded all round by files of military three deep, to prevent the burst and intrusion of the too eager of the crowd.
+
+At a quarter past one o'clock, the prisoner, dressed in his shroud, passed from the prison, and accompanied by the clergymen, the sheriff and other civil officers, proceeded forward, on foot, with a slow and solemn tread to the foot of the gallows. He did not appear to have suffered any considerable debility by his long imprisonment, but ascended the scaffold with a step evincing strength and firmness. On reaching the platform, the sheriff adjusted the rope, which being done, the wretched man turned to address the vast multitudes whose concentric gaze all found a focus on his person.
+
+[At this moment, as was afterwards accurately ascertained, Mrs. Whipple was enjoying the fine weather in New York, by a lounge through Broadway.]
+
+The address of the dying man was short. He said that "he perceived a great many people had come to witness his execution, and he hoped they had not come in vain, but that the spectacle would lead them to reflect upon the results of sin and lust, and induce them to shun those errors for which he was now about to suffer a painful and ignominious death." Then holding out a pamphlet which some grasping and sordid wretch had thrust into his hand for his dying "puff," he said, "This contains a full confession of the great transaction for which I am about to die, and all I have to say now is, that every word in it is true."
+
+He then handed the pamphlet to the Rev. Mr. Lacy, who attended him, and indicated that he was done.
+
+The prayers prescribed by the Episcopal church were then read, the condemned joining in them earnestly. The clergymen, the sheriff, and the jailer then separately took a final leave, and the condemned, giving the signal, the sheriff drew the cap over his eyes, the drop fell, and after a few contortions in the air, the spirit of the convict passed away. All that remained of the wretched creature for human care or contemplation was dead.
+
+Thus perished one of the murderers of John Whipple. The other did not remain in New York more than a few days after his death; for some of the city newspapers had noticed her appearance in Broadway on the day of execution, and her cruelty and cold indifference became the subject of remark. Her situation began to be uneasy, and by some was considered to be dangerous, so she yielded to the solicitation of a relation who resided in Onondaga County, and accompanied him to his home.
+
+There she resided for a period of fourteen months, keeping up in the meantime, a constant correspondence with her lover, and at the end of that time receiving his hand for her pains.
+
+As soon as the marriage took place, the strange pair removed to Metuchen, New Jersey. There they resided for five years, at the end of which time Freeman died.
+
+The double widow then went back to Onondaga County, and again took up her residence with her half-brother, the relation whom she had previously found refuge with, during the interval between the execution and her marriage.
+
+But she was an altered woman; the violence of her passions had consumed her energies, and left her but vigor sufficient for remorse. She became a moping, sullen misanthrope, and sought refuge from the inflictions of conscience in the oblivion of the bowl and the continuous stupefactions of opium. Under this combination of assaults her system sank, and she died a few years ago, a pitiable victim, not of the retributions of human laws, but of the vengeance of an offended God.
+
+THE END.
+
+# Farewell Address
+
+The final words of Jesse James Strang
+
+(c. 1797- August 24, 1827)
+
+All joy & peace have left me now,
+
+No star of Hope can I descry;
+
+Stern justice with a frowning brow
+
+Has fix'd my Doom & I must Die.
+
+But why those pangs of grief and woe?
+
+More painful far than Death can be?
+
+O Elsie! 'tis that I must go
+
+And bid a long Farewell to Thee!
+
+Shall I complain that THOU first drew
+
+thy Heart from truth & virtue's sway?
+
+Ah No; that Heart that's just & true
+
+Can ne'er be led by vice astray.
+
+I should have, like Good Joseph, scorn'd
+
+The partner of thy guilt to be;
+
+And as a brother, thee have warn'd
+
+Back to thy Husband's arms to flee.
+
+But ah! fell passions bore the sway;
+
+Whelm'd virtue 'neath its billowy deep,
+
+And pleasure with her syren lay
+
+Lull'd reason quietly to sleep.
+
+How did I press thee to my breast?
+
+And praises on thy charms bestow;
+
+While warning Conscience unreprest
+
+Told me my bliss must end in woe!
+
+Thy voice was music in my ear;
+
+Thine image rapturous to my sight;
+
+And thy lov'd form would oft appear
+
+In fancy's airy Dreams of night.
+
+But now those scenes are gone from me
+
+O would to GOD they ne'er had been
+
+And may my fate a warning be
+
+To all the Dying sons of men.
+
+Urged on by avarice and THEE,
+
+Thy worthy Husband's blood I shed;
+
+His mangled form methinks I see
+
+Invoking Vengeance on my head.
+
+Can Deeds of blood & Death like mine
+
+So foul, so Vile, e'er be forgiven?
+
+Can such a hardened wretch e'er shine
+
+Among the spotless throng of Heaven?
+
+Yes GOD will wipe away my tears;
+
+(For Christ hath Died for all our race)
+
+His mercy shines thro Endless Years
+
+And boundless are his truth & grace.
+
+And tho in Dust I lay my Head,
+
+Yet hope thro faith He will not leave
+
+My soul forever with the Dead
+
+Nor lose me in the silent Grave.
+
+My flesh shall His first call obey;
+
+Shake off the dust and rise on high;
+
+Then shall He lead the wondrous way
+
+To mansions bright above the sky.
+
+O Elsie! though by satan's wile
+
+Thy soul has strayed from virtue's track
+
+'Tis mercy only can beguile
+
+By gentle ways the wanderer BACK.
+
+The stain that on thy virtue lies
+
+Washed by thy tears will Yet Decay;
+
+As clouds that sully morning skies
+
+May all be wept in showers away.
+
+Go; THEN; be innocent and LIVE:
+
+The tongues of men may wound thee sore
+
+But Heaven in pity can forgive
+
+And bid thee go and sin NO more.

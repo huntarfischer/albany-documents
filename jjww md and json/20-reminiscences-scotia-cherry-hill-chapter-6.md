@@ -1,0 +1,179 @@
+# Reminiscences Of Boyhood.
+
+Annals of the Van Rensselaers in the United States : Especially as They Relate to the Family of Killian K. Van Rensselaer, 1888
+
+Maunsell Van Rensselaer
+
+SCOTIA
+
+Scotia was the home of my great-uncle, Judge John Sanders, who maintained the reputation for unbounded hospitality which it had enjoyed ever since its settlement by his maternal great-great-grandfather, Alexander Lenderse Glen, in 1661 (Vide Weise's History of Albany and Notitia to this paper). It is on the left bank of the Mohawk River about three-quarters of a mile above Schenectady. The existing mansion bears on its front "1713" in antique figures, its predecessor having been carried away by the encroachments of the river, which has often threatened to undermine the present one. It had escaped destruction by the French in their sack of Schenectady in 1692, in consequence of the kindness of my grandmother's great-grandfather and his brother in saving a French priest whom the Mohawk Indians were going to torture to death, as I have narrated in a paper printed in the publications of the New York Historical Society for 1846.
+
+My frequent visits there from my earliest childhood mingled the charm of romance with present pleasures, of which I never grew weary. My uncle had a large family, and almost all of his children were about him or near him. His grandchildren were mostly of my own age, and they all shared in the hospitable feelings of their head. The house was always full, and there was plenty of good cheer. In the winter we had sleighing and coasting, and home-made sausages and headcheeses and buckwheat cakes, with oileykoeks and crullas, and the great open fireplace filled with logs, and no fear of frost. In the summer we had all the enjoyments of country life without stint.
+
+My uncle had much land which he cultivated, and, like Boaz, he went out into the fields among his reapers, and did not disdain to handle the pitchfork and the rake in haying and harvest times. There had always been a large retinue of black servants, some of whom remained to my time, and they were not among the least interesting peculiarities of Scotia. They used the Dutch language and were as saucy as privileged negroes are wont to be. The sable cooks especially were absolute in the kitchen, and "Oar out dar now, or I'll gib yer de broomstick!" was often a welcome for us youngsters when we intruded into their domain while they were getting dinner ready. At other times they were full of affection and kindness, and made us happy with nuts, cakes, apples, and other enemies to health and sound sleep. They entertained us with ghost stories and the music "ob de fiddle," in which some of them were accomplished for the benefit of dancers, white as well as black.
+
+They had their superstitions, of course, and a venerable coachman, Pietje by name, was firmly believed to have the gift of second sight—a belief not confined to his sable companions, as remarkable traditions of his predictions were long preserved in the family. Their loyalty and fidelity to their masters were unimpeachable and unassailable, of which my uncle had an amusing instance in connection with Pietje.
+
+A neighbor, evidently taking for granted that a negro could not be more honest than himself, offered Pietje a dollar if he would bring him one of his master's sheep dressed for a feast he was preparing for a "husking bee." Pietje agreed and at the appointed time carried the meat to him, which was from one of Pietje's own sheep taken from his own flock. When the man discovered the trick and saw how he had outwitted himself, he took Pietje to task for stealing his sheep. To which the old darkey, with his ready wit, replied: "O! it's all de same ting, sah, it's all de same ting"; it was white man thief calling black man thief. He added, "Did he tink he could make me steal from my master?"
+
+My uncle was emphatically a "gentleman of the old school"; "modern degeneracy had not reached him." He adhered to the customs of the last century in his dress and never abandoned small clothes, silk stockings, and shoes with silver buckles. He was grave and dignified in his manners and expected the respect due to elders from the young. After one of my visits to his house, when I was not very large, he told my father, to my great confusion, that I "laughed too loudly," which was undoubtedly disrespectful in his view, although entirely unintentional, for it was impossible not to respect so upright and dignified a man.
+
+I do not remember, however, to have entertained any dread in his presence, which must have been because of the kindness and friendliness habitual with him towards his kindred. He was noted for his courage and resolution, of which he had given proof on notable occasions. There was a tradition that a bear, forced by hunger during a severe winter, raided upon his domain and was slain by him in "the camp," which was handed down in popular legend as the spot where the French encamped before their attack on Schenectady.
+
+Before the canals were made through the State, goods were carried to and from the west either in "batteaux" on the Mohawk that flows by Scotia, or in huge covered wagons or sleighs along the turnpikes, one of which passed through his estate. During the season of navigation, the river was alive with passing batteaux, illumined at night with hundreds of lights, and lively with the music of bugles and the songs and cries of the boatmen poling their boats against the stream. In winter, long trains of baggage wagons or sleighs filled the roads, especially when snow covered the ground, making passing difficult. The teamsters were a notoriously hard lot, made bolder by the numbers in which they pursued their journeys. One winter's day, my uncle was driving home alone in his sleigh when he met a train that completely filled the single track in the snow, compelling him to draw aside to let them pass.
+
+Sleigh after sleigh passed him quietly enough, until at last, a ruffian driver lifted his long whip and gave Judge Sanders a severe cut across the shoulders as he passed. He said nothing, but after the last sleigh had gone by, he turned his horse into the track and followed them, knowing that they would stop at the first tavern beyond. When they had all assembled in the barroom, he appeared among them, horsewhip in hand, and said, "I am John Sanders, and a magistrate. One of you has committed a brutal and cowardly assault on a peaceable traveler on the highway. If he is not given up, I shall commit all of you." They knew him well enough to know he would be as good as his word and that he was dangerous to trifle with. So, after a little deliberation, the aggressor presented himself and confessed his offense.
+
+My uncle, feeling that the dignity and authority of his office, as well as the safety of his person, had been outraged, gave him the choice of instant arrest and commitment or summary punishment there and then. He chose the latter and submitted with the best grace he could to a severe castigation which the judge inflicted on him in person, thus saving the cost of imprisonment, trial, and fine, and securing immunity for himself and all travelers in his bailiwick from rash or drunken teamsters from that time forth.
+
+My recollection carries me back to the time when the family at Scotia consisted of my uncle and aunt (his second wife), his widowed daughter Mrs. Anderson, "Cousin Betsy," whose scape-grace of a husband had died at sea, and she could never be convinced that he would not reappear, which was the last thing her kindred wished for; "Cousin Jacob," "Cousin Robert," "Cousin Peter," "Cousin Theodore," and "Cousin Barent," the eldest, who lived nearby with his family. "Cousin John" lived on the "Sanders Patent" on the upper waters of the Hudson, but later married Jane Livingston and moved to live at Clermont, Columbia County. All had something to do; Mrs. Anderson looked after the domestic affairs, and the stalwart sons found plenty to occupy them in the care of "the flats," or the mill, or the outlying farms.
+
+After the change from slave to free labor, the difficulty in getting along with laborers led my uncle to attempt an heroic remedy by procuring, through our consul, agricultural people from England. The experiment was eminently successful and relieved him from all anxiety, with three or four respectable families having been brought over and settled on the place. Their children took their places and became useful and reputable citizens. They represented the best class of English farmhands, and I never heard of any of them becoming discontented or giving trouble.
+
+Besides the home circle, there was "Cousin Sally," Mrs. Peter S. Van Rensselaer, mentioned before, and "Cousin Caty," Mrs. Gerard Beekman, who lived in New York. These all made annual pilgrimages to the family nest, and in my childhood, they would often meet there at the same time, and we among them. As long as my grandmother could endure the fatigue, she and my grandfather took advantage of the earliest sleighing to order the family sleigh to be put in order, provided with buffalo robes and the indispensable foot-stove. With my grandmother protected against the cold by the finest furs presented to her mother by Sir William Johnson, they would drive across the sand plains, cross the Mohawk on the ice, and settle down for a good, quiet visit with their kindred, who were never more happy than when welcoming them.
+
+O how I have wished, when seeing the comfortable old sleigh start off with its precious freight, that I was going with them! I know how those visits were prized on both sides and how they served to bind each together "in the bundle of life."
+
+CHERRY HILL
+
+"Cherry Hill" has passed out of the possession of its hereditary owners and begs a kind word of grateful remembrance from me. It used to be a pleasant place to visit in the old days, and I recall many a happy hour spent there, especially when the cherries were ripe, and we could have all that we wanted. It was built by my uncle Philip in 1768, the year of his marriage with Maria, daughter of Robert Sanders, who was my grandmother Van Rensselaer's uncle. In my possession is an ancient leaf from a memorandum book, on which is inscribed in faded ink the following record of the marriage, apparently in the handwriting of a clerk of my great-grandfather Van Rensselaer:
+
+"Philip Van Rensselaer—Maria Sanders, June 14, 1768."
+
+The following, endorsed by him, "March 20, 1775. A letter not signed, but supposed to be off Mr. Richard Yates," gives a curious picture of the period just before the Revolution:
+
+New York, March 20, 1775.
+
+Mr. Philip Van Rensselaer,
+
+Dear Sir,
+
+There are many people in this City who sell tea, clandestinely, although it is recommended by the late Congress that none should be made use of—which is not much attended to. The people who have tea in this city intend to petition the next Congress for liberty to sell what they have on hand, so that when you receive this, you will be pleased not to sell any that you have of mine, under 4s. for cash or 4s.6d. for barter.
+
+Albany, March 31, 1789
+
+30 Dollars reward.
+
+30 DOLLARS REWARD
+
+RAN AWAY last Friday evening, from the subscriber; Two NEGRO Boys; one named MARTINEEK, the other CATO. — Martineek is about nineteen years of age — had on when he went away a sailor's blue jacket and brown overalls. — Cato is about 17 years of age, and had on a green jacket and overalls. They are both very active, and speak very fast and much alike. — Martineek has been four seasons employed in a sloop, between Albany and New-York, and it is expected that Cato and himself will make for some sea-port town. Masters of vessels are forbid taking them off at their peril.
+
+Whoever will apprehend the said runaways, and secure them in gaol, and give information to the subscriber or the printer hereof, shall receive the above reward of Thirty Dollars, and if returned to Albany, the same reward and all reasonable expenses, by Philip Van Rensselaer.
+
+[ Image: Screenshot 2024-10-04 at 4.35.46 PM.png ]
+
+May 9, 1815
+
+Genteel Accommodations,
+
+For Steam-Boat Passengers & other Travellers.
+
+PHILANDER FOBES,
+
+RESPECTFULLY informs his friends and the public in general, that he has taken the COLUMBIAN HOTEL, Nearly opposite the Steam-Boat wharf, South-Market-street, Albany.
+
+Formerly occupied by Mr. Samuel Wigton, where exertions will be constantly used to afford satisfaction to those who may favor him with their custom. His Chambers are airy and commodious, and he flatters himself that his Table and Liquors will be found such as to ensure commendation.—Regular Boarders accommodated on moderate terms.
+
+☞ Carriages and Horses to let.
+
+May 9, 1815.
+
+# Chapter VI.
+
+The Pictorial Life and Adventures of Mrs. Whipple & Jesse Strang,1848
+
+Just previous to the arrival of the officers at Cherry Hill to arrest her, the murderess had heard of the confession of her paramour, and of his visit to the woods; but though she had not learned the details of the disclosures, and consequently knew not whether the revelation involved an implication of herself, she dreaded the worst with all the agonizing sharpness of terror to a guilty soul. The day had been a whirl of fear-nay, almost madness. Wildly had her feverish steps paced up and down the floor, with no respite from the weary penance, but a brief interval which had been occupied by writing a letter to the young man Freeman, who had been the first to win her love, and for whose possession she had so deeply steeped her hands in blood.
+
+She had contemplated the writing of this letter since the hour her husband had been disposed of, but her agitation had delayed her purpose, while hideous phantoms haunted her presence and mocked her from the task. At length however, she overcame these vagaries, and spurred by the threatening aspect of events, she sat down to the performance. In a few minutes it was done. It rapidly rehearsed her danger, her vehement love, and wound up by declaring the necessity that she should fly from Cherry Hill and find a refuge in his arms. Having finished it she consigned it to her bosom, and then with folded arms sat moodily debating the details of her flight.
+
+Restless with guilt she rose involuntarily, and again commenced pacing up and down the floor. At length she paused wearily before the window, and after poring vacantly upon the city spires in the distance for some moments, she turned her eyes and caught sight of two officers advancing along the road in the direction of the house. Her gloomy stupor vanished in a moment; the nature of her danger flashed across her brain, they could come for no one now but her. With practical presence of mind, she thrust her hand into her bosom to destroy the letter. Before she could accomplish her purpose, however, a knock was heard at the door, and, forced to relinquish her intention, she gave admission to the wench, who came with a message of trifling import from one of the members of the family.
+
+While engaged in the conversation which was thus produced between her and the servant woman, the officers came upstairs and took her into custody. It was needless then for her to attempt to dispose of or destroy the letter; the orders of the officers that they should not allow her out of their sight were peremptory, and were adhered to with a strictness which even forbade her the privilege of changing her dress, unless she did it in their presence. Finding matters in this condition the widow assumed to treat them with indifference, and with expressions of confidence in her release, she put on her hat and shawl and gave her arm to one of the constables.
+
+No friend walked by her side to bid her be of good cheer, or offer consolation to her misfortunes. She was alone with her own guilty heart, walking bravely in the face of destiny.
+
+The strange epistle—that chronicle of delirious love, foul thoughts, and fouler deeds, still lay upon that bosom, whose lovely surface had so often proffered hollow solace and treacherous repose to the confiding victim whom its inward resolution had cruelly consigned to death.
+
+On being conveyed before the magistrate, Mrs. Whipple refused to be examined without the presence of her legal adviser. She was therefore committed directly to prison, but by thus postponing the examination she succeeded in evading that searching of the person commonly visited upon high criminals, and which, if applied to her, would have been attended with the most dangerous consequences.
+
+The day was near its end when the dungeon door closed upon the murderess. She shrunk with terror as she peered into the heavy gloom of the apartment, but not forgetful of her leading purpose, she listened anxiously to the retreating footsteps of the jailer. When they had died away, she plucked the letter from her bosom and commenced tearing it into fragments with feverish rapidity. Though the jailer was soon to return to her with a light, she would not wait for the more effectual aid of the lamp to accomplish its destruction, for until the record was beyond the power of telling tales she lived in constant fear of the secret it contained.
+
+The jailer soon returned, bearing an armful of bedclothes and other articles necessary to the frail prisoner's comfort, and he was accompanied by his daughter Eleanor, a little girl of thirteen, who bore the lamp.
+
+As soon as Mrs. Whipple saw the child, a means suggested itself to accomplish the desire which had presented itself to her mind several times during the brief period that had elapsed since the moment of her arrest. This was the wish to obtain an accurate account of Strang's condition, and to have the means of communicating with him. She therefore clasped the child in her arms, and covering it with kisses, asked her if she would sleep with her that night. The child hesitated, whereupon she entreated her again with still more earnestness, and at length gained her object by promising presents of a valuable character. The little girl was thenceforth the constant sleeping companion of the murderess till the day of her trial.
+
+Mrs. Whipple could not learn much from the child in relation to the state of mind of her imprisoned paramour. She prattled of the thrilling events of the morning; the public visit of Strang to the woods; the finding of the rifle; of the socks, and the story of the broken glass about the stump, where the people said that Orton and the devil had practised-whole days together-in shooting at a mark. That moreover some people said that Orton had long ago sold himself to the Evil One, and that he had killed a great many other persons before he shot Mr. Whipple, and the only reason why he had never been found out was, because he had eaten them, and their bones could never be found. She remarked, however, that she did not believe he had eaten them, or any such thing, for she had been to his cell several times, and he did not seem that kind of a man.
+
+Mrs. Whipple humored the child by agreeing with all she said, and anxious to learn about herself, asked whether she had ever heard that Orton had charged any person else with being an accomplice in his last crime.
+
+She received the answer that Strang had confessed everything, and had told how Mrs. Whipple had been the cause of all of it.
+
+The worst was now revealed, and in the acme of her wild despair, the guilty woman buried her face in the pure bosom of the innocent child, and burst into a flood of bitter tears.
+
+The heart of the child was touched with pity, and while her cheeks were also bathed with sympathy, she raised the head of the weeping Magdalen, and kissing her tenderly, sought to make amends for the sorrow she had caused, by saying-" but I didn't believe it, ma'am! Indeed, I didn't believe it!"
+
+On the following day, Mrs. Whipple had an opportunity to ascertain her exact locality in the prison, and to calculate the chances of a communication with her associate. She found that she and Strang were the sole occupants of the third story of the building, and that they were lodged at the opposite ends of the corridor, with but two cells intervening. If, therefore, she could but obtain the privilege of being allowed to walk outside, she could converse with him under the door, and in that way obviate the dangerous experiment (first thought of,) of having notes carried by the child. There are two roads to favor; one is opened by money, the other by flattery. Mrs. Whipple could command the one and exercise the other, and having an important object to gain, she probably combined them both. At any rate, after the lapse of a few days, her cell door was allowed to stand open during the heat of the day, and though she was cautioned not to step outside, there remained no person to observe her except the child over whom she had already gained a controlling influence.
+
+One day, when the little girl had fallen asleep with fatigue, the murderess stole softly from the cell, and gliding along the corridor, reached the apartment of her paramour. The door of the dungeon contained no aperture by which she could look through, but it was hung high from the floor, to afford an opportunity for a circulation of air. Yielding to the necessities of the case, the widow flung herself prone upon the floor, and laying her head close to the crevice, looked in and saw the wretched tool and partner of her crimes sitting in the center of the cell, chained heavily to the floor. His hands were clasped and resting on his knees, his haggard eyes were fixed upon the ground, and he rocked himself sadly to and fro, as if tortured with some agonizing thought.
+
+"Jesse!" hissed the murderess in a whisper, the husky harshness of which even startled herself.
+
+The assassin started in his chains, and looked around the cell.
+
+"Jesse! Jesse! It is me!" repeated the woman earnestly.
+
+"Where!" said the felon, turning his head timidly, as though he feared to confront some horrible vision with his gaze.
+
+"Here, beneath the door-here!"
+
+"Who are you?"
+
+"It's me, Jesse! It's me! Lean down to the floor; it's Elsie-your Elsie!"
+
+"Avaunt! Get thee away! Get thee away-devil!" exclaimed the wretch, shrinking within his chains, with an expression of the deepest horror, and lifting his manacled hands to his eyes as if he would prevent the appearance of the woman's image.
+
+"Nay, Doctor, it's me, I say," repeated the widow. "It's Elsie-your Elsie, who has risked everything that is dear in life, that she might give herself to you."
+
+"You lie!" said the prisoner coarsely. "You betrayed my soul for your lusts, and made me a tool for another lover. I know you!"
+
+"Oh, Jesse, who has been telling you these dreadful things!" said the woman, bursting into a mock paroxysm. "Is this the reward for the agonizing hours I have spent for you since you have been here? Is this the reward, for all the love I bear you, and for the devotion which induced me, notwithstanding I was told you had betrayed me, to come here of my own accord and be a prisoner with you?"
+
+"What do you say?" said Strang, beginning to be interested. "You came here of your own accord?"
+
+"Yes," replied the artful woman, "they told me you had confessed, and charged me with being the cause of all-but they said that no one would believe it, and that I might remain at home for a few days if I pleased, until I could give bail to appear at court-more as a witness than anything else-but I would not be a witness against you, Jesse; no, no, no, not for all the world; and I told them that if they wanted to arrest me, they must take me to the prison at once, for I had nothing to say against you-and now that I have made this sacrifice-now that I have come here to tell you, I will die with you if necessary, you turn me off and curse me. Oh! oh! oh! Jesse! it is more than I can bear! more than I can bear! more than I can bear!" And she burst into another flood of tears.
+
+"I had been told that you had borne witness against me!" said Strang sullenly.
+
+"It was false; as false as hell!" said the woman with energy. "You should know me too well for that, Jesse!"
+
+"Well, it did not seem natural-like," replied the prisoner. "But I tell you Elsie, that they showed me your affidavit, telling all about it!"
+
+"Did you read it?" said the woman.
+
+"No, they told me what it contained, and as I saw your name at the bottom of it, I thought that that was enough."
+
+"And on their word, without knowing any more, you have betrayed a woman who loves you to distraction, and who, notwithstanding you have deserted her, has come to deliver up her life for your sake."
+
+"If they have deceived me, I'll have satisfaction on them for it!" said Strang, grasping his chains menacingly-"but," continued he, after a thoughtful pause-"they told me of things, Elsie, which the affidavit contained, that could not have been known unless through you. I mean about what passed between us at Hill's tavern."
+
+"I had no choice left;" quickly replied the widow. "It came to the ears of Justice Cole, and he sent for Mrs. Hill's people, and had you and I pointed out when we were not aware of it. When I found this out, I knew there was no getting out of it, so I admitted the truth, and said you had seduced and deluded me. If I had denied the visit, they would have proved the lie against me, and if I had not charged the ruin of my virtue upon you, they might have suspected my motives. It wouldn't have been natural for me to have blamed myself, and when people do things that are not natural, they are very apt to be suspected of some secret reason for it."
+
+"Ah! I see! I see!" exclaimed the simple-minded man. "I have been duped and fooled, and have sold myself to perdition. I am ruined! I am ruined! Oh Elsie, if you had only have let me known-"
+
+"Ah, Doctor," replied the widow, "if you had only had more faith. You knew what I had sacrificed for you, and you ought not to have believed any one but me. If you had only waited, and held your tongue for a while, both of us could have got clear. As it is, I fear we shall both be condemned. But I do not wish to reproach you, Jesse; I forgive you with all my heart, and will prove how unjust have been your suspicions by dying with you!"
+
+Strang only replied to this declaration by agonizing sobs, but as the widow was about to speak again, the voice of little Eleanor Becker was heard calling to her to come away, as she was doing wrong, and her father would come and catch her.
+
+The widow instantly retreated to her cell, but told the child that she must not watch her again, for if she did, they would take her to the court and make her be a witness.
+
+In two or three days after this, Mrs. Whipple obtained another interview with Strang, after the fashion of the last, but she found him to her great chagrin relapsed into his hostile humor. He upbraided her with having told him falsehoods when she came to his cell before, as he had found out from his counsel, who had since informed him she had been arrested on an indictment from the Grand Jury, and had had no choice to stay at home and give bail, as she had falsely represented. That finding her false in this, he believed her false in everything else, and that she need not flatter herself that she would be allowed to see him suffer and escape herself, for he would stick to the confession he had made, even if he had to swear to it in open court. The widow wept and implored him to change his mind, but his reply was, that if she was sincere in her protestation that she was willing to die with him, she could not complain at what he had said; for say what he would, she could not more than die.
+
+"True, Jesse," said the enchantress, with the most subtle skill, "but though we willingly die for those we love, it is worse than ten thousand deaths to perish by their hands. It will be easy to die with you, Jesse, if you love me; but if you hate me-oh, if you hate me, Jesse, it will drive me mad, and I shall rave myself to death, and never be allowed to share your trial, your sufferings and your grave. Leave me to my own will, that I may show you the sacrifices a true woman can make for the man she loves, and do not, I beseech you, do not deprive me of the poor consolation of proving my devotion on the scaffold. You have done me a wrong, and the only way that you can repair it, is to give me the sole chance left to prove its injustice."
+
+"I don't know what to say, Elsie," said Strang, irresolutely, and touching the corners of his eyes with his sleeve-"I don't know what to say-I sometimes think-"
+
+"That you have done me wrong!" said the widow, catching the word. "Yes, I know you must think so. You cannot forget the happy hours we have spent together; the sacrifices I have made to furnish you with means; the letters that have passed between us. Oh, Doctor, recall the past, and when I leave you, instead of brooding over cruel thoughts, sit down and write me one of the letters that you used to write, and let me come and get it, that I may keep it with me in my cell as a consolation for my wretchedness." Strang murmured a promise, but just as the smile of triumph appeared upon the lips of the woman as she heard it, she was warned away by the approach of footsteps, and starting up glided to her cell.
+
+On the following day she got a letter from Strang, and two days after that she obtained another, but being detected in the visit, her privileges were broken off, and her cell door being thenceforth kept closed, she was debarred from any further communication or intercourse.
+
+Sustained no longer by her plausible encouragements, nor kept up above his wretchedness by the artful stimulations of delirious passion, Strang sank again into the sullen and peevish mood which for a few hours the syren of his fate had charmed him from. The barb of jealousy which pricked him to his confession, still rankled in his soul, and when left to impartial solitude again, a patient review of all the particles of doubt connected with the mystery, soon convinced him that his suspicions had been correct. His counsel, too, had heard of the letters to the widow, and took pains to warn him against the guileful tongue which had won them from him. Moreover, his parents, who shudderingly regarded the widow as an incarnate fiend, joined their prayers with the advocate's commands, and advised their son to shun the woman as he would the foul fiend, and to shut his ears against her dangerous accents, as though she were the serpent whose subtle temptation had betrayed a world to perdition.

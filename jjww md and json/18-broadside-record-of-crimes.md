@@ -1,0 +1,337 @@
+# Execution of Jesse Strang for the Murder of John Whipple
+
+Broadside
+
+The Pictorial Life and Adventures of Mrs. Whipple & Jesse Strang, 1848
+
+* * *
+
+The wretch who doth his hands imbrue
+
+In’th blood Of his own kindred race,
+
+Blood shall his guilty soul persue,
+
+And stamp his mem’ry with disgrace.
+
+YES, he has met his painful death,
+
+Stern justice seiz'd his vital breath;
+
+His days are ended, and his doom,
+
+Forever fix'd beyond the tomb.
+
+Unhappy man! through wicked ways
+
+He scarce had number'd half his days;
+
+Sentenc'd to die in manhood's prime,
+
+To expiate his bloody crime.
+
+Well, we will not severely chide,
+
+Our hearts have pity on their side;
+
+'Twas only mercy from our God,
+
+That kept us from the path he trod.
+
+Let others vent their vengeful breath,
+
+And triumph in his shameful death,
+
+We would have souls of gentler Frame,
+
+Nor scandalize the christian name.
+
+We would possess the tender mind
+
+Of Christ, the Savior of mankind,
+
+Who loved and pittied every one,
+
+Though deeply into gilt they'd run.
+
+What if temptations strong and great,
+
+And drawn our souls from virtue’s gate,
+
+Should we not wish for mercy mild,
+
+To sooth the Heart by Sin beguiled.
+
+HIS bloody crime he has confessed,
+
+and said ’twas by the base request
+
+Of that false woman, Whipple's wife,
+
+Who urg’d him on to take the life,
+
+She did profess his love to him the same
+
+Which kindled the unholy flame
+
+In his impure depraved heart;
+
+Then both declare they’ll never part
+
+At first, they thought to flee away
+
+Into the Realm of Canada;
+
+But after further thought they take,
+
+The sixth Command resolve to break.
+
+At first it was not his intent,
+
+But through her means he did consent
+
+To do the cruel barb'rous deed;
+
+Enough to make one’s heart to bleed.
+
+This scheme allow'd the wealth to gain
+
+That they might live in grandeur’s train;
+
+Her property being very great,
+
+She thought she could not with it part
+
+But O, alas, her wicked crime
+
+Will haunt her mind through latest time,
+
+And nought but deep repentant tears,
+
+Can blot it from the page of years.
+
+But may she seek in Jesus' blood,
+
+And find Forgiveness with her God;
+
+His wounds can purge the foulest stain
+
+That guilt nor sin shall ne'er remain.
+
+His dying words, I now relate,
+
+Just as the gibbet seal'd his Fate:
+
+On the vast concourse look'd around,
+
+And thus address'd the gazing crowd.
+
+My fellow men, who’ve come to see
+
+The shameful end allotted me,
+
+I pray you all a warning take,
+
+And all your wickedness forsake.
+
+Avoid those crimes for which I die,
+
+Nor plunge yourselves in infamy;
+
+Suppress each base, impure desire,
+
+And quench the Vile, unhallow'd fire.
+
+May you return with hearts impress'd
+
+With humble, deep, repenting grace,
+
+As I do feel within my breast,
+
+Now I have run my mortal race.
+
+The appointed moment then had come
+
+That he must try his painful doom,
+
+The drop it fell, as all might see,
+
+Which launch'd him to Eternity.
+
+Now he has gone to worlds unknown,
+
+To meet the works which he has done;
+
+We hope that he may mercy find,
+
+Through Christ, the Savior of mankind.
+
+We Know that he has died For all,
+
+Though deeply plung'd in guilt and thrall,
+
+But yet we may so harden'd be,
+
+His love can't reach our misery.
+
+Oh, then what reason we've to fear,
+
+When onward borne, in sin's career,
+
+That our short day of grace will end,
+
+Ere we to our poor souls attend.
+
+Then hasten now while mercy calls,
+
+And on a bleeding SAVIOUR fall,
+
+Do not delay till 'tis too late,
+
+To enter in at MERCIES GATE.
+
+* * *
+
+# JESSE JAMES STRANG
+
+The Record Of Crimes in the United States, 1835
+
+What we have to relate concerning the celebrated murder of Mr. Whipple, is founded on facts disclosed at Strang’s trial, and on his confessions while under sentence of death.
+
+Jesse Strang was the son of poor parents and was brought up to hard labor. When he arrived at man's estate he married, but being naturally of a restless, depraved disposition, he soon left his spouse to shift for herself, and went to Ohio.
+
+Becoming tired of the western country he returned to the east, and in July, eighteen hundred and twenty-six, arrived in Albany, whence he went to Cherry Hill, near the residence of Philip P. Van Rensselaer, and hired himself to a Mr. Bates. To avoid recognition by any of his former acquaintance he took the name of Joseph Orton.
+
+Mr. Bates kept a public house. About the beginning of August, Strang being in the bar room, saw two females enter, one of whom was young, handsome, and very giddy and playful. This person was not, as he supposed from her demeanor, a girl, but a married woman. She was the wife of Mr. John Whipple, who was much her senior.
+
+As to her character, it appears that though her husband treated her with the utmost gentleness and affection, and though she had borne him a son, she was the slave of animal passion, which influenced her conduct the more; that she was totally devoid of religion and moral principle. Such was the famous, or more properly, the infamous Elsie D. Whipple, the first sight of whom lighted the flame of lawless love in Strang’s bosom.
+
+About the end of August, Strang went to live with Mr. Van Rensselaer, who dwelt in a house, in which Mr. Whipple and his wife were boarders. For a long time no particular intimacy took place between Strang and the object of his desires, nor did any part of her conduct encourage him to declare his feelings toward her, which were daily gaining strength. But near the end of October she held a conversation with him, in which she displayed so much levity, as induced him to think that she reciprocated his feelings.
+
+Strang went by the familiar name of "The Doctor" in the family. A few hours after the conversation above mentioned, Mrs. Whipple proved herself capable of making the first advances. She accosted him with, "Doctor, I want you to write me a letter."
+
+Supposing that she could not write, he exclaimed in astonishment, "What! I write you a letter?"
+
+"Yes," she rejoined, "I hate to write the first one." Then desiring him to consider the matter and write that very night, she left him. For a while he doubted whether this her proposal might not be a device to entrap him, but the recollection of her manner toward him, and his own passion, gave him courage to comply. We subjoin this model of epistolary writing to show what qualifications were necessary to command the love of Mrs. Whipple. It ran thus,
+
+Dear Elsie—
+
+I have searlesly considered on it as you requested of me yeasterday and I have concluded two compose a few lines two You and I thought that it was not my duty two right very freely not nowing Your object perhaps it is two get sum of my righting two show two your husband as you ar a marid woman, and If that is your intenshin It is my whish fore you two let me now it fore it is a thing that I skorn two make a distirbance between you and your husband but If in the outher hand It is out of pure offections I should be quite hapy for two have the information in your hand writing and I hope that you will not take any offen in my maner of riting two you as we ar pirfict strangers two each outher, but hop that thoes few lines may find free acceptan with you and after I find out your motive I can right mour freely on the subject and as for my offections thay ar quite favorible I shall expact an answer from you If that is your motive, sow I remain you well whisher.
+
+Joseph Orton
+
+The morality contained in this beautiful piece of composition was suggested by the reflections of the Sabbath day, and the letter was delivered thereon. Three-quarters of an hour sufficed Mrs. Whipple to indite an answer, which began with, "Dear Doctor," and assured him that she had no evil design toward him. Her motive, she said, was pure love, excited by the first sight of his beautiful eyes.
+
+Since that moment she had enjoyed neither happiness nor comfort. She had eloped to be married and could do so again. She had waited long, hoping that he would declare himself, and now desired him never to leave the place without taking her with him. She had long been of opinion that the passion of love had no real existence, but he had convinced her of her error, and she solicited a continuation of his correspondence. She subscribed, herself Elsie D. Whipple, his true and affectionate lover till death.
+
+In answer to this Strang wrote her a proposal to elope with him, promising, if she would consent, to do all in his power to support and protect her. She accepted the offer without hesitation, saying she would go to the end of the earth to get him. However, she was unwilling to start till she had obtained twelve hundred dollars for their expenses. In a subsequent conversation she explained her plans more fully by word of mouth.
+
+She had always been desirous to keep a public house and thought the sum she had mentioned would be enough to begin with. Strang objected that he knew nothing of the business, but thought that he might turn his hand to it as well as to anything else.
+
+He proposed that they should go first to Montreal, and remain there till Mr. Whipple should be reconciled to his loss, and then proceed to Sandusky in Ohio, where they might be married by fictitious names, and carry their project into execution.
+
+The wretches had little opportunity for conversation, and therefore continued their intercourse by letter. The topics of these were the means of raising money, and being unable to hit on any feasible plan, the infatuated woman at last proposed directly that Strang should forge a check, in Mr. Whipple's name, on the bank in which his money was deposited. Strang did not want to, will, but his education had not qualified him for such an act of villainy.
+
+Impatient of delay, his paramour entreated him to assassinate her husband; thus proving that a woman makes more rapid strides in the path which leadeth to destruction, when she has once set her foot in it, than a man. She proposed that he should hire some laboring man to do the deed, or failing in that to do it himself.
+
+If he should conclude to take the business in his own hands she offered to procure her husband's pistols for him. This wickedness was entirely the suggestion of her own mind, for Strang had never intimated any such intention to her, and though she had often wished for Mr. Whipple's death, she had never before spoken of murdering him.
+
+Strang was shocked at the proposal, and told her so. He said that though his affection for her was not susceptible of increase, he would rather labor all his life than be guilty of a murder.
+
+He loved her, not for her property, but for herself: if she loved him well enough to become his companion he would work himself to death to maintain her, but if the possession of her depended on the murder of an innocent man, there was an end of the affair. In writing thus he still hoped that her suggestion had not been serious.
+
+She answered that she had thought Strang was a man as resolute as another who had offered to kill Mr. Whipple. This person she did not love, and was confident that he had no affection for her, but was actuated in his offer by the desire of obtaining her property.
+
+Strang, she continued, really loved her as he pretended, he would have consented for the sake of her person and property, and that he might live without work: but as he had refused to do her will, she had concluded to live on the same terms with him as before, until they could otherwise obtain the means to elope.
+
+We had forgotten to mention that while this intercourse was being carried on, Mr. Whipple was absent. In January he returned. One day in the February succeeding, his wicked wife called Strang aside, and with every appearance of indignation told him that her husband had struck her, which, probably, was false, as such an action was not in keeping with the worthy man's character.
+
+Strang asked if he should not waylay and kill the supposed offender, and Mrs. Whipple eagerly assented. He said he could not, and she then desired him, if he was so faint-hearted, at least to procure poison, which she would administer herself, being resolved to bear such abuse no longer. Strang refused to do this, too.
+
+A few days after, as Strang was sitting in the kitchen, Mrs. Whipple passed through with a bowl of milk. She stopped and told him her husband had just called for the milk, and observed that had he consented to procure the poison, it would have been an excellent opportunity to administer it unsuspected.
+
+Matters kept on in their usual train till March, when finding it impossible to raise money, and urged by Mrs. Whipple, Strang bought a dose of arsenic, which he gave her, and she put it into her husband's tea. They then pledged themselves by the most solemn oaths, never, under any circumstances, to betray each other, as if those capable of such a crime, would regard the sanctity of an oath. But whether the druggist had suspected Strang, and given him a harmless portion, or whether Mr. Whipple's constitution was uncommonly strong, the dose had no effect on him.
+
+Strang then bought a quantity of arsenic at another shop, divided it into three equal parts, and gave it to Mrs. Whipple. A week after, she informed Strang that she had given her husband one of the portions in sulphur, and asked if he thought it would operate taken in that manner. He replied that he thought it would, and they both impatiently waited for the result.
+
+The next morning Mr. Whipple refused to take a second poisoned dose of sulphur proffered by his wife, the last having, as he said, cramped his stomach. She told him it had had the same effect on her, and persuaded him to persevere.
+
+He took a part, and gave the rest to his son, while the guilty mother looked on, afraid to remonstrate. By Strang's advice she gave the boy salt, by way of antidote, but the precaution was apparently needless, for the poison had no effect on father or child.
+
+Being resolved to destroy Mr. Whipple, Strang applied to a female slave named Dinah Jackson, and asked if she would poison him for five hundred dollars.
+
+She gave him no direct reply, and on being again asked the next day if she had made up her mind to do it, replied, "No, that I won't. I won't sell my soul to hell for all the world. If I should do it, I should never have any comfort after it."
+
+What a moral contrast between this poor, miserable, degraded servant, and the young and beautiful Elsie Whipple!
+
+In April, Mr. Whipple being about to start for Vermont, his wife requested Strang to take one of his pistols or a club, or an axe, and waylay and slay him. She even pointed out the spot where it could be done most conveniently. He replied that he would think of it, but took no measures, and Mr. Whipple departed unharmed.
+
+Despairing of being able to work Strang to the pitch of wickedness she desired, and desperately determined on murder, Mrs. Whipple wrote, in presence of her paramour, and with his assistance, two letters to different persons, offering them five hundred dollars to kill her husband. But finding some difficulty in directing them, they were never sent.
+
+Mr. Whipple's absence gave this abominable pair an opportunity to carry, not their adulterous intentions, but their acts, farther than they had ever done before. The injured husband's return was not suffered to interrupt their criminal enjoyment.
+
+Pretending to have business elsewhere, Strang left the house, saying he should be gone two days, and met Mrs. Whipple at a place of assignation. He took her into a wagon, and drove to a public house where they put up for the night, in the characters of man and wife.
+
+The next day they returned to Albany, and regained their house by different roads. The expenses of this excursion were defrayed by Mrs. Whipple, with her husband's money.
+
+They now agreed to collect a hundred dollars, due Mr. Whipple from one of his tenants, and elope without farther delay; but not being able to persuade herself to leave her child, the guilty Elsie desired Strang to shoot her husband through his window, with one of his own pistols.
+
+Strang replied that he had never fired a pistol in his life, and should be as likely to kill any other of the family as the one intended: he said he could do it with nothing but a double barreled gun, and she sent him to Albany to inquire the price of the weapon. It proved too high for her means, and it was agreed between them to buy a rifle, the price of which was lower.
+
+Their course being now fixed, Strang reported that he had seen persons lurking about the house and grounds, late at night, and apparently with evil design. This he did to divert suspicion from himself when the deed should have been done.
+
+Mrs. Whipple furnished him with money, and he bought a rifle, which he hid in the loft of the privy, after which he wrote a letter to the infatuated woman, stating that all was ready, but that if she was willing, he would go no farther.
+
+But she had gone too far in crime to stop there. She desired him to try his gun, and to shoot at the mark through a pane of glass, as she had heard of an attempt to shoot a man through a window which failed, by the glancing of the ball. This, she told him might be his case, or he might hit some other person. She furnished him with two panes of glass and powder and ball for the experiment. This done, she dressed and started for church. (It was Sunday.)
+
+Strang took from the butt of a whip-stock a piece of lead which he cut into bullets, and then proceeded with his rifle and glass to the woods. He set a pane upon a stump, and fired through it at a mark on a pine tree, which he hit. He shot again through the glass doubled, and then at an angle with its surface, and the result was, that he satisfied himself that a bullet would not glance from a window. After this he secreted his gun and returned home.
+
+When Mrs. Whipple returned from church she questioned him touching his experiments, and asked to see the rifle. He told her where to find the weapon, and she went and looked at it. As Strang had expended all his lead, she brought him a bullet saying, "Mr. Whipple is loading his pistol to save his own life, and I have taken the last ball he had left for you to kill him with. What a wicked creature I am!"
+
+Scarcely had this conversation ended, when Mr. Whipple entered and asked Strang what the people said to lurk about the house at night could mean, and why he did not shoot them. Strang said there was a gun hanging over the door for that express purpose. Mr. Whipple told him to be sure to hit and hurt them, so that he might be able to lay hands on them, and left him.
+
+A short time after, Mrs. Whipple came to Strang and asked if he loaded the rifle with the ball she had given him. He said he had not, but was about to do it, and he did so. She came again, and being satisfied that preparations were thus far advanced, asked him from what place he intended to fire on her husband.
+
+He answered, from the roof of a shed, that was situated behind and close to the window of Mr. Whipple's room. She approved of the project and promised to roll up the window curtain! He asked for her over-shoes, and on being told they were so small he could not possibly get them on, said he must have a pair of socks, at any rate, and she said she would put them under his pillow.
+
+She demanded what he meant to do with the gun after firing, and he replied that he should throw it into the river, or the well. She also agreed to give him certain signals that he might know where the different members of the household should have bestowed themselves.
+
+They parted, and not having an opportunity to speak to him again, slipped a note into his hand, directing him to throw the gun as far as he possibly could, if any of the family should come out. If we had not read of the murder of Mr. White, we should say that the sang froid of these two criminals was never equalled.
+
+Strang went to Albany in the afternoon and lounged away his time till the hour for the consummation of his crime had arrived. About ten o'clock he took his rifle, pulled off his boots and hose and donned the socks Mrs. Whipple had provided, according to agreement.
+
+He pulled off his upper garment, wrapped his boots and a bundle he had brought from the city in it, and deposited it under a fence about fifty yards from the house. This done he went to the shed before mentioned, and by the aid of a large box climbed upon the roof, and took his station opposite Mr. Whipple's window.
+
+The unfortunate gentleman was sitting at a table and Mr. Abraham Van Rensselaer was near him; not so near however, but that Strang could fire without putting his life in danger. After examining the priming, Strang put the muzzle of his rifle close to the sash, took deliberate aim under Mr. Whipple's left arm, and fired. Mr. Whipple exclaimed, "Oh Lord!" and fell from his chair.
+
+The instant Strang discharged his piece he retreated three or four steps, slipped, threw the gun from his hand and fell from the shed to the earth. He instantly sprang to his feet, audibly thanking God he was not hurt! picked up his rifle and ran to the place where he had left his bundle.
+
+Thence he proceeded at his full speed to a wet ravine, where he buried the murderous implement in the mud, stamped it down, and strewed leaves over it. His muddy socks he disposed of in the same manner, but in another place. Having readjusted his apparel, he regained the main road from Albany, went to the house and knocked at the door.
+
+A female slave let him in, and told him Mr. Whipple had been shot. He went into the room where the body was lying and exhibited the first symptoms of guilt in turning pale at the sight of it, as was afterwards specified in the trial.
+
+Mr. Van Rensselaer desired Strang to take his gun, and go round the house, lest, peradventure, the assassin might be still lurking about it. He went accordingly, but soon returned, and was sworn as one of the coroner's jury, the sitting of which was adjourned till the next morning.
+
+The next morning Strang averred that he suspected Mr. Whipple had been murdered by some of the laborers on the canal, and gave a minute account of the persons he said he had seen about the house. His zeal to fix the guilt on strangers aroused the suspicions of his fellow jurors, who, however, returned a verdict of "murder committed by some person or persons unknown."
+
+In the afternoon Mrs. Whipple came to Strang as he was sitting in the kitchen, and asked if he had secured "that piece" and the socks, and he said he had. Immediately after he was summoned to the Police Office and examined, on oath, touching the persons said to have been seen about the house. Here he added perjury to the list of his crimes, and gave a plausible account of the matter.
+
+In the afternoon of the next day Mrs. Whipple told him they were suspected, and immediately after they were apprehended. On his several examinations he stated many falsehoods, but at last admitted the facts relative to the journey to Schenectady with Mrs. Whipple, as already related. He was then fully committed on a charge of murder, and Mr. Yates to whom he applied to act as his counsel, refused to do so.
+
+He then employed Calvin Pepper, Esq. to whom he confessed his guilt. He also desired Mr. Pepper to go to the place where he had left his rifle, and remove it, lest it should be found and furnish evidence against him. But to his father and step-mother, who visited him about this time in prison, he strenuously denied his guilt, and they engaged Mr. Oakley of Poughkeepsie to assist in his defence.
+
+He was visited by the Grand Jury, in a body, the next June, and informed by them that Mrs. Whipple herself had furnished sufficient proof of his guilt for conviction, and that his case was hopeless. Thus reduced to despair, he sent for the jailor, and confessed his crime, with all its circumstances, and told him where the rifle, socks, glass, balls, and a part of the arsenic he had procured for Mrs. Whipple might be found.
+
+The next day he was conducted to Cherry Hill by the constables, accompanied by a crowd of people, and showed them the fragments of the glass he had used in his dreadful experiment, and the marks of his bullets, which were cut out of the tree in his presence. The socks could not be found.
+
+Mrs. Whipple was lodged in the same story in jail with Strang, and near him. By persuading the jailor to leave her door open to admit a free circulation of air, she was enabled to come to the door of Strang's apartment and converse with him. She showed no penitence or compunction, but reprimanded her wretched tool for making a confession, saying that had he been silent both might have been acquitted.
+
+Now that the dreadful consequences of their mutual guilt had come upon him, his feelings toward her were wholly changed, and he desired nothing so much as that she might be convicted with him. He hoped that in this case the influence of his and her friends might prevail on the governor to commute their punishment, and save them both from the ignominy of a public execution.
+
+To this effect, as he had destroyed her letters to him, he endeavored to copy some from memory and endeavored to imitate her handwriting, but was unable. He then copied one of the letters he had written to her, and gave it to Mr. Pepper, with a request that it might be hidden at Cherry Hill, so that he might direct a search to be made for it. Mr. Pepper took the letter without remark.
+
+The next morning Mr. Pepper and the District Attorney visited the prisoner. The latter told him that he must not hope to obtain pardon or favor by testifying against Mrs. Whipple; for that he was guilty, and he, the District Attorney, would be the last person to recommend him to mercy.
+
+Strang then resolved to have his confessions rejected, if possible, and to stand his trial. When he was arraigned he pleaded not guilty, but all the circumstances we have related that admitted of proof were proved against him, and he was convicted. He suffered accordingly.
+
+No positive proof, beyond Strang's confessions, could be found against Mrs. Whipple, and though there was and is no doubt of her full participation in the guilt of the ignorant and miserable paramour, she was acquitted and has since married!

@@ -1,0 +1,141 @@
+## Saturday, August 4th, 1827
+
+The Comet
+
+COLOURED POPULATION
+
+We were astonished and somewhat indignant, in perusing the speculations in the New-York Journal a few weeks since, on what might be the future fate of the coloured population of the United States. The writer expressed the opinion that there would not be any equality in the division or distinction with white people; that they will not be put upon a level with them in political or physical power, or their moral or intellectual character. This view, however, disregards the efforts made in unmasking the dreary path of suffering the coloured population has endured, and the demand for their rights.
+
+It is essential to note the longstanding degradation and cruelty imposed by their white masters. The oppressed people have been subjected to immeasurable suffering, which calls for measures to ameliorate their condition. Though some may believe that the prejudice against them will prevent any substantial change, we cannot ignore that there are individuals in our society advocating for their wellbeing.
+
+Furthermore, we must make provisions for them, allowing them to pursue advancement, should they desire, either within the country or by providing measures that support their welfare elsewhere. Nevertheless, the prevailing prejudice makes it unlikely for them to gain social equality or to be granted the respect and civility that others receive.
+
+## Saturday, August 4th, 1827
+
+Pamphlet, 1827
+
+At half past nine o'clock, this morning, Saturday, Strang was conducted into court. He came in between two constables, his head inclined forward, his eyes downcast, and his whole appearance indicating a sense of guilt and the apprehension of punishment.
+
+He had been sustained hitherto probably by the excitement of the occasion; by possible lapses in the testimony, and by the prospect of appearing as a witness against Mrs. Whipple.
+
+But the decision of the court which excluded his testimony, and the abrupt termination of the trial in the acquittal of Mrs. Whipple had removed any unreal expectation that had been indulged in, and with them had flown all the previous assumptions of confidence and composure.
+
+He was much agitated and wept aloud. During the interval between the coming in of the court and the passing of the sentence, the prisoner sat leaning forward upon the table, frequently weeping and applying a handkerchief to his face.
+
+At eleven o'clock the district attorney said, I now move for sentence of the court, in pursuance of the verdict against Jesse Strang.
+
+The court addressing the prisoner, said:
+
+You have been indicted by the grand inquest of the county of Albany for the crime of murder, the murder of John Whipple. To that indictment you have pleaded not guilty, and for your deliverance put yourself upon your country.
+
+A jury of your country have passed upon that issue, and by their verdict have convicted you, and have found you guilty of the murder of the said John Whipple.
+
+It now remains for you, if you have any thing to say why the sentence of the law should not be pronounced against you, to offer it for the consideration of the court.
+
+The prisoner remaining silent, Judge Duer proceeded to address and sentence the criminal; which painful duty he discharged in a very solemn, feeling, and appropriate manner; adding that from respect for the feelings of his aged and respectable parents, which he had so deeply lacerated by his crimes and misconduct, his body would not be delivered over to the surgeons for dissection but would be given into their charge for burial; and concluding with the following sentence:
+
+That you, Jesse Strang, be taken hence to the place from whence you came, and there remain in the custody of the sheriff, until Friday the 24th day of August, instant; and be then taken hence by the said sheriff to some convenient place, and there, between the hours of 12 at noon and 3 o'clock in the afternoon, be hung by the neck until you are dead; and may God your Creator, God your Redeemer, and God your Sanctifier, have mercy on your soul!
+
+The prisoner received the sentence standing, and holding a handkerchief to his face.
+
+The court and auditory were sensibly affected; and the prisoner seemed to feel the solemnities of a moment so awful in reference to himself. The large concourse of spectators then retired; and at a proper time, the prisoner was re-conveyed to prison.
+
+## Saturday, August 4th, 1827
+
+Pamphlet, 1827
+
+The following is a request from DANIEL STRANG, the father of JESSE STRANG, to have his Confession published.
+
+I, DANIEL STRANG, the father of JESSE STRANG, convicted of the murder of JOHN WHIPPLE, do consent and request that Calvin Pepper, one of his counsel, prepare for the press, and publish, the entire confession of said JESSE, relative to said murder, and his acts and conduct from the time he came to live with Mr. Philip P. Van Rensselaer, until the time of his execution; omitting nothing relative to said murder, except such parts as, in the opinion of said Pepper, would be libelous and expose him and the Printer to the payment of damages, at the suit of some third person; and I do earnestly request that said Pepper publish nothing except what said JESSE shall sanction and declare to be true at the close of his life. And I do earnestly request of his keepers, that no other person be permitted to write any thing in his, the said JESSE's presence, relative to said murder, or to question him relative thereto, after this date, except such person or persons as said Pepper and said JESSE shall both request to be present.
+
+Daniel Strang
+
+Albany, August 4th, 1827.
+
+## Saturday, August 11th, 1827
+
+The Niles' Weekly Register
+
+* * *
+
+TRIALS FOR MURDER
+
+An unusual degree of excitement has been created in the public mind by the trial at Albany, N.Y., on the 25th ult. of Jesse Strang, alias Orton, for the murder of Mr. John Whipple of that city, on the 7th of May last. Strang, though a man of tolerable education and of respectable parentage, was residing in the family of Mr. Whipple in the capacity of a servant, during which period an improper intimacy took place between him and Whipple's wife, who is represented as being very ignorant and of a weak and frivolous character, though connected with one of the most worthy and wealthy families of Albany. Strang had frequently declared his determination to Mrs. W. to destroy her husband; and on the return of Mr. Whipple from a short journey, he mounted a shed and shot Mr. Whipple through a window of the room in which he was sitting at a table. The testimony was most conclusive, and the jury, after having received a charge from the judge, returned a verdict of guilty.
+
+The prisoner, throughout the trial, appeared like one who had made up his mind to meet an inevitable and horrid fate, and when his doom was pronounced by a jury of his country, scarcely a muscle moved or a change of countenance told the workings of a mind that had led him on to ruin.
+
+After the trial of Strang, Mrs. Elsie Whipple was arraigned at the bar as an accessory to the murder of her husband—the circumstances adduced in evidence prove her to have been regardless of all ties of affection, and of having been guilty of the most debasing infidelity. On her trial a point of law was discussed, questioning the admissibility of the evidence of Strang, who had already been convicted, and the judge having decided that it would be improper to receive it, as it would give him an implied claim to pardon, the jury, without further deliberation, acquitted the prisoner. Thus consigning her to the horrors of a living death, in the reflection that her departure from the path of virtue has caused her husband to descend to an untimely grave, and blasted her own name with infamy. Strang has been sentenced to be hung on the 24th of this month.
+
+* * *
+
+## Monday, August 13th, 1827
+
+Pamphlet, 1827
+
+* * *
+
+Northern District of New-York. To wit:
+
+BE it remembered, that on the thirteenth day of August, in the fifty-second year of the independence of the United States of America, A. D. 1827, Calvin Pepper, of the said District, hath deposited in this office the title of a book, the right whereof he claims as proprietor, in the words following, to wit:
+
+"The Confessions of Jesse Strang, who was convicted of the murder of John Whipple, at a Special Court of Oyer and Terminer, held in and for the County of Albany, on the fourth day of August, 1827. Being a minute relation of all the circumstances connected with the murder, as related by him after his conviction; and which he most solemnly affirmed, contained nothing but the truth. Made to Calvin Pepper, Esq. one of his Counsel."
+
+In conformity to the act of the Congress of the United States, entitled "An act for the encouragement of learning, by securing the copies of Maps, Charts and Books, to the authors and proprietors of such copies, during the times therein mentioned ;" and also, to the act entitled "An act supplementary to an act entitled 'An act for the encouragement of learning, by securing the copies of Maps, Charts, and Books, to the authors and proprietors of such copies during the times therein mentioned,' and extending the benefits thereof to the arts of Designing, Engraving, and Etching historical and other prints."
+
+R. R. Lansing
+
+Richard Ray Lansing
+
+Clerk Of the District Court of the United States,
+
+for the Northern District of New-York.
+
+* * *
+
+## Thursday, August 16th, 1827
+
+The Albany Daily Advertiser
+
+* * *
+
+THE SENTENCE OF STRANG
+
+In the Court of Oyer and Terminer, on Saturday last, Judge Dyer, on pronouncing the sentence of the law, addressed the prisoner as follows: —
+
+JESSE STRANG! Hearken to what I shall say to you. You have been indicted on the oaths of the Grand Inquest of the county of Albany, as a principal felon in the murder of John Whipple; to which indictment, on your arraignment, you pleaded not guilty, and for your deliverance put yourself upon your country. The jury selected from that country for your trial, have found you guilty; and it remains only for the court to pass sentence of death against you. Have you aught to say why the judgment of the law should not now be pronounced upon you?
+
+You say nothing. Nothing is to be said. The crime for which you are to suffer, is of the deepest dye; the circumstances under which it was committed, are of the most atrocious character, and your guilt has been most clearly established. By your own confession, you planned and executed the destruction of the deceased with the most deliberate and perfidious cruelty. Not with the ferocity of the tiger; but with the cunning of the serpent — the malignity of a fiend. Impelled by lust and avarice, you directed your subtle machinations to the possession of the person and property of his wife; and having succeeded in one part of your design, you pursued it with remorseless energy and unrelenting perseverance, until you had removed, as you supposed, the remaining obstacle to the accomplishment of the other. You commenced by seducing this weak, infatuated woman from her allegiance to her husband; proceeded, beguiled her from her duty to society, her friends, and her God, and ended her ruin with the murder of her husband; and had you escaped detection, you would probably have realized the guilty expectation that tempted you to these acts of complicated villany. But the murderer seldom escapes detection, or lies for any length of time concealed. Even-handed Justice, sooner or later, is sure to overtake him; and a special providence seems frequently to discover him, when trusting to his artifices, he thinks himself secure. This may have been the case with you. You probably imagined that if you could elude the vigilance of man, your guilt would continue unrevealed; or even, that if you could escape punishment in this world, you would have nothing to apprehend in that which is to come. But Justice has been swift to overtake you, and you now stand convicted, trembling and weeping before a tribunal of your fellow men. How will you appear before your God?
+
+Perhaps you doubt that there is a God; and from the selfish obduracy of your conduct, as well as from reports founded on your own confessions, which, though not officially before us, have, from their notoriety, reached our ears, we fear that your heart has been long since hardened, and your mind darkened into Atheism; that infidelity was the source of an early and intense depravity, and the ultimate cause of your last most aggravated and heinous crime. You have, indeed pursued your career of blood, regardless of God or man. You have defied the powers of earth and set at nought the vengeance of Heaven. Reckless of your own fate, you have not scrupled to involve in it the temporal and eternal doom of others. You have sent a confiding husband suddenly to his account, and sought the destruction, body and soul, of a treacherous and deluded wife. And you have done all this, without provocation, without resentment, without animosity, without passions in cold-blooded malignity, and from heartless calculations of profit to yourself. In contempt of the divine command, you coveted your neighbour's house and his wife, and in order to obtain them, you have inflicted without compunction every remaining barrier.
+
+If you had no dread of eternal consequences, and deliberately resolved to hazard your own reputation, your peace of mind, and even your mortal existence, in the prosecution of your nefarious ends—had you no consideration—no remembrance of your friends? Did it never cross your active, scheming, restless mind, that you had honest parents, and other reputable connexions, whose good name would be tarnished, whose peace would be injured, and whose lives might terminate in sorrow for your crimes? If your heart were not of stone,—if it could have felt one touch of humanity—that reflection would have staid your murderous hand. If, in the hardness and self-sufficiency of your heart, you forgot or despised them, yet will not this court overlook their request or disregard their grief; but from respect to their unmerited sufferings will spare them the additional pang of ordering your lifeless body for dissection, and in the exercise of its discretion, will direct it to be delivered into their hands.
+
+If the monitor within your breast be not already awakened, and you regard not what is said to you, listen, I charge you, to the still small voice of conscience. It can admonish you more potently, and convince you more deeply, than can words from the lips of man. If you have not already begun to feel that you owe your being to an Almighty and Eternal Author, and that you have offended not merely against human ordinances, but against the immutable laws of the infinitely wise and righteous Ruler of the Universe; if you do not already believe that your accountability is not confined to this world; as sure as you still exist, you will one day know it—and you will soon know that without the divine mercy, you stand condemned and will perish—as sure as there is a God.
+
+Prepare then to meet him face to face.—Pray, if you ever have or ever can, for his mercy, for that only can avail you now. Die you must. On earth you can expect no pardon. From Heaven alone must you look for it: and there may be mercy there, even for one so vile and wretched as yourself. But it is to be obtained only from the infinite mercy of the God whom you have denied; through the merits and intercession of the Saviour you have despised; and by the influence of that holy Spirit whose aid you have rejected. Full and unfeigned repentance is the only condition on which it is vouchsafed. But your heart of stone must be converted to a heart of flesh; you must be brought to feel and abhor as well as to acknowledge your guilt; and by penitence and contrition must your soul be purified.—Be not, however, deceived. Your only hope of pardon after death, depends on the sincerity of your repentance before you die. For in the grave there is neither repentance, nor forgiveness: neither can man venture to assure you of pardon, for God alone can read your heart. Improve then the time afforded you. It will be long enough for every essential purpose of preparation—but not for encouraging vain and delusive imaginations, or reviving lingering regrets or fallacious expectations. From this instant, consider yourself cut off from this world, and all that therein is. Look only to your entrance into the next. And in your final departure, seek not the applause of men; but humble yourself as becomes you before an offended God. Affect not the character of an heroic felon; but endeavour to behave like a Christian: And however penitent and contrite you may feel, be not deluded into supposing yourself a martyr or a saint; but remember to the last moment of your life, that you are a malefactor and a sinner.
+
+The sentence of the law is—that you, Jesse Strang, otherwise called Joseph Orton, be taken hence to the place from whence you came, there to remain in custody of the sheriff of the county of Albany, until Friday the 24th day of August, instant; on which day, between the hours of 12 at noon and 3 thereafter, you are to be brought forth by the said sheriff to some proper place, to be by him selected for the purpose, and there hung by the neck until you are dead. And may God have mercy on your immortal soul!
+
+Judge Dyer
+
+## Thursday, August 16th, 1827
+
+The Standard
+
+* * *
+
+THE CONFESSION OF JESSE STRANG
+
+CONDEMNED for the murder of John Whipple, is now in the press and will be published on the 24th instant. It comprises a minute relation of all the circumstances, connected with the murder, as related by him, after his conviction—which he most solemnly affirms, contains nothing but the truth. By Calvin Pepper, Esq., one of his counsel.
+
+## Thursday, August 16th, 1827
+
+The Standard
+
+A CARD. – The proprietor of the New-York State Museum, presents his compliments to Edward Livingston, Esq., the District Attorney, for the favor he has conferred, by presenting the rifle with which Jesse Strang committed the murder on John Whipple—together with the ball that entered the body of Whipple, and the broken glass and ball with which he tried the experiment of firing obliquely through glass, to ascertain whether it would alter the direction of the ball.
+
+H. T. MEECH.
+
+The public are respectfully informed, that the above articles are now exhibited in the New-York State Museum, where visitors can have the gratification of seeing those instruments of death, with which Strang committed the murder on our late fellow citizen, John Whipple.
+
+August. 9.
