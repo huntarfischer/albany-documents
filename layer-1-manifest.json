@@ -1,0 +1,16 @@
+{
+  "manifest_version": "1.0",
+  "title": "Jesse James and the Widow Whipple",
+  "layer": 1,
+  "status": "SEALED",
+  "depends_on_layer0_sha256": "735edd6b4b60fdf1d019ac9baa0644ed21ce71bdf48018ef42634e38eef9fba7",
+  "files": [
+    "jesse-james-and-the-widow-whipple-layer-1.md",
+    "layer-1-structural-index.json",
+    "layer-1-source-registry.json",
+    "jesse-james-and-the-widow-whipple-layer-1.json",
+    "layer-1-validation.json",
+    "layer-1-repair-audit.json"
+  ],
+  "rule": "Layer 1 may be replaced only by a newly validated Layer 1 version derived from the same frozen Layer 0 or an explicitly versioned successor to Layer 0."
+}

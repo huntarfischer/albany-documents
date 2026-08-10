@@ -1,0 +1,68 @@
+{
+  "audit_version": "1.0",
+  "layer": 1,
+  "status": "NOT_SEALED",
+  "mechanical_checks": {
+    "layer0_line_count": 2069,
+    "layer0_sha256_matches": true,
+    "structural_block_count": 82,
+    "logical_object_count": 78,
+    "continuation_block_count": 4,
+    "structural_gap_count": 0,
+    "structural_overlap_count": 0,
+    "all_ids_unique": true,
+    "all_references_resolve": true,
+    "all_marker_ranges_match_layer0_text": true,
+    "all_source_occurrence_ranges_match_layer0_text": true,
+    "zip_integrity_passed": true
+  },
+  "spec_findings": [
+    {
+      "severity": "blocking",
+      "issue": "Structural granularity is incomplete relative to the Layer 1 plan.",
+      "detail": "The 82 structural blocks faithfully mirror Layer 0 blocks, but some Layer 0 blocks contain additional explicit manuscript objects that are not yet promoted to their own Layer 1 structural units.",
+      "examples": [
+        "The Troy Sentinel article dated Friday, August 3, 1827 is embedded inside the same Layer 0 block as the trial verdict.",
+        "The Reminiscences/Cherry Hill section contains a 1775 letter, a 1789 advertisement, and an 1815 hotel advertisement.",
+        "Witnesses are indexed only as call markers; full testimony spans and legal ruling/argument units are not yet structurally segmented."
+      ]
+    },
+    {
+      "severity": "blocking",
+      "issue": "The Source Registry currently conflates source identity, source type, attribution metadata, front-matter credits, and bibliography entries.",
+      "detail": "All stored line ranges are exact, but several source records use the first attribution line as the source identity even when that line is actually a contextual heading, document type, agency, or recipient.",
+      "examples": [
+        "\"Colonial Days And Ways\" is currently the primary source label for a header that also explicitly names \"The Strang Family Genealogy\" and \"Josephine Frost, 1915.\"",
+        "\"Broadside\" is currently used as a primary source label even though it functions as a document type and the manuscript separately names The Pictorial Life and Adventures of Mrs. Whipple & Jesse Strang, 1848.",
+        "\"Albany County Sheriff\" is currently treated as the source identity for The Voluntary Examination Of Elsie Whipple, although it is better preserved as institutional attribution metadata.",
+        "\"Sent to his daughter Margaret Elizabeth Butler\" is currently treated as a source identity, although it is recipient metadata for The Testimony of Robert Wynkoop Lansing."
+      ]
+    },
+    {
+      "severity": "blocking",
+      "issue": "Some explicit embedded documents are not represented in the Source Registry.",
+      "examples": [
+        "The Last Will and Testament of Philip Van Rensselaer.",
+        "Farewell Address / The final words of Jesse James Strang."
+      ]
+    },
+    {
+      "severity": "blocking",
+      "issue": "Trial-day blocks do not yet carry inherited source context.",
+      "detail": "The trial source headers are captured, but subsequent dated trial-day blocks often have empty source_ids. Layer 1 needs to distinguish direct source attribution from source context inherited through manuscript structure."
+    },
+    {
+      "severity": "nonblocking",
+      "issue": "Current validation proves address correctness, not semantic classification correctness.",
+      "detail": "The existing validation correctly proves that every stored range points to the exact Layer 0 text, but it cannot prove that a line was classified as the right kind of structural or source object."
+    }
+  ],
+  "required_before_seal": [
+    "Promote explicit nested manuscript objects into hierarchical structural units while keeping the 82 Layer 0 blocks as immutable containers.",
+    "Add parent/child relationships and structural types for newspaper items, trial days, testimony units, legal arguments/rulings, advertisements, poems, embedded documents, images, appendix material, and other explicit forms.",
+    "Rebuild the Source Registry with separate fields for source title as written, source type, author as written, date as written, publication as written, institutional attribution, recipient, and source-occurrence role.",
+    "Separate direct attribution, inherited source context, front-matter source credits, archive acknowledgments, and bibliography entries.",
+    "Add explicit source/document records for the Philip Van Rensselaer will, Robert Wynkoop Lansing testimony, Farewell Address, and other embedded documents that are themselves presented as documents.",
+    "Run a reverse structural audit against Layer 0 so every explicit manuscript object expected by the Layer 1 specification is accounted for before Layer 1 is sealed."
+  ]
+}

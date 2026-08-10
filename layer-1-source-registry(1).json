@@ -1,0 +1,2090 @@
+{
+  "format_version": "2.0-layer-1-sources",
+  "title": "Jesse James and the Widow Whipple",
+  "layer": 1,
+  "status": "canonical",
+  "rules": [
+    "Source titles and metadata are preserved as written.",
+    "Source identity, document type, publication, author, date, institution, recipient, and occurrence role are stored separately.",
+    "Direct source attribution is distinguished from inherited source context.",
+    "Archive acknowledgments and bibliography entries are not treated as proof that a work supplied a specific passage.",
+    "No external verification or source reconciliation is performed in Layer 1.",
+    "Where the immediate manuscript structure does not state a source, Layer 1 leaves the span unattributed rather than inferring one."
+  ],
+  "sources": [
+    {
+      "source_id": "L1-SRC-0001",
+      "title_as_written": "The Albany Argus & City Gazette",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0001",
+        "L1-SRC-OCC-0002",
+        "L1-SRC-OCC-0003",
+        "L1-SRC-OCC-0004",
+        "L1-SRC-OCC-0005",
+        "L1-SRC-OCC-0006",
+        "L1-SRC-OCC-0009",
+        "L1-SRC-OCC-0011"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0002",
+      "title_as_written": "THE POUGHKEEPSIE JOURNAL",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0007",
+        "L1-SRC-OCC-0039"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0003",
+      "title_as_written": "The Evening Post",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0008"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0004",
+      "title_as_written": "The Albany Daily Advertiser",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0010",
+        "L1-SRC-OCC-0021",
+        "L1-SRC-OCC-0033"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0005",
+      "title_as_written": "The Albany Argus & City Gazette,",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0012"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0006",
+      "title_as_written": "The Poughkeepsie Journal,",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0013"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0007",
+      "title_as_written": "The New York Evening Post",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0014"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0008",
+      "title_as_written": "The Rochester Telegraph",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0015"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0009",
+      "title_as_written": "THE ANTIDOTE",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0016"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0010",
+      "title_as_written": "The Albany Argus",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0017"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0011",
+      "title_as_written": "The Troy Register",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0018"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0012",
+      "title_as_written": "The New York Commercial Advertiser",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0019"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0013",
+      "title_as_written": "The Chenango Republican",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0020"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0014",
+      "title_as_written": "The Albany Gazette",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0022",
+        "L1-SRC-OCC-0023"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0015",
+      "title_as_written": "The Standard Newspaper",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0024"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0016",
+      "title_as_written": "Historic Cherry Hill",
+      "source_type": "institution",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0025"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0017",
+      "title_as_written": "New York State Museum",
+      "source_type": "institution",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0026"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0018",
+      "title_as_written": "New York State Archives",
+      "source_type": "institution",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0027"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0019",
+      "title_as_written": "Wisconsin Historical Society",
+      "source_type": "institution",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0028"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0020",
+      "title_as_written": "Cornell University",
+      "source_type": "institution",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0029"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0021",
+      "title_as_written": "The Troy Sentinel",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0030"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0022",
+      "title_as_written": "The Comet",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0031"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0023",
+      "title_as_written": "The Niles' Weekly Register",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0032"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0024",
+      "title_as_written": "The Standard",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0034",
+        "L1-SRC-OCC-0035"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0025",
+      "title_as_written": "Albany Argus & City Gazette",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0036"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0026",
+      "title_as_written": "The New-York American",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0037"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0027",
+      "title_as_written": "Newark Sentinel of Freedom and New Jersey Advertiser,",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0038"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0028",
+      "title_as_written": "Albany Evening Journal",
+      "source_type": "periodical",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0040",
+        "L1-SRC-OCC-0071"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0029",
+      "title_as_written": "The Strang Family Genealogy",
+      "source_type": "genealogical_work",
+      "author_as_written": "Josephine Frost",
+      "date_as_written": "1915",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0041"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0030",
+      "title_as_written": "The Confession Of Jesse James Strang",
+      "source_type": "confession_pamphlet",
+      "document_type_as_written": "PAMPHLET",
+      "date_as_written": "AUGUST 4, 1827",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0042"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0031",
+      "title_as_written": "THE TRIAL OF JESSE JAMES STRAND, 1827",
+      "source_type": "trial_pamphlet",
+      "author_or_publisher_as_written": "E.M. Murden",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0043"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0032",
+      "title_as_written": "The Van Rensselaer Manor",
+      "source_type": "historical_work",
+      "subtitle_as_written": "Address to The Order of Colonial Lords of Manors in america",
+      "author_date_as_written": "Kilain Van Rensselaer, 1915",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0044"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0033",
+      "title_as_written": "THE TRIAL OF ELSIE WHIPPLE, 1827",
+      "source_type": "trial_pamphlet",
+      "author_or_publisher_as_written": "E.M. Murden",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0045"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0034",
+      "title_as_written": "The Voluntary Examination Of Elsie Whipple",
+      "source_type": "official_examination_document",
+      "institution_as_written": "Albany County Sheriff",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0046"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0035",
+      "title_as_written": "A Legacy of Historical Gleanings",
+      "source_type": "historical_work",
+      "volume_as_written": "Volume I",
+      "author_date_as_written": "Catharina Van Rensselaer Bonney, 1885",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0047"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0036",
+      "title_as_written": "Pamphlet, 1827",
+      "source_type": "pamphlet",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0048",
+        "L1-SRC-OCC-0049",
+        "L1-SRC-OCC-0050"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0037",
+      "title_as_written": "The Final Confession Of Jesse James Strang",
+      "source_type": "confession_pamphlet",
+      "publication_line_as_written": "THE CONFESSION OF JESSE JAMES STRANG PAMPHLET, AUGUST 4, 1827",
+      "author_as_written": "Calvin Pepper, Esq",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0051"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0038",
+      "title_as_written": "The Knickerbocker News",
+      "source_type": "periodical",
+      "author_as_written": "Charley Mooney",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0052"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0039",
+      "title_as_written": "Execution of Jesse Strang for the Murder of John Whipple",
+      "source_type": "broadside_document",
+      "document_type_as_written": "Broadside",
+      "reproduced_in_as_written": "The Pictorial Life and Adventures of Mrs. Whipple & Jesse Strang, 1848",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0053"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0040",
+      "title_as_written": "JESSE JAMES STRANG",
+      "source_type": "historical_work_section",
+      "publication_as_written": "The Record Of Crimes in the United States, 1835",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0054"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0041",
+      "title_as_written": "To Mrs. Whipple",
+      "source_type": "poem_document",
+      "publication_as_written": "The Confession of Jesse James, 1827",
+      "author_as_written": "Written by Calvin Pepper, Esq",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0055"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0042",
+      "title_as_written": "Elsie Lansing Whipple Vs The World",
+      "source_type": "historical_work_section",
+      "publication_as_written": "The Pictorial Life and Adventures of Mrs. Whipple & Jesse Strang, 1848",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0056"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0043",
+      "title_as_written": "Reminiscences Of Boyhood.",
+      "source_type": "historical_work_section",
+      "publication_as_written": "Annals of the Van Rensselaers in the United States : Especially as They Relate to the Family of Killian K. Van Rensselaer, 1888",
+      "author_as_written": "Maunsell Van Rensselaer",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0057"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0044",
+      "title_as_written": "Chapter VI.",
+      "source_type": "historical_work_section",
+      "publication_as_written": "The Pictorial Life and Adventures of Mrs. Whipple & Jesse Strang,1848",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0058"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0045",
+      "title_as_written": "The Cumberland Line",
+      "source_type": "historical_work_section",
+      "publication_as_written": "Legacy of Historical Gleanings",
+      "author_date_as_written": "Catharina Van Rensselaer Bonney, 1885",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0059"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0046",
+      "title_as_written": "The Last Will and Testament of Philip Van Rensselaer",
+      "source_type": "will_document",
+      "date_as_written": "December 26, 1799",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0060"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0047",
+      "title_as_written": "The Descendents of Cherry Hill",
+      "source_type": "genealogical_section",
+      "publication_as_written": "Historic Families of America, 1915",
+      "author_as_written": "Walter Whipple Spooner",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0061"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0048",
+      "title_as_written": "Horrible Assassination",
+      "source_type": "historical_work_section",
+      "publication_as_written": "Legacy of Historical Gleanings",
+      "author_date_as_written": "Catharina Van Rensselaer Bonney, 1885",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0062"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0049",
+      "title_as_written": "SHERRIFF’S SALE",
+      "source_type": "legal_notice_document",
+      "date_as_written": "March 18, 1836",
+      "publication_as_written": "THE POUGHKEEPSIE JOURNAL",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0063"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0050",
+      "title_as_written": "Maria Sanders Van Rensselaer",
+      "source_type": "historical_work_section",
+      "publication_as_written": "A Legacy of Historical Gleanings",
+      "author_date_as_written": "Catharina Van Rensselaer Bonney, 1885",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0064"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0051",
+      "title_as_written": "The Testimony of Robert Wynkoop Lansing",
+      "source_type": "testimony_document",
+      "recipient_as_written": "Sent to his daughter Margaret Elizabeth Butler",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0065"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0052",
+      "title_as_written": "Chapter X.",
+      "source_type": "historical_work_section",
+      "publication_as_written": "The Pictorial Life and Adventures of Mrs. Whipple & Jesse Strang 1848",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0066"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0053",
+      "title_as_written": "Farewell Address",
+      "source_type": "farewell_document",
+      "descriptor_as_written": "The final words of Jesse James Strang",
+      "date_as_written": "(c. 1797- August 24, 1827)",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0067"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0054",
+      "title_as_written": "New York, March 20, 1775.",
+      "source_type": "letter_document",
+      "introductory_attribution_as_written": "The following, endorsed by him, \"March 20, 1775. A letter not signed, but supposed to be off Mr. Richard Yates,\" gives a curious picture of the period just before the Revolution:",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0068"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0055",
+      "title_as_written": "30 DOLLARS REWARD",
+      "source_type": "advertisement_document",
+      "date_as_written": "Albany, March 31, 1789",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0069"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0056",
+      "title_as_written": "Genteel Accommodations",
+      "source_type": "advertisement_document",
+      "date_as_written": "May 9, 1815",
+      "advertiser_as_written": "PHILANDER FOBES",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0070"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0057",
+      "title_as_written": "Whipple, Elsie Lansing, 1802-1832. Trial and Acquittal of Mrs. Whipple, as Accessary to the Murder of Her Husband, John Whipple with a Brief Sketch of Her Life. New York :Printed and sold wholesale and retail, by C. Brown, 12871827.",
+      "source_type": "bibliography_entry",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0072"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0058",
+      "title_as_written": "Strang, Jesse, 1797-1827. The Trial and Confession of Jesse Strang for the Murder of John Whipple : at Albany on the 7th of May, 1827 : Being the Only Edition Published Containing All the Evidence as given on That Very Interesting Trial : to Which Is Annexed, the Sentence of Death as Delivered by the Judge Duer, Also, in Full the Trial and Acquittal of Mrs. Whipple, as an Accessory to the Murder of Her Husband : Together with a Sketch of the History of Jesse Strang & Mrs. Whipple. New-York :E.M. Murden & A. Ming, Jr., 1827.",
+      "source_type": "bibliography_entry",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0073"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0059",
+      "title_as_written": "Strang, Jesse, 1797-1827. The Trial, Conviction & Sentence of Jesse Strang, for the Murder of John Whipple : at Albany on the 7th of May 1827 : Containing All the Evidence as given on the Very Interesting Trial, with the Trial & Acquittal of Mrs. Whipple, as an Accomplice to the Murder of Her Husband : Together with a Brief Sketch of the History of Jesse Strang and Also the History of Mrs. Whipple. New-York :E.M. Murden, 1827.",
+      "source_type": "bibliography_entry",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0074"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0060",
+      "title_as_written": "Jones, Louis C. (Louis Clark), 1908-1990. Murder at Cherry Hill : the Strang-Whipple Case, 1827. Albany, N.Y. :Historic Cherry Hill, 1982.",
+      "source_type": "bibliography_entry",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0075"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0061",
+      "title_as_written": "Van Rensselaer, Kiliaen, 1879-. The Van Rensselaer Manor : Address Delivered at the Third Annual Meeting of the New York Branch of the Order of Colonial Lords of Manors in America, Held in the City of New York, April 24, 1915. Baltimore :[publisher not identified], 1917.",
+      "source_type": "bibliography_entry",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0076"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0062",
+      "title_as_written": "Historic Cherry Hill (Museum : Albany, N.Y.). Selections from a Van Rensselaer Family Library, 1536-1799 : a Bibliography, with Some Annotations and Notes on Important Book Plates and Inscriptions. Albany, N.Y. :Historic Cherry Hill, 1979.",
+      "source_type": "bibliography_entry",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0077"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0063",
+      "title_as_written": "Strang, Jesse, 1797-1827. The Confession of Jesse Strang, Who Was Conficted of the Murder of John Whipple, at a Special Court of Oyer and Terminer, Held in and for the County of Albany, on the Fourth Day of August 1827. Albany :Printed by J.B. Van Steenburgh, 1827.",
+      "source_type": "bibliography_entry",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0078"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0064",
+      "title_as_written": "Different Voices, Different Truths : the 1827 Murder at Cherry Hill. Albany, N.Y. :Historic Cherry Hill, 1990.",
+      "source_type": "bibliography_entry",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0079"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0065",
+      "title_as_written": "Howard, H. R. Pictorial Life and Adventures of Mrs. Whipple & Jesse Strang: The Murder of Mr. Whipple. Philadelphia: T.B. Peterson & Bros, 1848.",
+      "source_type": "bibliography_entry",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0080"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0066",
+      "title_as_written": "Frost, Josephine C. The Strang Genealogy, Descendants of Daniel Streing, of New Rochelle, New York, with Special Records of the Purdy, Ganung, Kissam, Sackett, Bloomfield, Keeler, Belcher, Morgan, Whitney and Thorne Families. Brooklyn, N.Y: Bowles--printer, 1915. Print.",
+      "source_type": "bibliography_entry",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0081"
+      ]
+    },
+    {
+      "source_id": "L1-SRC-0067",
+      "title_as_written": "Van Rensselaer, Sarah Rogers. Ancestral Sketches and Records of Olden Times. New York, A.D.F. Randolph & company, 1882. Pdf. https://www.loc.gov/item/06009054/.",
+      "source_type": "bibliography_entry",
+      "occurrence_ids": [
+        "L1-SRC-OCC-0082"
+      ]
+    }
+  ],
+  "occurrences": [
+    {
+      "occurrence_id": "L1-SRC-OCC-0001",
+      "source_id": "L1-SRC-0001",
+      "role": "direct_attribution",
+      "attribution_line_start": 7,
+      "attribution_line_end": 7,
+      "attribution_lines_as_written": [
+        "The Albany Argus & City Gazette"
+      ],
+      "containing_container_id": "L1-CNT-0002"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0002",
+      "source_id": "L1-SRC-0001",
+      "role": "direct_attribution",
+      "attribution_line_start": 13,
+      "attribution_line_end": 13,
+      "attribution_lines_as_written": [
+        "The Albany Argus & City Gazette"
+      ],
+      "containing_container_id": "L1-CNT-0003"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0003",
+      "source_id": "L1-SRC-0001",
+      "role": "direct_attribution",
+      "attribution_line_start": 22,
+      "attribution_line_end": 22,
+      "attribution_lines_as_written": [
+        "The Albany Argus & City Gazette"
+      ],
+      "containing_container_id": "L1-CNT-0004"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0004",
+      "source_id": "L1-SRC-0001",
+      "role": "direct_attribution",
+      "attribution_line_start": 25,
+      "attribution_line_end": 25,
+      "attribution_lines_as_written": [
+        "The Albany Argus & City Gazette"
+      ],
+      "containing_container_id": "L1-CNT-0005"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0005",
+      "source_id": "L1-SRC-0001",
+      "role": "direct_attribution",
+      "attribution_line_start": 31,
+      "attribution_line_end": 31,
+      "attribution_lines_as_written": [
+        "The Albany Argus & City Gazette"
+      ],
+      "containing_container_id": "L1-CNT-0006"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0006",
+      "source_id": "L1-SRC-0001",
+      "role": "direct_attribution",
+      "attribution_line_start": 35,
+      "attribution_line_end": 35,
+      "attribution_lines_as_written": [
+        "The Albany Argus & City Gazette"
+      ],
+      "containing_container_id": "L1-CNT-0007"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0007",
+      "source_id": "L1-SRC-0002",
+      "role": "direct_attribution",
+      "attribution_line_start": 38,
+      "attribution_line_end": 38,
+      "attribution_lines_as_written": [
+        "THE POUGHKEEPSIE JOURNAL"
+      ],
+      "containing_container_id": "L1-CNT-0008"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0008",
+      "source_id": "L1-SRC-0003",
+      "role": "direct_attribution",
+      "attribution_line_start": 42,
+      "attribution_line_end": 42,
+      "attribution_lines_as_written": [
+        "The Evening Post"
+      ],
+      "containing_container_id": "L1-CNT-0009"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0009",
+      "source_id": "L1-SRC-0001",
+      "role": "direct_attribution",
+      "attribution_line_start": 45,
+      "attribution_line_end": 45,
+      "attribution_lines_as_written": [
+        "The Albany Argus & City Gazette"
+      ],
+      "containing_container_id": "L1-CNT-0010"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0010",
+      "source_id": "L1-SRC-0004",
+      "role": "direct_attribution",
+      "attribution_line_start": 48,
+      "attribution_line_end": 48,
+      "attribution_lines_as_written": [
+        "The Albany Daily Advertiser"
+      ],
+      "containing_container_id": "L1-CNT-0011"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0011",
+      "source_id": "L1-SRC-0001",
+      "role": "direct_attribution",
+      "attribution_line_start": 52,
+      "attribution_line_end": 52,
+      "attribution_lines_as_written": [
+        "The Albany Argus & City Gazette"
+      ],
+      "containing_container_id": "L1-CNT-0012"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0012",
+      "source_id": "L1-SRC-0005",
+      "role": "direct_attribution",
+      "attribution_line_start": 57,
+      "attribution_line_end": 57,
+      "attribution_lines_as_written": [
+        "The Albany Argus & City Gazette,"
+      ],
+      "containing_container_id": "L1-CNT-0013"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0013",
+      "source_id": "L1-SRC-0006",
+      "role": "direct_attribution",
+      "attribution_line_start": 58,
+      "attribution_line_end": 58,
+      "attribution_lines_as_written": [
+        "The Poughkeepsie Journal,"
+      ],
+      "containing_container_id": "L1-CNT-0013"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0014",
+      "source_id": "L1-SRC-0007",
+      "role": "direct_attribution",
+      "attribution_line_start": 59,
+      "attribution_line_end": 59,
+      "attribution_lines_as_written": [
+        "The New York Evening Post"
+      ],
+      "containing_container_id": "L1-CNT-0013"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0015",
+      "source_id": "L1-SRC-0008",
+      "role": "direct_attribution",
+      "attribution_line_start": 60,
+      "attribution_line_end": 60,
+      "attribution_lines_as_written": [
+        "The Rochester Telegraph"
+      ],
+      "containing_container_id": "L1-CNT-0013"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0016",
+      "source_id": "L1-SRC-0009",
+      "role": "direct_attribution",
+      "attribution_line_start": 71,
+      "attribution_line_end": 71,
+      "attribution_lines_as_written": [
+        "THE ANTIDOTE"
+      ],
+      "containing_container_id": "L1-CNT-0014"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0017",
+      "source_id": "L1-SRC-0010",
+      "role": "direct_attribution",
+      "attribution_line_start": 75,
+      "attribution_line_end": 75,
+      "attribution_lines_as_written": [
+        "The Albany Argus"
+      ],
+      "containing_container_id": "L1-CNT-0015"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0018",
+      "source_id": "L1-SRC-0011",
+      "role": "direct_attribution",
+      "attribution_line_start": 102,
+      "attribution_line_end": 102,
+      "attribution_lines_as_written": [
+        "The Troy Register"
+      ],
+      "containing_container_id": "L1-CNT-0016"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0019",
+      "source_id": "L1-SRC-0012",
+      "role": "direct_attribution",
+      "attribution_line_start": 106,
+      "attribution_line_end": 106,
+      "attribution_lines_as_written": [
+        "The New York Commercial Advertiser"
+      ],
+      "containing_container_id": "L1-CNT-0017"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0020",
+      "source_id": "L1-SRC-0013",
+      "role": "direct_attribution",
+      "attribution_line_start": 112,
+      "attribution_line_end": 112,
+      "attribution_lines_as_written": [
+        "The Chenango Republican"
+      ],
+      "containing_container_id": "L1-CNT-0018"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0021",
+      "source_id": "L1-SRC-0004",
+      "role": "direct_attribution",
+      "attribution_line_start": 120,
+      "attribution_line_end": 120,
+      "attribution_lines_as_written": [
+        "The Albany Daily Advertiser"
+      ],
+      "containing_container_id": "L1-CNT-0019"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0022",
+      "source_id": "L1-SRC-0014",
+      "role": "direct_attribution",
+      "attribution_line_start": 129,
+      "attribution_line_end": 129,
+      "attribution_lines_as_written": [
+        "The Albany Gazette"
+      ],
+      "containing_container_id": "L1-CNT-0020"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0023",
+      "source_id": "L1-SRC-0014",
+      "role": "direct_attribution",
+      "attribution_line_start": 132,
+      "attribution_line_end": 132,
+      "attribution_lines_as_written": [
+        "The Albany Gazette"
+      ],
+      "containing_container_id": "L1-CNT-0021"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0024",
+      "source_id": "L1-SRC-0015",
+      "role": "direct_attribution",
+      "attribution_line_start": 139,
+      "attribution_line_end": 139,
+      "attribution_lines_as_written": [
+        "The Standard Newspaper"
+      ],
+      "containing_container_id": "L1-CNT-0022"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0025",
+      "source_id": "L1-SRC-0016",
+      "role": "archive_acknowledgment",
+      "attribution_line_start": 62,
+      "attribution_line_end": 62,
+      "attribution_lines_as_written": [
+        "Historic Cherry Hill"
+      ],
+      "containing_container_id": "L1-CNT-0013"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0026",
+      "source_id": "L1-SRC-0017",
+      "role": "archive_acknowledgment",
+      "attribution_line_start": 63,
+      "attribution_line_end": 63,
+      "attribution_lines_as_written": [
+        "New York State Museum"
+      ],
+      "containing_container_id": "L1-CNT-0013"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0027",
+      "source_id": "L1-SRC-0018",
+      "role": "archive_acknowledgment",
+      "attribution_line_start": 64,
+      "attribution_line_end": 64,
+      "attribution_lines_as_written": [
+        "New York State Archives"
+      ],
+      "containing_container_id": "L1-CNT-0013"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0028",
+      "source_id": "L1-SRC-0019",
+      "role": "archive_acknowledgment",
+      "attribution_line_start": 65,
+      "attribution_line_end": 65,
+      "attribution_lines_as_written": [
+        "Wisconsin Historical Society"
+      ],
+      "containing_container_id": "L1-CNT-0013"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0029",
+      "source_id": "L1-SRC-0020",
+      "role": "archive_acknowledgment",
+      "attribution_line_start": 66,
+      "attribution_line_end": 66,
+      "attribution_lines_as_written": [
+        "Cornell University"
+      ],
+      "containing_container_id": "L1-CNT-0013"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0030",
+      "source_id": "L1-SRC-0021",
+      "role": "direct_attribution",
+      "attribution_line_start": 1017,
+      "attribution_line_end": 1017,
+      "attribution_lines_as_written": [
+        "The Troy Sentinel"
+      ],
+      "containing_container_id": "L1-CNT-0040"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0031",
+      "source_id": "L1-SRC-0022",
+      "role": "direct_attribution",
+      "attribution_line_start": 1152,
+      "attribution_line_end": 1152,
+      "attribution_lines_as_written": [
+        "The Comet"
+      ],
+      "containing_container_id": "L1-CNT-0044"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0032",
+      "source_id": "L1-SRC-0023",
+      "role": "direct_attribution",
+      "attribution_line_start": 1179,
+      "attribution_line_end": 1179,
+      "attribution_lines_as_written": [
+        "The Niles' Weekly Register"
+      ],
+      "containing_container_id": "L1-CNT-0047"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0033",
+      "source_id": "L1-SRC-0004",
+      "role": "direct_attribution",
+      "attribution_line_start": 1199,
+      "attribution_line_end": 1199,
+      "attribution_lines_as_written": [
+        "The Albany Daily Advertiser"
+      ],
+      "containing_container_id": "L1-CNT-0049"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0034",
+      "source_id": "L1-SRC-0024",
+      "role": "direct_attribution",
+      "attribution_line_start": 1212,
+      "attribution_line_end": 1212,
+      "attribution_lines_as_written": [
+        "The Standard"
+      ],
+      "containing_container_id": "L1-CNT-0050"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0035",
+      "source_id": "L1-SRC-0024",
+      "role": "direct_attribution",
+      "attribution_line_start": 1217,
+      "attribution_line_end": 1217,
+      "attribution_lines_as_written": [
+        "The Standard"
+      ],
+      "containing_container_id": "L1-CNT-0051"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0036",
+      "source_id": "L1-SRC-0025",
+      "role": "direct_attribution",
+      "attribution_line_start": 1665,
+      "attribution_line_end": 1665,
+      "attribution_lines_as_written": [
+        "Albany Argus & City Gazette"
+      ],
+      "containing_container_id": "L1-CNT-0064"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0037",
+      "source_id": "L1-SRC-0026",
+      "role": "direct_attribution",
+      "attribution_line_start": 1676,
+      "attribution_line_end": 1676,
+      "attribution_lines_as_written": [
+        "The New-York American"
+      ],
+      "containing_container_id": "L1-CNT-0065"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0038",
+      "source_id": "L1-SRC-0027",
+      "role": "direct_attribution",
+      "attribution_line_start": 1699,
+      "attribution_line_end": 1699,
+      "attribution_lines_as_written": [
+        "Newark Sentinel of Freedom and New Jersey Advertiser,"
+      ],
+      "containing_container_id": "L1-CNT-0067"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0039",
+      "source_id": "L1-SRC-0002",
+      "role": "direct_attribution",
+      "attribution_line_start": 1735,
+      "attribution_line_end": 1735,
+      "attribution_lines_as_written": [
+        "THE POUGHKEEPSIE JOURNAL"
+      ],
+      "containing_container_id": "L1-CNT-0069"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0040",
+      "source_id": "L1-SRC-0028",
+      "role": "direct_attribution",
+      "attribution_line_start": 1856,
+      "attribution_line_end": 1856,
+      "attribution_lines_as_written": [
+        "Albany Evening Journal"
+      ],
+      "containing_container_id": "L1-CNT-0073"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0041",
+      "source_id": "L1-SRC-0029",
+      "role": "direct_attribution",
+      "attribution_line_start": 143,
+      "attribution_line_end": 145,
+      "attribution_lines_as_written": [
+        "Colonial Days And Ways",
+        "The Strang Family Genealogy",
+        "Josephine Frost, 1915"
+      ],
+      "containing_container_id": "L1-CNT-0023",
+      "passage_line_start": 143,
+      "passage_line_end": 172,
+      "context_label_as_written": "Colonial Days And Ways",
+      "author_as_written": "Josephine Frost",
+      "date_as_written": "1915"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0042",
+      "source_id": "L1-SRC-0030",
+      "role": "direct_attribution",
+      "attribution_line_start": 173,
+      "attribution_line_end": 174,
+      "attribution_lines_as_written": [
+        "The Confession Of Jesse James Strang",
+        "PAMPHLET, AUGUST 4, 1827"
+      ],
+      "containing_container_id": "L1-CNT-0024",
+      "passage_line_start": 173,
+      "passage_line_end": 228,
+      "document_type_as_written": "PAMPHLET",
+      "date_as_written": "AUGUST 4, 1827"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0043",
+      "source_id": "L1-SRC-0031",
+      "role": "direct_attribution",
+      "attribution_line_start": 230,
+      "attribution_line_end": 231,
+      "attribution_lines_as_written": [
+        "THE TRIAL OF JESSE JAMES STRAND, 1827",
+        "E.M. Murden"
+      ],
+      "containing_container_id": "L1-CNT-0025",
+      "passage_line_start": 229,
+      "passage_line_end": 584,
+      "author_or_publisher_as_written": "E.M. Murden"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0044",
+      "source_id": "L1-SRC-0032",
+      "role": "direct_attribution",
+      "attribution_line_start": 586,
+      "attribution_line_end": 588,
+      "attribution_lines_as_written": [
+        "The Van Rensselaer Manor",
+        "Address to The Order of Colonial Lords of Manors in america",
+        "Kilain Van Rensselaer, 1915"
+      ],
+      "containing_container_id": "L1-CNT-0031",
+      "passage_line_start": 585,
+      "passage_line_end": 633,
+      "subtitle_as_written": "Address to The Order of Colonial Lords of Manors in america",
+      "author_date_as_written": "Kilain Van Rensselaer, 1915"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0045",
+      "source_id": "L1-SRC-0033",
+      "role": "direct_attribution",
+      "attribution_line_start": 635,
+      "attribution_line_end": 636,
+      "attribution_lines_as_written": [
+        "THE TRIAL OF ELSIE WHIPPLE, 1827",
+        "E.M. Murden"
+      ],
+      "containing_container_id": "L1-CNT-0032",
+      "passage_line_start": 634,
+      "passage_line_end": 1022,
+      "author_or_publisher_as_written": "E.M. Murden"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0046",
+      "source_id": "L1-SRC-0034",
+      "role": "direct_attribution",
+      "attribution_line_start": 1023,
+      "attribution_line_end": 1025,
+      "attribution_lines_as_written": [
+        "The Voluntary Examination Of Elsie Whipple",
+        "Wednesday May 26, 1827",
+        "Albany County Sheriff"
+      ],
+      "containing_container_id": "L1-CNT-0041",
+      "passage_line_start": 1023,
+      "passage_line_end": 1033,
+      "institution_as_written": "Albany County Sheriff"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0047",
+      "source_id": "L1-SRC-0035",
+      "role": "direct_attribution",
+      "attribution_line_start": 1035,
+      "attribution_line_end": 1037,
+      "attribution_lines_as_written": [
+        "A Legacy of Historical Gleanings",
+        "Volume I",
+        "Catharina Van Rensselaer Bonney, 1885"
+      ],
+      "containing_container_id": "L1-CNT-0042",
+      "passage_line_start": 1034,
+      "passage_line_end": 1147,
+      "volume_as_written": "Volume I",
+      "author_date_as_written": "Catharina Van Rensselaer Bonney, 1885"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0048",
+      "source_id": "L1-SRC-0036",
+      "role": "direct_attribution",
+      "attribution_line_start": 1158,
+      "attribution_line_end": 1158,
+      "attribution_lines_as_written": [
+        "Pamphlet, 1827"
+      ],
+      "containing_container_id": "L1-CNT-0045",
+      "passage_line_start": 1157,
+      "passage_line_end": 1171
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0049",
+      "source_id": "L1-SRC-0036",
+      "role": "direct_attribution",
+      "attribution_line_start": 1173,
+      "attribution_line_end": 1173,
+      "attribution_lines_as_written": [
+        "Pamphlet, 1827"
+      ],
+      "containing_container_id": "L1-CNT-0046",
+      "passage_line_start": 1172,
+      "passage_line_end": 1177
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0050",
+      "source_id": "L1-SRC-0036",
+      "role": "direct_attribution",
+      "attribution_line_start": 1187,
+      "attribution_line_end": 1187,
+      "attribution_lines_as_written": [
+        "Pamphlet, 1827"
+      ],
+      "containing_container_id": "L1-CNT-0048",
+      "passage_line_start": 1186,
+      "passage_line_end": 1197
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0051",
+      "source_id": "L1-SRC-0037",
+      "role": "direct_attribution",
+      "attribution_line_start": 1222,
+      "attribution_line_end": 1224,
+      "attribution_lines_as_written": [
+        "The Final Confession Of Jesse James Strang",
+        "THE CONFESSION OF JESSE JAMES STRANG PAMPHLET, AUGUST 4, 1827",
+        "Calvin Pepper, Esq"
+      ],
+      "containing_container_id": "L1-CNT-0052",
+      "passage_line_start": 1222,
+      "passage_line_end": 1261,
+      "publication_line_as_written": "THE CONFESSION OF JESSE JAMES STRANG PAMPHLET, AUGUST 4, 1827",
+      "author_as_written": "Calvin Pepper, Esq"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0052",
+      "source_id": "L1-SRC-0038",
+      "role": "direct_attribution",
+      "attribution_line_start": 1263,
+      "attribution_line_end": 1264,
+      "attribution_lines_as_written": [
+        "The Knickerbocker News",
+        "Charley Mooney"
+      ],
+      "containing_container_id": "L1-CNT-0053",
+      "passage_line_start": 1262,
+      "passage_line_end": 1280,
+      "author_as_written": "Charley Mooney"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0053",
+      "source_id": "L1-SRC-0039",
+      "role": "direct_attribution",
+      "attribution_line_start": 1281,
+      "attribution_line_end": 1283,
+      "attribution_lines_as_written": [
+        "Execution of Jesse Strang for the Murder of John Whipple",
+        "Broadside",
+        "The Pictorial Life and Adventures of Mrs. Whipple & Jesse Strang, 1848"
+      ],
+      "containing_container_id": "L1-CNT-0054",
+      "passage_line_start": 1281,
+      "passage_line_end": 1377,
+      "document_type_as_written": "Broadside",
+      "reproduced_in_as_written": "The Pictorial Life and Adventures of Mrs. Whipple & Jesse Strang, 1848"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0054",
+      "source_id": "L1-SRC-0040",
+      "role": "direct_attribution",
+      "attribution_line_start": 1378,
+      "attribution_line_end": 1379,
+      "attribution_lines_as_written": [
+        "JESSE JAMES STRANG",
+        "The Record Of Crimes in the United States, 1835"
+      ],
+      "containing_container_id": "L1-CNT-0055",
+      "passage_line_start": 1378,
+      "passage_line_end": 1449,
+      "publication_as_written": "The Record Of Crimes in the United States, 1835"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0055",
+      "source_id": "L1-SRC-0041",
+      "role": "direct_attribution",
+      "attribution_line_start": 1450,
+      "attribution_line_end": 1452,
+      "attribution_lines_as_written": [
+        "To Mrs. Whipple",
+        "The Confession of Jesse James, 1827",
+        "Written by Calvin Pepper, Esq"
+      ],
+      "containing_container_id": "L1-CNT-0056",
+      "passage_line_start": 1450,
+      "passage_line_end": 1479,
+      "publication_as_written": "The Confession of Jesse James, 1827",
+      "author_as_written": "Written by Calvin Pepper, Esq"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0056",
+      "source_id": "L1-SRC-0042",
+      "role": "direct_attribution",
+      "attribution_line_start": 1480,
+      "attribution_line_end": 1481,
+      "attribution_lines_as_written": [
+        "Chapter I.",
+        "The Pictorial Life and Adventures of Mrs. Whipple & Jesse Strang, 1848"
+      ],
+      "containing_container_id": "L1-CNT-0057",
+      "passage_line_start": 1480,
+      "passage_line_end": 1508,
+      "publication_as_written": "The Pictorial Life and Adventures of Mrs. Whipple & Jesse Strang, 1848"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0057",
+      "source_id": "L1-SRC-0043",
+      "role": "direct_attribution",
+      "attribution_line_start": 1509,
+      "attribution_line_end": 1511,
+      "attribution_lines_as_written": [
+        "Reminiscences Of Boyhood.",
+        "Annals of the Van Rensselaers in the United States : Especially as They Relate to the Family of Killian K. Van Rensselaer, 1888",
+        "Maunsell Van Rensselaer"
+      ],
+      "containing_container_id": "L1-CNT-0058",
+      "passage_line_start": 1509,
+      "passage_line_end": 1548,
+      "publication_as_written": "Annals of the Van Rensselaers in the United States : Especially as They Relate to the Family of Killian K. Van Rensselaer, 1888",
+      "author_as_written": "Maunsell Van Rensselaer"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0058",
+      "source_id": "L1-SRC-0044",
+      "role": "direct_attribution",
+      "attribution_line_start": 1549,
+      "attribution_line_end": 1550,
+      "attribution_lines_as_written": [
+        "Chapter VI.",
+        "The Pictorial Life and Adventures of Mrs. Whipple & Jesse Strang,1848"
+      ],
+      "containing_container_id": "L1-CNT-0059",
+      "passage_line_start": 1549,
+      "passage_line_end": 1598,
+      "publication_as_written": "The Pictorial Life and Adventures of Mrs. Whipple & Jesse Strang,1848"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0059",
+      "source_id": "L1-SRC-0045",
+      "role": "direct_attribution",
+      "attribution_line_start": 1599,
+      "attribution_line_end": 1601,
+      "attribution_lines_as_written": [
+        "The Cumberland Line",
+        "Legacy of Historical Gleanings",
+        "Catharina Van Rensselaer Bonney, 1885"
+      ],
+      "containing_container_id": "L1-CNT-0060",
+      "passage_line_start": 1599,
+      "passage_line_end": 1612,
+      "publication_as_written": "Legacy of Historical Gleanings",
+      "author_date_as_written": "Catharina Van Rensselaer Bonney, 1885"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0060",
+      "source_id": "L1-SRC-0046",
+      "role": "direct_attribution",
+      "attribution_line_start": 1613,
+      "attribution_line_end": 1614,
+      "attribution_lines_as_written": [
+        "The Last Will and Testament of Philip Van Rensselaer",
+        "December 26, 1799"
+      ],
+      "containing_container_id": "L1-CNT-0061",
+      "passage_line_start": 1613,
+      "passage_line_end": 1628,
+      "date_as_written": "December 26, 1799"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0061",
+      "source_id": "L1-SRC-0047",
+      "role": "direct_attribution",
+      "attribution_line_start": 1629,
+      "attribution_line_end": 1631,
+      "attribution_lines_as_written": [
+        "The Descendents of Cherry Hill",
+        "Historic Families of America, 1915",
+        "Walter Whipple Spooner"
+      ],
+      "containing_container_id": "L1-CNT-0062",
+      "passage_line_start": 1629,
+      "passage_line_end": 1634,
+      "publication_as_written": "Historic Families of America, 1915",
+      "author_as_written": "Walter Whipple Spooner"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0062",
+      "source_id": "L1-SRC-0048",
+      "role": "direct_attribution",
+      "attribution_line_start": 1706,
+      "attribution_line_end": 1708,
+      "attribution_lines_as_written": [
+        "Horrible Assassination",
+        "Legacy of Historical Gleanings",
+        "Catharina Van Rensselaer Bonney, 1885"
+      ],
+      "containing_container_id": "L1-CNT-0068",
+      "passage_line_start": 1706,
+      "passage_line_end": 1732,
+      "publication_as_written": "Legacy of Historical Gleanings",
+      "author_date_as_written": "Catharina Van Rensselaer Bonney, 1885"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0063",
+      "source_id": "L1-SRC-0049",
+      "role": "direct_attribution",
+      "attribution_line_start": 1733,
+      "attribution_line_end": 1735,
+      "attribution_lines_as_written": [
+        "SHERRIFF’S SALE",
+        "March 18, 1836",
+        "THE POUGHKEEPSIE JOURNAL"
+      ],
+      "containing_container_id": "L1-CNT-0069",
+      "passage_line_start": 1733,
+      "passage_line_end": 1746,
+      "date_as_written": "March 18, 1836",
+      "publication_as_written": "THE POUGHKEEPSIE JOURNAL"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0064",
+      "source_id": "L1-SRC-0050",
+      "role": "direct_attribution",
+      "attribution_line_start": 1747,
+      "attribution_line_end": 1749,
+      "attribution_lines_as_written": [
+        "Maria Sanders Van Rensselaer",
+        "A Legacy of Historical Gleanings",
+        "Catharina Van Rensselaer Bonney, 1885"
+      ],
+      "containing_container_id": "L1-CNT-0070",
+      "passage_line_start": 1747,
+      "passage_line_end": 1762,
+      "publication_as_written": "A Legacy of Historical Gleanings",
+      "author_date_as_written": "Catharina Van Rensselaer Bonney, 1885"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0065",
+      "source_id": "L1-SRC-0051",
+      "role": "direct_attribution",
+      "attribution_line_start": 1763,
+      "attribution_line_end": 1764,
+      "attribution_lines_as_written": [
+        "The Testimony of Robert Wynkoop Lansing",
+        "Sent to his daughter Margaret Elizabeth Butler"
+      ],
+      "containing_container_id": "L1-CNT-0071",
+      "passage_line_start": 1763,
+      "passage_line_end": 1854,
+      "recipient_as_written": "Sent to his daughter Margaret Elizabeth Butler"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0066",
+      "source_id": "L1-SRC-0052",
+      "role": "direct_attribution",
+      "attribution_line_start": 1868,
+      "attribution_line_end": 1869,
+      "attribution_lines_as_written": [
+        "Chapter X.",
+        "The Pictorial Life and Adventures of Mrs. Whipple & Jesse Strang 1848"
+      ],
+      "containing_container_id": "L1-CNT-0074",
+      "passage_line_start": 1868,
+      "passage_line_end": 1891,
+      "publication_as_written": "The Pictorial Life and Adventures of Mrs. Whipple & Jesse Strang 1848"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0067",
+      "source_id": "L1-SRC-0053",
+      "role": "direct_attribution",
+      "attribution_line_start": 1892,
+      "attribution_line_end": 1894,
+      "attribution_lines_as_written": [
+        "Farewell Address",
+        "The final words of Jesse James Strang",
+        "(c. 1797- August 24, 1827)"
+      ],
+      "containing_container_id": "L1-CNT-0075",
+      "passage_line_start": 1892,
+      "passage_line_end": 1958,
+      "descriptor_as_written": "The final words of Jesse James Strang",
+      "date_as_written": "(c. 1797- August 24, 1827)"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0068",
+      "source_id": "L1-SRC-0054",
+      "role": "embedded_document_attribution",
+      "attribution_line_start": 1530,
+      "attribution_line_end": 1531,
+      "attribution_lines_as_written": [
+        "The following, endorsed by him, \"March 20, 1775. A letter not signed, but supposed to be off Mr. Richard Yates,\" gives a curious picture of the period just before the Revolution:",
+        "New York, March 20, 1775."
+      ],
+      "containing_container_id": "L1-CNT-0058",
+      "passage_line_start": 1530,
+      "passage_line_end": 1534,
+      "introductory_attribution_as_written": "The following, endorsed by him, \"March 20, 1775. A letter not signed, but supposed to be off Mr. Richard Yates,\" gives a curious picture of the period just before the Revolution:"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0069",
+      "source_id": "L1-SRC-0055",
+      "role": "embedded_document_attribution",
+      "attribution_line_start": 1535,
+      "attribution_line_end": 1537,
+      "attribution_lines_as_written": [
+        "Albany, March 31, 1789",
+        "30 Dollars reward.",
+        "30 DOLLARS REWARD"
+      ],
+      "containing_container_id": "L1-CNT-0058",
+      "passage_line_start": 1535,
+      "passage_line_end": 1539,
+      "date_as_written": "Albany, March 31, 1789"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0070",
+      "source_id": "L1-SRC-0056",
+      "role": "embedded_document_attribution",
+      "attribution_line_start": 1541,
+      "attribution_line_end": 1544,
+      "attribution_lines_as_written": [
+        "May 9, 1815",
+        "Genteel Accommodations,",
+        "For Steam-Boat Passengers & other Travellers.",
+        "PHILANDER FOBES,"
+      ],
+      "containing_container_id": "L1-CNT-0058",
+      "passage_line_start": 1541,
+      "passage_line_end": 1548,
+      "date_as_written": "May 9, 1815",
+      "advertiser_as_written": "PHILANDER FOBES"
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0071",
+      "source_id": "L1-SRC-0028",
+      "role": "direct_attribution",
+      "attribution_line_start": 1856,
+      "attribution_line_end": 1856,
+      "attribution_lines_as_written": [
+        "Albany Evening Journal"
+      ],
+      "containing_container_id": "L1-CNT-0073",
+      "passage_line_start": 1855,
+      "passage_line_end": 1867
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0072",
+      "source_id": "L1-SRC-0057",
+      "role": "bibliography_entry",
+      "attribution_line_start": 2043,
+      "attribution_line_end": 2043,
+      "attribution_lines_as_written": [
+        "Whipple, Elsie Lansing, 1802-1832. Trial and Acquittal of Mrs. Whipple, as Accessary to the Murder of Her Husband, John Whipple with a Brief Sketch of Her Life. New York :Printed and sold wholesale and retail, by C. Brown, 12871827."
+      ],
+      "containing_container_id": "L1-CNT-0079",
+      "passage_line_start": 2043,
+      "passage_line_end": 2043
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0073",
+      "source_id": "L1-SRC-0058",
+      "role": "bibliography_entry",
+      "attribution_line_start": 2044,
+      "attribution_line_end": 2044,
+      "attribution_lines_as_written": [
+        "Strang, Jesse, 1797-1827. The Trial and Confession of Jesse Strang for the Murder of John Whipple : at Albany on the 7th of May, 1827 : Being the Only Edition Published Containing All the Evidence as given on That Very Interesting Trial : to Which Is Annexed, the Sentence of Death as Delivered by the Judge Duer, Also, in Full the Trial and Acquittal of Mrs. Whipple, as an Accessory to the Murder of Her Husband : Together with a Sketch of the History of Jesse Strang & Mrs. Whipple. New-York :E.M. Murden & A. Ming, Jr., 1827."
+      ],
+      "containing_container_id": "L1-CNT-0079",
+      "passage_line_start": 2044,
+      "passage_line_end": 2044
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0074",
+      "source_id": "L1-SRC-0059",
+      "role": "bibliography_entry",
+      "attribution_line_start": 2045,
+      "attribution_line_end": 2045,
+      "attribution_lines_as_written": [
+        "Strang, Jesse, 1797-1827. The Trial, Conviction & Sentence of Jesse Strang, for the Murder of John Whipple : at Albany on the 7th of May 1827 : Containing All the Evidence as given on the Very Interesting Trial, with the Trial & Acquittal of Mrs. Whipple, as an Accomplice to the Murder of Her Husband : Together with a Brief Sketch of the History of Jesse Strang and Also the History of Mrs. Whipple. New-York :E.M. Murden, 1827."
+      ],
+      "containing_container_id": "L1-CNT-0079",
+      "passage_line_start": 2045,
+      "passage_line_end": 2045
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0075",
+      "source_id": "L1-SRC-0060",
+      "role": "bibliography_entry",
+      "attribution_line_start": 2046,
+      "attribution_line_end": 2046,
+      "attribution_lines_as_written": [
+        "Jones, Louis C. (Louis Clark), 1908-1990. Murder at Cherry Hill : the Strang-Whipple Case, 1827. Albany, N.Y. :Historic Cherry Hill, 1982."
+      ],
+      "containing_container_id": "L1-CNT-0079",
+      "passage_line_start": 2046,
+      "passage_line_end": 2046
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0076",
+      "source_id": "L1-SRC-0061",
+      "role": "bibliography_entry",
+      "attribution_line_start": 2047,
+      "attribution_line_end": 2047,
+      "attribution_lines_as_written": [
+        "Van Rensselaer, Kiliaen, 1879-. The Van Rensselaer Manor : Address Delivered at the Third Annual Meeting of the New York Branch of the Order of Colonial Lords of Manors in America, Held in the City of New York, April 24, 1915. Baltimore :[publisher not identified], 1917."
+      ],
+      "containing_container_id": "L1-CNT-0079",
+      "passage_line_start": 2047,
+      "passage_line_end": 2047
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0077",
+      "source_id": "L1-SRC-0062",
+      "role": "bibliography_entry",
+      "attribution_line_start": 2048,
+      "attribution_line_end": 2048,
+      "attribution_lines_as_written": [
+        "Historic Cherry Hill (Museum : Albany, N.Y.). Selections from a Van Rensselaer Family Library, 1536-1799 : a Bibliography, with Some Annotations and Notes on Important Book Plates and Inscriptions. Albany, N.Y. :Historic Cherry Hill, 1979."
+      ],
+      "containing_container_id": "L1-CNT-0079",
+      "passage_line_start": 2048,
+      "passage_line_end": 2048
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0078",
+      "source_id": "L1-SRC-0063",
+      "role": "bibliography_entry",
+      "attribution_line_start": 2049,
+      "attribution_line_end": 2049,
+      "attribution_lines_as_written": [
+        "Strang, Jesse, 1797-1827. The Confession of Jesse Strang, Who Was Conficted of the Murder of John Whipple, at a Special Court of Oyer and Terminer, Held in and for the County of Albany, on the Fourth Day of August 1827. Albany :Printed by J.B. Van Steenburgh, 1827."
+      ],
+      "containing_container_id": "L1-CNT-0079",
+      "passage_line_start": 2049,
+      "passage_line_end": 2049
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0079",
+      "source_id": "L1-SRC-0064",
+      "role": "bibliography_entry",
+      "attribution_line_start": 2050,
+      "attribution_line_end": 2050,
+      "attribution_lines_as_written": [
+        "Different Voices, Different Truths : the 1827 Murder at Cherry Hill. Albany, N.Y. :Historic Cherry Hill, 1990."
+      ],
+      "containing_container_id": "L1-CNT-0079",
+      "passage_line_start": 2050,
+      "passage_line_end": 2050
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0080",
+      "source_id": "L1-SRC-0065",
+      "role": "bibliography_entry",
+      "attribution_line_start": 2051,
+      "attribution_line_end": 2051,
+      "attribution_lines_as_written": [
+        "Howard, H. R. Pictorial Life and Adventures of Mrs. Whipple & Jesse Strang: The Murder of Mr. Whipple. Philadelphia: T.B. Peterson & Bros, 1848."
+      ],
+      "containing_container_id": "L1-CNT-0079",
+      "passage_line_start": 2051,
+      "passage_line_end": 2051
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0081",
+      "source_id": "L1-SRC-0066",
+      "role": "bibliography_entry",
+      "attribution_line_start": 2052,
+      "attribution_line_end": 2052,
+      "attribution_lines_as_written": [
+        "Frost, Josephine C. The Strang Genealogy, Descendants of Daniel Streing, of New Rochelle, New York, with Special Records of the Purdy, Ganung, Kissam, Sackett, Bloomfield, Keeler, Belcher, Morgan, Whitney and Thorne Families. Brooklyn, N.Y: Bowles--printer, 1915. Print."
+      ],
+      "containing_container_id": "L1-CNT-0079",
+      "passage_line_start": 2052,
+      "passage_line_end": 2052
+    },
+    {
+      "occurrence_id": "L1-SRC-OCC-0082",
+      "source_id": "L1-SRC-0067",
+      "role": "bibliography_entry",
+      "attribution_line_start": 2053,
+      "attribution_line_end": 2053,
+      "attribution_lines_as_written": [
+        "Van Rensselaer, Sarah Rogers. Ancestral Sketches and Records of Olden Times. New York, A.D.F. Randolph & company, 1882. Pdf. https://www.loc.gov/item/06009054/."
+      ],
+      "containing_container_id": "L1-CNT-0079",
+      "passage_line_start": 2053,
+      "passage_line_end": 2053
+    }
+  ],
+  "contexts": [
+    {
+      "context_id": "L1-SRC-CTX-0001",
+      "source_id": "L1-SRC-0029",
+      "line_start": 143,
+      "line_end": 172,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0041"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0002",
+      "source_id": "L1-SRC-0030",
+      "line_start": 173,
+      "line_end": 228,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0042"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0003",
+      "source_id": "L1-SRC-0031",
+      "line_start": 229,
+      "line_end": 584,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0043"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0004",
+      "source_id": "L1-SRC-0032",
+      "line_start": 585,
+      "line_end": 633,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0044"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0005",
+      "source_id": "L1-SRC-0033",
+      "line_start": 634,
+      "line_end": 1022,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0045"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0006",
+      "source_id": "L1-SRC-0034",
+      "line_start": 1023,
+      "line_end": 1033,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0046"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0007",
+      "source_id": "L1-SRC-0035",
+      "line_start": 1034,
+      "line_end": 1147,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0047"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0008",
+      "source_id": "L1-SRC-0036",
+      "line_start": 1157,
+      "line_end": 1171,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0048"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0009",
+      "source_id": "L1-SRC-0036",
+      "line_start": 1172,
+      "line_end": 1177,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0049"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0010",
+      "source_id": "L1-SRC-0036",
+      "line_start": 1186,
+      "line_end": 1197,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0050"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0011",
+      "source_id": "L1-SRC-0037",
+      "line_start": 1222,
+      "line_end": 1261,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0051"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0012",
+      "source_id": "L1-SRC-0038",
+      "line_start": 1262,
+      "line_end": 1280,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0052"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0013",
+      "source_id": "L1-SRC-0039",
+      "line_start": 1281,
+      "line_end": 1377,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0053"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0014",
+      "source_id": "L1-SRC-0040",
+      "line_start": 1378,
+      "line_end": 1449,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0054"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0015",
+      "source_id": "L1-SRC-0041",
+      "line_start": 1450,
+      "line_end": 1479,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0055"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0016",
+      "source_id": "L1-SRC-0042",
+      "line_start": 1480,
+      "line_end": 1508,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0056"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0017",
+      "source_id": "L1-SRC-0043",
+      "line_start": 1509,
+      "line_end": 1548,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0057"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0018",
+      "source_id": "L1-SRC-0044",
+      "line_start": 1549,
+      "line_end": 1598,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0058"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0019",
+      "source_id": "L1-SRC-0045",
+      "line_start": 1599,
+      "line_end": 1612,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0059"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0020",
+      "source_id": "L1-SRC-0046",
+      "line_start": 1613,
+      "line_end": 1628,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0060"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0021",
+      "source_id": "L1-SRC-0047",
+      "line_start": 1629,
+      "line_end": 1634,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0061"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0022",
+      "source_id": "L1-SRC-0048",
+      "line_start": 1706,
+      "line_end": 1732,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0062"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0023",
+      "source_id": "L1-SRC-0049",
+      "line_start": 1733,
+      "line_end": 1746,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0063"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0024",
+      "source_id": "L1-SRC-0050",
+      "line_start": 1747,
+      "line_end": 1762,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0064"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0025",
+      "source_id": "L1-SRC-0051",
+      "line_start": 1763,
+      "line_end": 1854,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0065"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0026",
+      "source_id": "L1-SRC-0052",
+      "line_start": 1868,
+      "line_end": 1891,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0066"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0027",
+      "source_id": "L1-SRC-0053",
+      "line_start": 1892,
+      "line_end": 1958,
+      "relationship": "direct_source_context",
+      "basis": "explicit_attribution_within_or_immediately_adjacent_to_passage",
+      "attribution_occurrence_id": "L1-SRC-OCC-0067"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0028",
+      "source_id": "L1-SRC-0054",
+      "line_start": 1530,
+      "line_end": 1534,
+      "relationship": "direct_source_context",
+      "basis": "explicit_embedded_document_boundary",
+      "attribution_occurrence_id": "L1-SRC-OCC-0068"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0029",
+      "source_id": "L1-SRC-0055",
+      "line_start": 1535,
+      "line_end": 1539,
+      "relationship": "direct_source_context",
+      "basis": "explicit_embedded_document_boundary",
+      "attribution_occurrence_id": "L1-SRC-OCC-0069"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0030",
+      "source_id": "L1-SRC-0056",
+      "line_start": 1541,
+      "line_end": 1548,
+      "relationship": "direct_source_context",
+      "basis": "explicit_embedded_document_boundary",
+      "attribution_occurrence_id": "L1-SRC-OCC-0070"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0031",
+      "source_id": "L1-SRC-0028",
+      "line_start": 1855,
+      "line_end": 1867,
+      "relationship": "direct_source_context",
+      "basis": "explicit_periodical_attribution",
+      "attribution_occurrence_id": "L1-SRC-OCC-0071"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0032",
+      "source_id": "L1-SRC-0031",
+      "line_start": 246,
+      "line_end": 275,
+      "relationship": "inherited_source_context",
+      "basis": "contained_within_explicitly_attributed_trial_source_span",
+      "attribution_occurrence_id": "L1-SRC-OCC-0043"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0033",
+      "source_id": "L1-SRC-0031",
+      "line_start": 276,
+      "line_end": 338,
+      "relationship": "inherited_source_context",
+      "basis": "contained_within_explicitly_attributed_trial_source_span",
+      "attribution_occurrence_id": "L1-SRC-OCC-0043"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0034",
+      "source_id": "L1-SRC-0031",
+      "line_start": 339,
+      "line_end": 455,
+      "relationship": "inherited_source_context",
+      "basis": "contained_within_explicitly_attributed_trial_source_span",
+      "attribution_occurrence_id": "L1-SRC-OCC-0043"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0035",
+      "source_id": "L1-SRC-0031",
+      "line_start": 456,
+      "line_end": 545,
+      "relationship": "inherited_source_context",
+      "basis": "contained_within_explicitly_attributed_trial_source_span",
+      "attribution_occurrence_id": "L1-SRC-OCC-0043"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0036",
+      "source_id": "L1-SRC-0031",
+      "line_start": 546,
+      "line_end": 584,
+      "relationship": "inherited_source_context",
+      "basis": "contained_within_explicitly_attributed_trial_source_span",
+      "attribution_occurrence_id": "L1-SRC-OCC-0043"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0037",
+      "source_id": "L1-SRC-0033",
+      "line_start": 654,
+      "line_end": 751,
+      "relationship": "inherited_source_context",
+      "basis": "contained_within_explicitly_attributed_trial_source_span",
+      "attribution_occurrence_id": "L1-SRC-OCC-0045"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0038",
+      "source_id": "L1-SRC-0033",
+      "line_start": 752,
+      "line_end": 781,
+      "relationship": "inherited_source_context",
+      "basis": "contained_within_explicitly_attributed_trial_source_span",
+      "attribution_occurrence_id": "L1-SRC-OCC-0045"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0039",
+      "source_id": "L1-SRC-0033",
+      "line_start": 782,
+      "line_end": 852,
+      "relationship": "inherited_source_context",
+      "basis": "contained_within_explicitly_attributed_trial_source_span",
+      "attribution_occurrence_id": "L1-SRC-OCC-0045"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0040",
+      "source_id": "L1-SRC-0033",
+      "line_start": 853,
+      "line_end": 874,
+      "relationship": "inherited_source_context",
+      "basis": "contained_within_explicitly_attributed_trial_source_span",
+      "attribution_occurrence_id": "L1-SRC-OCC-0045"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0041",
+      "source_id": "L1-SRC-0033",
+      "line_start": 875,
+      "line_end": 929,
+      "relationship": "inherited_source_context",
+      "basis": "contained_within_explicitly_attributed_trial_source_span",
+      "attribution_occurrence_id": "L1-SRC-OCC-0045"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0042",
+      "source_id": "L1-SRC-0033",
+      "line_start": 930,
+      "line_end": 978,
+      "relationship": "inherited_source_context",
+      "basis": "contained_within_explicitly_attributed_trial_source_span",
+      "attribution_occurrence_id": "L1-SRC-OCC-0045"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0043",
+      "source_id": "L1-SRC-0033",
+      "line_start": 979,
+      "line_end": 989,
+      "relationship": "inherited_source_context",
+      "basis": "contained_within_explicitly_attributed_trial_source_span",
+      "attribution_occurrence_id": "L1-SRC-OCC-0045"
+    },
+    {
+      "context_id": "L1-SRC-CTX-0044",
+      "source_id": "L1-SRC-0033",
+      "line_start": 990,
+      "line_end": 1022,
+      "relationship": "inherited_source_context",
+      "basis": "contained_within_explicitly_attributed_trial_source_span",
+      "attribution_occurrence_id": "L1-SRC-OCC-0045"
+    }
+  ],
+  "unattributed_structural_spans": [
+    {
+      "line_start": 1635,
+      "line_end": 1663,
+      "label_as_written": "Chapter IX.",
+      "reason": "No immediate explicit source attribution is printed in this structural span; Layer 1 does not infer one."
+    }
+  ]
+}
