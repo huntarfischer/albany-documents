@@ -2,7 +2,7 @@ import Foundation
 import JJWWReaderCore
 
 let canonicalPath = CommandLine.arguments.dropFirst().first
-    ?? "../../jesse-james-and-the-widow-whipple-canonical.json"
+    ?? "../../jesse-james-and-the-widow-whipple-canonical-v1.1.json"
 
 do {
     let canonicalURL = URL(fileURLWithPath: canonicalPath)
