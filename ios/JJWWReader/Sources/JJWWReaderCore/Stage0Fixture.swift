@@ -4,8 +4,9 @@ public enum Stage0FixtureError: Error, Equatable, CustomStringConvertible {
     case manifestMissing
     case invalidFixtureVersion(String)
     case canonicalFormatMismatch(expected: String, actual: String)
+    case canonicalVersionMismatch(expected: String, actual: String)
     case canonicalLineCountMismatch(expected: Int, actual: Int)
-    case correctionPreconditionFailed(line: Int, expected: String, actual: String)
+    case canonicalSHAMismatch(expected: String, actual: String)
     case invalidRange(start: Int, end: Int, lineCount: Int)
 
     public var description: String {
@@ -16,10 +17,12 @@ public enum Stage0FixtureError: Error, Equatable, CustomStringConvertible {
             return "Unsupported Stage 0 fixture version: \(version)"
         case let .canonicalFormatMismatch(expected, actual):
             return "Canonical format mismatch. Expected \(expected), got \(actual)."
+        case let .canonicalVersionMismatch(expected, actual):
+            return "Canonical version mismatch. Expected \(expected), got \(actual)."
         case let .canonicalLineCountMismatch(expected, actual):
             return "Canonical line-count mismatch. Expected \(expected), got \(actual)."
-        case let .correctionPreconditionFailed(line, expected, actual):
-            return "Canonical correction precondition failed at line \(line). Expected '\(expected)', got '\(actual)'."
+        case let .canonicalSHAMismatch(expected, actual):
+            return "Canonical line-sequence SHA mismatch. Expected \(expected), got \(actual)."
         case let .invalidRange(start, end, lineCount):
             return "Invalid canonical range \(start)-\(end) for \(lineCount) lines."
         }
@@ -29,11 +32,9 @@ public enum Stage0FixtureError: Error, Equatable, CustomStringConvertible {
 public enum Stage0Fixture {
     public static let expectedFixtureVersion = "0.1"
 
-    /// Builds the five-section Stage 0 edition from the repository's canonical Layer 0 source.
+    /// Builds the five-section Stage 0 edition directly from the sealed canonical Layer 0 v1.1 JSON.
     ///
-    /// The Albany repository currently stores the v1.0 canonical file. Stage 0 applies the single,
-    /// explicit EDCOR-0011 compiler correction described by the fixture manifest to construct the
-    /// current v1.1 line sequence before selecting the prototype ranges. No other text is changed.
+    /// Stage 0 does not patch, normalize, or otherwise alter canonical text at runtime.
     public static func load(canonicalURL: URL) throws -> Edition {
         let manifest = try loadManifest()
         guard manifest.fixtureVersion == expectedFixtureVersion else {
@@ -43,44 +44,39 @@ public enum Stage0Fixture {
         let data = try Data(contentsOf: canonicalURL)
         let canonical = try JSONDecoder().decode(CanonicalLayer0Document.self, from: data)
 
-        guard canonical.formatVersion == manifest.canonicalTransform.baseFormatVersion else {
+        guard canonical.formatVersion == manifest.canonicalSource.formatVersion else {
             throw Stage0FixtureError.canonicalFormatMismatch(
-                expected: manifest.canonicalTransform.baseFormatVersion,
+                expected: manifest.canonicalSource.formatVersion,
                 actual: canonical.formatVersion
             )
         }
 
-        var lines = canonical.reconstructedLines()
-        guard lines.count == manifest.canonicalTransform.targetLineCount else {
-            throw Stage0FixtureError.canonicalLineCountMismatch(
-                expected: manifest.canonicalTransform.targetLineCount,
-                actual: lines.count
+        guard canonical.canonicalVersion == manifest.canonicalSource.layer0Version else {
+            throw Stage0FixtureError.canonicalVersionMismatch(
+                expected: manifest.canonicalSource.layer0Version,
+                actual: canonical.canonicalVersion
             )
         }
 
-        for correction in manifest.canonicalTransform.corrections {
-            let index = correction.line - 1
-            guard lines.indices.contains(index) else {
-                throw Stage0FixtureError.invalidRange(
-                    start: correction.line,
-                    end: correction.line,
-                    lineCount: lines.count
-                )
-            }
-            guard lines[index] == correction.expectedOldText else {
-                throw Stage0FixtureError.correctionPreconditionFailed(
-                    line: correction.line,
-                    expected: correction.expectedOldText,
-                    actual: lines[index]
-                )
-            }
-            lines[index] = correction.replacementText
+        guard canonical.validation.lineSequenceSHA256 == manifest.canonicalSource.lineSequenceSHA256 else {
+            throw Stage0FixtureError.canonicalSHAMismatch(
+                expected: manifest.canonicalSource.lineSequenceSHA256,
+                actual: canonical.validation.lineSequenceSHA256
+            )
+        }
+
+        let lines = canonical.reconstructedLines()
+        guard lines.count == manifest.canonicalSource.lineCount else {
+            throw Stage0FixtureError.canonicalLineCountMismatch(
+                expected: manifest.canonicalSource.lineCount,
+                actual: lines.count
+            )
         }
 
         let units = try manifest.edition.units.map { descriptor in
             try makeReadingUnit(
                 descriptor: descriptor,
-                canonicalVersion: manifest.canonicalTransform.targetLayer0Version,
+                canonicalVersion: manifest.canonicalSource.layer0Version,
                 lines: lines
             )
         }
@@ -89,8 +85,8 @@ public enum Stage0Fixture {
             id: manifest.edition.id,
             title: manifest.edition.title,
             version: manifest.edition.version,
-            canonicalLayer0Version: manifest.canonicalTransform.targetLayer0Version,
-            canonicalLineSequenceSHA256: manifest.canonicalTransform.targetLineSequenceSHA256,
+            canonicalLayer0Version: manifest.canonicalSource.layer0Version,
+            canonicalLineSequenceSHA256: manifest.canonicalSource.lineSequenceSHA256,
             readingUnits: units
         )
     }
@@ -179,24 +175,15 @@ public enum Stage0Fixture {
 
 private struct FixtureManifest: Decodable {
     let fixtureVersion: String
-    let canonicalTransform: CanonicalTransform
+    let canonicalSource: CanonicalSourceDescriptor
     let edition: EditionDescriptor
 }
 
-private struct CanonicalTransform: Decodable {
-    let baseLayer0Version: String
-    let baseFormatVersion: String
-    let targetLayer0Version: String
-    let targetLineCount: Int
-    let targetLineSequenceSHA256: String
-    let corrections: [CanonicalCorrection]
-}
-
-private struct CanonicalCorrection: Decodable {
-    let correctionID: String
-    let line: Int
-    let expectedOldText: String
-    let replacementText: String
+private struct CanonicalSourceDescriptor: Decodable {
+    let layer0Version: String
+    let formatVersion: String
+    let lineCount: Int
+    let lineSequenceSHA256: String
 }
 
 private struct EditionDescriptor: Decodable {
@@ -228,17 +215,29 @@ private struct DocumentBlockDescriptor: Decodable {
 
 private struct CanonicalLayer0Document: Decodable {
     let formatVersion: String
+    let canonicalVersion: String
     let chunks: [CanonicalChunk]
+    let validation: CanonicalValidation
 
     enum CodingKeys: String, CodingKey {
         case formatVersion = "format_version"
+        case canonicalVersion = "canonical_version"
         case chunks
+        case validation
     }
 
     func reconstructedLines() -> [String] {
         chunks.flatMap { chunk in
             chunk.blocks.flatMap(\.reconstructedLines)
         }
+    }
+}
+
+private struct CanonicalValidation: Decodable {
+    let lineSequenceSHA256: String
+
+    enum CodingKeys: String, CodingKey {
+        case lineSequenceSHA256 = "line_sequence_sha256"
     }
 }
 
