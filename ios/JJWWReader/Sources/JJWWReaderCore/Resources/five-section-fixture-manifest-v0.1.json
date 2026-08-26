@@ -1,19 +1,10 @@
 {
   "fixtureVersion": "0.1",
-  "canonicalTransform": {
-    "baseLayer0Version": "1.0",
-    "baseFormatVersion": "1.0-canonical-layer-0",
-    "targetLayer0Version": "1.1",
-    "targetLineCount": 2069,
-    "targetLineSequenceSHA256": "106274914ba9c0cc1afd4418d6e8a8dbfa62a5f2d04c9089d87aa0a406147a8e",
-    "corrections": [
-      {
-        "correctionID": "EDCOR-0011",
-        "line": 119,
-        "expectedOldText": "Monday June 16, 1827",
-        "replacementText": "Monday June 18, 1827"
-      }
-    ]
+  "canonicalSource": {
+    "layer0Version": "1.1",
+    "formatVersion": "1.1-canonical-layer-0",
+    "lineCount": 2069,
+    "lineSequenceSHA256": "106274914ba9c0cc1afd4418d6e8a8dbfa62a5f2d04c9089d87aa0a406147a8e"
   },
   "edition": {
     "id": "jjww-stage0-five-section-edition",
