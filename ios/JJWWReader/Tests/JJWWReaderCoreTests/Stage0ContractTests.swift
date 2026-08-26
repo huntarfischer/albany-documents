@@ -32,7 +32,7 @@ struct Stage0ContractTests {
             .deletingLastPathComponent()
 
         return repositoryRoot.appendingPathComponent(
-            "jesse-james-and-the-widow-whipple-canonical.json"
+            "jesse-james-and-the-widow-whipple-canonical-v1.1.json"
         )
     }
 
@@ -87,7 +87,7 @@ struct Stage0ContractTests {
         #expect(edition.readingUnit(sequence: 999) == nil)
     }
 
-    @Test("The fixture builds the current v1.1 selected canonical text")
+    @Test("The fixture reads the sealed v1.1 selected canonical text directly")
     func plainTextGate() throws {
         let edition = try Stage0Fixture.load(canonicalURL: canonicalURL)
         let selectedLines = edition.orderedReadingUnits.flatMap(\.blocks).flatMap(\.lines)
