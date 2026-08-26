@@ -1,16 +1,14 @@
 {
-  "format_version": "1.1-canonical-layer-0",
+  "format_version": "1.0-canonical-layer-0",
   "title": "Jesse James and the Widow Whipple",
   "source_file": "Jesse James and the Widow Whipple(1).rtf",
   "source_extraction": {
-    "basis": "canonical Layer 0 v1.0 plus one explicit user-authorized compiler correction",
-    "original_extraction_tool": "pandoc",
-    "original_target": "plain",
-    "original_wrap": "none",
-    "updated_source_file_reingested_in_this_step": false,
-    "note": "The user reports that the manuscript heading has been corrected to Monday June 18, 1827. This reseal applies that exact one-line correction to canonical v1.0. No fresh extraction of the user's locally edited RTF was available in this step."
+    "tool": "pandoc",
+    "target": "plain",
+    "wrap": "none",
+    "comparison_unit": "splitlines() line sequence"
   },
-  "principle": "Immutable Layer 0 canonical capture after an explicit compiler correction. Version 1.1 differs from v1.0 only at line 119: 'Monday June 16, 1827' was corrected to 'Monday June 18, 1827'. No historical interpretation, normalization, or other textual alteration has been added.",
+  "principle": "Faithful Layer 0 transcription. The ordered chunk/block model preserves the Pandoc plain-text line sequence of the corrected RTF exactly. No historical interpretation, normalization, correction, claim extraction, or event modeling has been added.",
   "chunks": [
     {
       "format_version": "0.2-poc",
@@ -270,7 +268,7 @@
         {
           "id": "chunk-02-001",
           "type": "dated_entry",
-          "date_text": "Monday June 18, 1827",
+          "date_text": "Monday June 16, 1827",
           "lines": [
             "The Albany Daily Advertiser",
             "The late Murder.—The Grand Jury for the city and county of Albany, on Thursday, found a true bill against Jesse Strang, for the murder of John Whipple, at Cherry Hill, near Albany, on the night of the 7th May last. They have also found a bill against Elsie Douw Whipple, the wife of this said John Whipple, for being a participator in the murder. Mrs. Whipple. was yesterday arrested, and is now in prison to await her trial, which will probably be in July.",
@@ -3061,36 +3059,14 @@
     }
   ],
   "validation": {
-    "canonical_version": "1.1",
-    "canonical_line_count": 2069,
-    "prior_line_count": 2069,
-    "changed_line_count": 1,
-    "inserted_line_count": 0,
-    "deleted_line_count": 0,
-    "line_number_map_identity": true,
-    "changed_lines": [
-      {
-        "line": 119,
-        "old": "Monday June 16, 1827",
-        "new": "Monday June 18, 1827"
-      }
-    ],
-    "prior_line_sequence_sha256": "735edd6b4b60fdf1d019ac9baa0644ed21ce71bdf48018ef42634e38eef9fba7",
-    "line_sequence_sha256": "106274914ba9c0cc1afd4418d6e8a8dbfa62a5f2d04c9089d87aa0a406147a8e",
-    "calendar_check": {
-      "date": "1827-06-18",
-      "weekday_as_written": "Monday",
-      "actual_weekday": "Monday",
-      "match": true
-    },
-    "reseal_basis": "user-authorized compiler correction",
-    "updated_source_file_reingested": false,
-    "status": "PASS"
-  },
-  "canonical_version": "1.1",
-  "supersedes": {
-    "canonical_version": "1.0",
-    "line_sequence_sha256": "735edd6b4b60fdf1d019ac9baa0644ed21ce71bdf48018ef42634e38eef9fba7",
-    "artifact_name": "jesse-james-and-the-widow-whipple-canonical-layer-0-v1.0"
+    "chunk_count": 25,
+    "source_line_count": 2069,
+    "reconstructed_line_count": 2069,
+    "exact_line_sequence_match": true,
+    "gap_count": 0,
+    "overlap_count": 0,
+    "first_source_line": "[ Image: LOGO BLACK.png ]",
+    "last_source_line": "JESSE JAMES AND THE WIDOW WHIPPLE",
+    "line_sequence_sha256": "735edd6b4b60fdf1d019ac9baa0644ed21ce71bdf48018ef42634e38eef9fba7"
   }
 }
