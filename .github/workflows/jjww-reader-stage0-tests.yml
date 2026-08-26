@@ -1,0 +1,27 @@
+name: JJWW Reader Stage 0 Tests
+
+on:
+  push:
+    branches:
+      - feature/jjww-reader-stage0
+    paths:
+      - 'ios/JJWWReader/**'
+      - 'jesse-james-and-the-widow-whipple-canonical-v1.1.json'
+      - '.github/workflows/jjww-reader-stage0-tests.yml'
+  pull_request:
+    paths:
+      - 'ios/JJWWReader/**'
+      - 'jesse-james-and-the-widow-whipple-canonical-v1.1.json'
+      - '.github/workflows/jjww-reader-stage0-tests.yml'
+
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Stage 0 contract tests
+        working-directory: ios/JJWWReader
+        run: swift test
+      - name: Run Stage 0 plain-text gate
+        working-directory: ios/JJWWReader
+        run: swift run jjww-stage0-print > /tmp/jjww-stage0-print.txt
