@@ -10,7 +10,7 @@ It contains only:
 
 - runtime reader model types
 - a small fixture manifest for the cover + five test experiences
-- a development loader that reconstructs the selected text from the repository canonical corpus
+- a development loader that reads the selected text directly from the sealed repository canonical corpus
 - deterministic lookup/order behavior
 - a plain-text gate executable
 - contract tests
@@ -19,22 +19,20 @@ It intentionally contains **no SwiftUI view layer**, paper/material renderer, pa
 
 ## Canonical handling
 
-The Albany repository currently stores the canonical Layer 0 v1.0 JSON. The current project canon is v1.1.
+The repository now contains the current sealed Canonical Layer 0 v1.1 JSON directly:
 
-For Stage 0 only, the fixture manifest transparently applies the one known compiler correction:
-
-- `EDCOR-0011`
-- line 119
-- `Monday June 16, 1827`
-- becomes `Monday June 18, 1827`
-
-The loader checks the old text before applying the correction. It changes no other line.
-
-The resulting runtime edition declares:
-
+- `jesse-james-and-the-widow-whipple-canonical-v1.1.json`
 - Canonical Layer 0 version: **1.1**
 - line count: **2069**
 - SHA-256: `106274914ba9c0cc1afd4418d6e8a8dbfa62a5f2d04c9089d87aa0a406147a8e`
+
+The prior v1.0 canonical is preserved as:
+
+- `jesse-james-and-the-widow-whipple-canonical-v1.0.json`
+
+The unversioned repository alias `jesse-james-and-the-widow-whipple-canonical.json` also points at the current v1.1 content.
+
+Stage 0 does **not** apply EDCOR-0011 or any other text mutation at runtime. It verifies the v1.1 canonical version, format, line count, and sealed line-sequence SHA before constructing the five-section fixture.
 
 Layer 1 source anchors are from **v2.5**.
 
@@ -61,7 +59,7 @@ swift run jjww-stage0-print
 The print executable also accepts an explicit canonical JSON path:
 
 ```bash
-swift run jjww-stage0-print /path/to/jesse-james-and-the-widow-whipple-canonical.json
+swift run jjww-stage0-print /path/to/jesse-james-and-the-widow-whipple-canonical-v1.1.json
 ```
 
 Stage 0 is complete only when the tests are green and the plain-text printout is manually reviewed before Stage 1 begins.
