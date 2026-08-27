@@ -23,8 +23,12 @@ public enum PaginationError: Error, Equatable {
 public final class PaginationEngine {
     private let cache: PaginationCache
 
-    public init(cache: PaginationCache = PaginationCache()) {
+    public init(cache: PaginationCache) {
         self.cache = cache
+    }
+
+    public convenience init() {
+        self.init(cache: PaginationCache())
     }
 
     public func paginate(
