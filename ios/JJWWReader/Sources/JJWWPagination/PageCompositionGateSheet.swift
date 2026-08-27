@@ -2,6 +2,7 @@ import SwiftUI
 import JJWWReaderCore
 import JJWWMaterials
 import JJWWTypography
+import JJWWScrollReader
 
 public struct PageCompositionGateSheet: View {
     public let edition: Edition
@@ -176,24 +177,103 @@ public struct ComposedPageLeafView: View {
             if fragment.trailingSeparator != .none { Color.clear.frame(height: 8) }
         } else if let unit = edition.readingUnit(id: fragment.readingUnitID),
                   let typography = TypographyCatalog.profile(id: unit.typographyProfile.id) {
-            let token = typography.token(fragment.role)
-            let openingHeader = page.beginsSectionTransition && isHeader(fragment.role)
-            let contentWidth = max(1, 390 - page.resolvedMargins.leading - page.resolvedMargins.trailing)
+            if unit.id == FarewellArtifactLayout.unitID {
+                farewellFragment(
+                    fragment,
+                    typography: typography,
+                    composition: composition,
+                    seed: seed
+                )
+            } else {
+                let token = typography.token(fragment.role)
+                let openingHeader = page.beginsSectionTransition && isHeader(fragment.role)
+                let contentWidth = max(1, 390 - page.resolvedMargins.leading - page.resolvedMargins.trailing)
+                PrintWearText(
+                    fragment.text,
+                    token: token,
+                    profile: composition.printWear,
+                    seed: seed ^ UInt64(fragment.canonicalLine),
+                    pointScale: openingHeader ? composition.headerScale : 1,
+                    trackingDelta: openingHeader ? composition.headerTrackingDelta : 0,
+                    lineSpacingMultiplier: openingHeader ? composition.headerLineSpacingMultiplier : composition.bodyLeadingMultiplier,
+                    snapshotLayoutWidth: token.justified ? contentWidth : nil
+                )
+                .frame(maxWidth: .infinity, alignment: token.centered ? .center : .leading)
+                .padding(.top, openingHeader && isFirstOpeningHeader(fragment) ? CGFloat(composition.headerTopSpace) : 0)
+                .padding(.bottom, separatorSpacing(for: fragment.role, composition: composition))
+            }
+        } else {
+            Text(fragment.text).font(.body)
+        }
+    }
+
+    @ViewBuilder
+    private func farewellFragment(
+        _ fragment: PageTextFragment,
+        typography: TypographyProfileDefinition,
+        composition: PageCompositionProfile,
+        seed: UInt64
+    ) -> some View {
+        let line = fragment.canonicalLine
+        if FarewellArtifactLayout.headerRange.contains(line) {
+            let token: TypographyToken = {
+                if line == 1893 { return typography.token(.sourceHeader) }
+                if line == 1894 { return typography.token(.dateHeading) }
+                return typography.token(.sectionTitle)
+            }()
+            let scale: Double = {
+                if line == 1892 { return composition.headerScale }
+                if line == 1893 { return 0.98 }
+                return 0.90
+            }()
+
             PrintWearText(
                 fragment.text,
                 token: token,
                 profile: composition.printWear,
-                seed: seed ^ UInt64(fragment.canonicalLine),
-                pointScale: openingHeader ? composition.headerScale : 1,
-                trackingDelta: openingHeader ? composition.headerTrackingDelta : 0,
-                lineSpacingMultiplier: openingHeader ? composition.headerLineSpacingMultiplier : composition.bodyLeadingMultiplier,
-                snapshotLayoutWidth: token.justified ? contentWidth : nil
+                seed: seed ^ UInt64(line),
+                pointScale: scale,
+                trackingDelta: line == 1892 ? composition.headerTrackingDelta : 0,
+                lineSpacingMultiplier: composition.headerLineSpacingMultiplier
             )
-            .frame(maxWidth: .infinity, alignment: token.centered ? .center : .leading)
-            .padding(.top, openingHeader && isFirstOpeningHeader(fragment) ? CGFloat(composition.headerTopSpace) : 0)
-            .padding(.bottom, separatorSpacing(for: fragment.role, composition: composition))
+            .frame(maxWidth: .infinity, alignment: .center)
+            .padding(.top, line == 1892 && page.beginsSectionTransition ? CGFloat(composition.headerTopSpace) : 0)
+            .padding(.bottom, line == 1892 ? 12 : (line == 1894 ? CGFloat(composition.headerBottomSpace) : 5))
+        } else if let side = FarewellArtifactLayout.columnSide(for: line) {
+            let token = typography.token(.verse)
+            let contentWidth = max(1, 390 - page.resolvedMargins.leading - page.resolvedMargins.trailing - 24)
+
+            HStack(alignment: .top, spacing: 10) {
+                if side == .leading {
+                    FarewellColumnOrnament(side: side, seed: seed ^ UInt64(line))
+                        .frame(minHeight: 24)
+                }
+
+                PrintWearText(
+                    fragment.text,
+                    token: token,
+                    profile: composition.printWear,
+                    seed: seed ^ UInt64(line),
+                    lineSpacingMultiplier: composition.bodyLeadingMultiplier,
+                    snapshotLayoutWidth: contentWidth
+                )
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                if side == .trailing {
+                    FarewellColumnOrnament(side: side, seed: seed ^ UInt64(line))
+                        .frame(minHeight: 24)
+                }
+            }
+            .padding(.top, line == FarewellArtifactLayout.secondColumnStart ? 34 : 0)
+            .padding(.bottom, FarewellArtifactLayout.isStanzaEnd(line) ? 12 : 1.5)
         } else {
-            Text(fragment.text).font(.body)
+            PrintWearText(
+                fragment.text,
+                token: typography.token(fragment.role),
+                profile: composition.printWear,
+                seed: seed ^ UInt64(line),
+                lineSpacingMultiplier: composition.bodyLeadingMultiplier
+            )
         }
     }
 
