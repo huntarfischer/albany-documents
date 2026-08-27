@@ -12,6 +12,8 @@ on:
       - 'ios/JJWWReader/**'
       - '.github/workflows/jjww-reader-stage6-pages.yml'
 
+# Run the complete reader test history because Stage 6 intentionally supersedes
+# the earlier Pages-placeholder behavior while preserving the earlier contracts.
 jobs:
   pages-gate:
     runs-on: macos-latest
