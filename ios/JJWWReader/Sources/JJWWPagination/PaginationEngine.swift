@@ -98,13 +98,15 @@ public final class PaginationEngine {
         configuration: PaginationConfiguration
     ) throws -> [PageSlice] {
         guard let firstUnit = units.first else { return [] }
-        guard let profile = TypographyCatalog.profile(id: firstUnit.typographyProfile.id) else {
+        guard let typographyProfile = TypographyCatalog.profile(id: firstUnit.typographyProfile.id) else {
             throw PaginationError.missingTypographyProfile(firstUnit.typographyProfile.id)
         }
 
+        let composition = PageCompositionCatalog.profile(for: firstUnit)
         let source = buildAttributedSource(
             units: units,
-            typographyProfile: profile,
+            typographyProfile: typographyProfile,
+            composition: composition,
             textScale: configuration.textScale
         )
 
@@ -114,8 +116,9 @@ public final class PaginationEngine {
         layoutManager.usesFontLeading = true
         textStorage.addLayoutManager(layoutManager)
 
-        var containers: [NSTextContainer] = []
         var pageCharacterRanges: [NSRange] = []
+        var pageMargins: [PageMargins] = []
+        var pageKinds: [PageCompositionKind] = []
         var coveredCharacters = 0
         var guardCount = 0
 
@@ -125,7 +128,10 @@ public final class PaginationEngine {
                 throw PaginationError.textKitProducedEmptyPage(segmentID)
             }
 
-            let container = NSTextContainer(size: configuration.geometry.contentSize)
+            let opening = pageCharacterRanges.isEmpty
+            let kind = PageCompositionCatalog.kind(for: firstUnit, opening: opening)
+            let margins = composition.margins(for: kind)
+            let container = NSTextContainer(size: configuration.geometry.contentSize(using: margins))
             container.lineFragmentPadding = 0
             layoutManager.addTextContainer(container)
             layoutManager.ensureLayout(for: container)
@@ -139,8 +145,9 @@ public final class PaginationEngine {
                 throw PaginationError.textKitProducedEmptyPage(segmentID)
             }
 
-            containers.append(container)
             pageCharacterRanges.append(characterRange)
+            pageMargins.append(margins)
+            pageKinds.append(kind)
             coveredCharacters = max(coveredCharacters, NSMaxRange(characterRange))
         }
 
@@ -203,7 +210,10 @@ public final class PaginationEngine {
                     fragments: fragments,
                     materialProfile: firstUnitForPage.materialProfile,
                     side: pageIndex.isMultiple(of: 2) ? .recto : .verso,
-                    beginsSectionTransition: startsAtUnitBeginning
+                    beginsSectionTransition: startsAtUnitBeginning,
+                    compositionKind: pageKinds[localPageIndex],
+                    compositionProfileID: composition.id,
+                    resolvedMargins: pageMargins[localPageIndex]
                 )
             )
         }
@@ -231,6 +241,7 @@ public final class PaginationEngine {
     private func buildAttributedSource(
         units: [ReadingUnit],
         typographyProfile: TypographyProfileDefinition,
+        composition: PageCompositionProfile,
         textScale: ReaderTextScale
     ) -> AttributedSource {
         let output = NSMutableAttributedString(string: "")
@@ -241,11 +252,24 @@ public final class PaginationEngine {
                 ReaderLineRoleResolver.presentations(for: block, in: unit).map { (unit, block, $0) }
             }
         }
+        let openingIndices = presentations.enumerated()
+            .filter { $0.element.2.usesInkAwakening }
+            .map(\.offset)
+        let firstOpeningIndex = openingIndices.first
+        let lastOpeningIndex = openingIndices.last
 
         for (index, item) in presentations.enumerated() {
             let (unit, block, presentation) = item
             let token = typographyProfileFor(unit: unit, fallback: typographyProfile).token(presentation.role)
-            let attributes = attributes(for: token, textScale: textScale)
+            let attributes = attributes(
+                for: token,
+                textScale: textScale,
+                composition: composition,
+                isOpeningHeader: presentation.usesInkAwakening,
+                isFirstOpeningHeader: index == firstOpeningIndex,
+                isLastOpeningHeader: index == lastOpeningIndex,
+                isFirstBodyAfterOpening: lastOpeningIndex.map { index == $0 + 1 } ?? false
+            )
             let start = output.length
             let text = presentation.canonicalLine.text
             output.append(NSAttributedString(string: text, attributes: attributes))
@@ -327,23 +351,52 @@ public final class PaginationEngine {
 
     private func attributes(
         for token: TypographyToken,
-        textScale: ReaderTextScale
+        textScale: ReaderTextScale,
+        composition: PageCompositionProfile,
+        isOpeningHeader: Bool,
+        isFirstOpeningHeader: Bool,
+        isLastOpeningHeader: Bool,
+        isFirstBodyAfterOpening: Bool
     ) -> [NSAttributedString.Key: Any] {
         #if canImport(UIKit) || canImport(AppKit)
         let scale = pointScale(for: textScale)
+        let headerScale = isOpeningHeader ? CGFloat(composition.headerScale) : 1
         let paragraph = NSMutableParagraphStyle()
         paragraph.alignment = token.centered ? .center : .left
-        paragraph.lineSpacing = CGFloat(token.lineSpacing) * scale
+        let leadingMultiplier = isOpeningHeader
+            ? CGFloat(composition.headerLineSpacingMultiplier)
+            : CGFloat(composition.bodyLeadingMultiplier)
+        paragraph.lineSpacing = CGFloat(token.lineSpacing) * scale * leadingMultiplier
         paragraph.paragraphSpacing = paragraphSpacing(for: token.role) * scale
+        if isOpeningHeader {
+            paragraph.paragraphSpacing += CGFloat(isLastOpeningHeader ? composition.headerBottomSpace : 2.5) * scale
+        } else if bodyRole(token.role) {
+            paragraph.paragraphSpacing += CGFloat(composition.paragraphGap) * scale
+            paragraph.firstLineHeadIndent = CGFloat(composition.paragraphIndent) * scale
+        }
+        if isFirstOpeningHeader {
+            paragraph.paragraphSpacingBefore = CGFloat(composition.headerTopSpace) * scale
+        } else if isFirstBodyAfterOpening {
+            paragraph.paragraphSpacingBefore = CGFloat(composition.ruleGap) * scale
+        }
 
         return [
-            .font: platformFont(for: token, scale: scale),
-            .kern: CGFloat(token.tracking),
+            .font: platformFont(for: token, scale: scale * headerScale),
+            .kern: CGFloat(token.tracking + (isOpeningHeader ? composition.headerTrackingDelta : 0)),
             .paragraphStyle: paragraph
         ]
         #else
         return [:]
         #endif
+    }
+
+    private func bodyRole(_ role: TypographyRole) -> Bool {
+        switch role {
+        case .body, .firstPersonBody:
+            return true
+        default:
+            return false
+        }
     }
 
     private func pointScale(for textScale: ReaderTextScale) -> CGFloat {

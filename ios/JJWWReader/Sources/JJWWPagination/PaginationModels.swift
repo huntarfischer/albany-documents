@@ -44,6 +44,13 @@ public struct PageGeometry: Codable, Equatable, Hashable, Sendable {
     public var contentSize: CGSize {
         CGSize(width: contentWidth, height: contentHeight)
     }
+
+    public func contentSize(using margins: PageMargins) -> CGSize {
+        CGSize(
+            width: max(1, width - margins.leading - margins.trailing),
+            height: max(1, height - margins.top - margins.bottom)
+        )
+    }
 }
 
 public struct PaginationPresentationRules: Codable, Equatable, Hashable, Sendable {
@@ -84,6 +91,7 @@ public struct PaginationConfiguration: Codable, Equatable, Sendable {
     public let textScale: ReaderTextScale
     public let typographyProfileVersion: String
     public let marginProfileVersion: String
+    public let pageCompositionProfileVersion: String
     public let presentationRules: PaginationPresentationRules
     public let includeCoverUnit: Bool
 
@@ -92,6 +100,7 @@ public struct PaginationConfiguration: Codable, Equatable, Sendable {
         textScale: ReaderTextScale = .standard,
         typographyProfileVersion: String = "typography-stage3-v0.1",
         marginProfileVersion: String = "page-margins-stage5-v0.1",
+        pageCompositionProfileVersion: String = "page-composition-stage5.5-v0.1",
         presentationRules: PaginationPresentationRules = .prototype,
         includeCoverUnit: Bool = false
     ) {
@@ -99,6 +108,7 @@ public struct PaginationConfiguration: Codable, Equatable, Sendable {
         self.textScale = textScale
         self.typographyProfileVersion = typographyProfileVersion
         self.marginProfileVersion = marginProfileVersion
+        self.pageCompositionProfileVersion = pageCompositionProfileVersion
         self.presentationRules = presentationRules
         self.includeCoverUnit = includeCoverUnit
     }
@@ -114,6 +124,7 @@ public struct PaginationConfiguration: Codable, Equatable, Sendable {
             textScale: textScale.rawValue,
             typographyProfileVersion: typographyProfileVersion,
             marginProfileVersion: marginProfileVersion,
+            pageCompositionProfileVersion: pageCompositionProfileVersion,
             presentationRulesVersion: presentationRules.version,
             editionVersion: edition.version,
             canonicalLineSequenceSHA256: edition.canonicalLineSequenceSHA256,
@@ -132,6 +143,7 @@ public struct PaginationCacheKey: Codable, Equatable, Hashable, Sendable {
     public let textScale: String
     public let typographyProfileVersion: String
     public let marginProfileVersion: String
+    public let pageCompositionProfileVersion: String
     public let presentationRulesVersion: String
     public let editionVersion: String
     public let canonicalLineSequenceSHA256: String
@@ -217,6 +229,9 @@ public struct PageSlice: Codable, Equatable, Sendable, Identifiable {
     public let materialProfile: MaterialProfile
     public let side: PageSide
     public let beginsSectionTransition: Bool
+    public let compositionKind: PageCompositionKind
+    public let compositionProfileID: String
+    public let resolvedMargins: PageMargins
 
     public init(
         id: String,
@@ -231,7 +246,10 @@ public struct PageSlice: Codable, Equatable, Sendable, Identifiable {
         fragments: [PageTextFragment],
         materialProfile: MaterialProfile,
         side: PageSide,
-        beginsSectionTransition: Bool
+        beginsSectionTransition: Bool,
+        compositionKind: PageCompositionKind,
+        compositionProfileID: String,
+        resolvedMargins: PageMargins
     ) {
         self.id = id
         self.pageIndex = pageIndex
@@ -246,6 +264,9 @@ public struct PageSlice: Codable, Equatable, Sendable, Identifiable {
         self.materialProfile = materialProfile
         self.side = side
         self.beginsSectionTransition = beginsSectionTransition
+        self.compositionKind = compositionKind
+        self.compositionProfileID = compositionProfileID
+        self.resolvedMargins = resolvedMargins
     }
 
     public var pageNumber: Int { pageIndex + 1 }
