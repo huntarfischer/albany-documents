@@ -45,6 +45,7 @@ public struct PrintWearText: View {
     private let pointScale: Double
     private let trackingDelta: Double
     private let lineSpacingMultiplier: Double
+    private let snapshotLayoutWidth: Double?
 
     public init(
         _ text: String,
@@ -53,7 +54,8 @@ public struct PrintWearText: View {
         seed: UInt64,
         pointScale: Double = 1,
         trackingDelta: Double = 0,
-        lineSpacingMultiplier: Double = 1
+        lineSpacingMultiplier: Double = 1,
+        snapshotLayoutWidth: Double? = nil
     ) {
         self.text = text
         self.token = token
@@ -62,6 +64,7 @@ public struct PrintWearText: View {
         self.pointScale = pointScale
         self.trackingDelta = trackingDelta
         self.lineSpacingMultiplier = lineSpacingMultiplier
+        self.snapshotLayoutWidth = snapshotLayoutWidth
     }
 
     public var body: some View {
@@ -100,7 +103,8 @@ public struct PrintWearText: View {
                 token: token,
                 pointScale: pointScale,
                 trackingDelta: trackingDelta,
-                lineSpacingMultiplier: lineSpacingMultiplier
+                lineSpacingMultiplier: lineSpacingMultiplier,
+                snapshotLayoutWidth: snapshotLayoutWidth
             )
         } else {
             Text(rendered)
