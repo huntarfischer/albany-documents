@@ -92,7 +92,7 @@ public struct BookShellGateSheet: View {
             .frame(width: 390)
 
             content()
-                .frame(width: 390, height: 844)
+                .frame(width: 390, height: 844, alignment: .top)
                 .clipped()
                 .overlay(Rectangle().stroke(.white.opacity(0.18), lineWidth: 1))
         }
@@ -162,7 +162,7 @@ private struct SnapshotSafeScrollUnitPreview: View {
             animateOpening: false,
             snapshotLayoutWidth: 334
         )
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .frame(maxWidth: .infinity, alignment: .top)
         .background(JJWWEditorialPalette.ink)
     }
 }
