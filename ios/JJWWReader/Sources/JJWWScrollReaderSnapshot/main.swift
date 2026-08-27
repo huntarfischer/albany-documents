@@ -9,6 +9,7 @@ import AppKit
 
 @main
 struct ScrollReaderSnapshotCommand {
+    @MainActor
     static func main() throws {
         let arguments = Array(CommandLine.arguments.dropFirst())
         let output = arguments.first ?? "scroll-reader-stage4.png"
@@ -38,6 +39,7 @@ struct ScrollReaderSnapshotCommand {
         print(ribbonURL.path)
     }
 
+    @MainActor
     private static func render<Content: View>(_ view: Content, to output: String) throws {
         let renderer = ImageRenderer(content: view)
         renderer.scale = 1
