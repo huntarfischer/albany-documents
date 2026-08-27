@@ -29,7 +29,8 @@ public struct MaterialLabGateSheet: View {
                 .fill(Color.white.opacity(0.15))
                 .frame(width: 1)
             controlMap
-                .frame(width: 620, maxHeight: .infinity)
+                .frame(width: 620)
+                .frame(maxHeight: .infinity)
                 .background(Color.black.opacity(0.14))
         }
         .foregroundStyle(Color.white.opacity(0.92))
@@ -93,7 +94,7 @@ public struct MaterialLabGateSheet: View {
                         value("warmth", profile.effectivePaperTuning.warmth),
                         value("brightness", profile.effectivePaperTuning.brightness)
                     ])
-                    group("MOTTLING", [
+                    group("MOTLING", [
                         value("amount", profile.mottling.amount),
                         value("scale", profile.mottling.scale),
                         "count  \(profile.mottling.count)"
