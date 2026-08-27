@@ -10,15 +10,17 @@ public struct MaterialLabView: View {
     }
 
     public var body: some View {
-        GeometryReader { proxy in
-            HStack(spacing: 0) {
-                preview
-                    .frame(width: max(440, proxy.size.width * 0.56))
-                Divider()
-                controls
-                    .frame(maxWidth: .infinity)
-            }
+        HStack(spacing: 0) {
+            preview
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            Divider()
+                .overlay(Color.white.opacity(0.12))
+            controls
+                .frame(width: 620, maxHeight: .infinity)
+                .background(Color.black.opacity(0.16))
         }
+        .frame(minWidth: 1100, minHeight: 720)
+        .foregroundStyle(Color.white.opacity(0.92))
         .background(Color(red: 0.075, green: 0.07, blue: 0.062))
         .preferredColorScheme(.dark)
     }
@@ -31,7 +33,7 @@ public struct MaterialLabView: View {
                         .font(.system(size: 25, weight: .black, design: .serif))
                     Text("Stage 2 · live deterministic tuning")
                         .font(.system(size: 12, weight: .semibold, design: .monospaced))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.white.opacity(0.58))
                 }
                 Spacer()
                 Text(session.materialState.rawValue.uppercased())
@@ -69,7 +71,7 @@ public struct MaterialLabView: View {
 
             Text("Ink bleed is stored now for Stage 3 Ink Awakening; it is intentionally not faked into body text during Stage 2.")
                 .font(.system(size: 11, design: .monospaced))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.white.opacity(0.52))
         }
         .padding(24)
     }
@@ -158,6 +160,7 @@ public struct MaterialLabView: View {
             }
             .padding(20)
         }
+        .scrollIndicators(.visible)
     }
 
     private var profileControls: some View {
@@ -206,7 +209,7 @@ public struct MaterialLabView: View {
                 if let message = session.message {
                     Text(message)
                         .font(.system(size: 10, design: .monospaced))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.white.opacity(0.55))
                 }
             }
             TextEditor(text: $session.transferText)
@@ -225,7 +228,7 @@ public struct MaterialLabView: View {
         VStack(alignment: .leading, spacing: 10) {
             Text(title)
                 .font(.system(size: 11, weight: .black, design: .monospaced))
-                .foregroundStyle(.orange)
+                .foregroundStyle(Color.orange)
             content()
         }
         .padding(12)
@@ -244,7 +247,7 @@ public struct MaterialLabView: View {
                 Spacer()
                 Text(value.wrappedValue.formatted(.number.precision(.fractionLength(decimals))))
                     .font(.system(size: 10, design: .monospaced))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.white.opacity(0.55))
             }
             Slider(value: value, in: range)
         }
@@ -262,7 +265,7 @@ public struct MaterialLabView: View {
                 Spacer()
                 Text("\(value.wrappedValue)")
                     .font(.system(size: 10, design: .monospaced))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.white.opacity(0.55))
             }
         }
     }
