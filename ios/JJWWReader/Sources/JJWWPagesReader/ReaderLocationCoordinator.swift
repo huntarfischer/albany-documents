@@ -30,19 +30,20 @@ public final class ReaderLocationCoordinator: ObservableObject {
     public init(
         edition: Edition,
         scrollSession: ScrollReaderSession,
-        paginationEngine: PaginationEngine = PaginationEngine(),
+        paginationEngine: PaginationEngine? = nil,
         geometry: PageGeometry = .phonePortrait
     ) throws {
         self.edition = edition
         self.scrollSession = scrollSession
-        self.paginationEngine = paginationEngine
+        let resolvedPaginationEngine = paginationEngine ?? PaginationEngine()
+        self.paginationEngine = resolvedPaginationEngine
         self.geometry = geometry
 
         let configuration = PaginationConfiguration(
             geometry: geometry,
             textScale: scrollSession.textScale
         )
-        let result = try paginationEngine.paginate(
+        let result = try resolvedPaginationEngine.paginate(
             edition: edition,
             configuration: configuration
         )
