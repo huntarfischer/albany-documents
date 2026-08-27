@@ -31,6 +31,16 @@ final class Stage3TypographyTests: XCTestCase {
         }
     }
 
+    func testNewspaperBodyIsFullyJustifiedAndHyphenated() {
+        let body = TypographyCatalog.newspaper.token(.body)
+        XCTAssertEqual(body.paragraphAlignment, .justified)
+        XCTAssertGreaterThan(body.hyphenationFactor, 0.5)
+
+        XCTAssertNotEqual(TypographyCatalog.confession.token(.body).paragraphAlignment, .justified)
+        XCTAssertNotEqual(TypographyCatalog.trial.token(.body).paragraphAlignment, .justified)
+        XCTAssertNotEqual(TypographyCatalog.farewell.token(.body).paragraphAlignment, .justified)
+    }
+
     func testReduceMotionUsesShortFadeAtNaturalEntry() {
         XCTAssertEqual(
             InkAwakeningPolicy.behavior(
