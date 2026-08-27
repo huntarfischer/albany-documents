@@ -16,7 +16,8 @@ public struct MaterialLabView: View {
             Divider()
                 .overlay(Color.white.opacity(0.12))
             controls
-                .frame(width: 620, maxHeight: .infinity)
+                .frame(width: 620)
+                .frame(maxHeight: .infinity)
                 .background(Color.black.opacity(0.16))
         }
         .frame(minWidth: 1100, minHeight: 720)
