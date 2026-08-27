@@ -197,15 +197,18 @@ public enum TypographyCatalog {
         ]
     )
 
+    /// Broadside-inspired, but still semantic live text. The surviving artifact's
+    /// two columns are presented serially on phone; verse therefore remains a
+    /// single leading-aligned reading measure rather than being centered.
     public static let farewell = TypographyProfileDefinition(
         id: TypographyProfile.farewell1827.id,
         displayName: "Farewell Address 1827",
         tokens: [
-            token(.dateHeading, .subheadline, .serif, .medium, tracking: 0.8, centered: true),
-            token(.sourceHeader, .title3, .serif, .semibold, tracking: 0.6, centered: true),
-            token(.sectionTitle, .title, .serif, .black, tracking: 1.0, uppercase: true, centered: true),
-            token(.verse, .body, .serif, .regular, lineSpacing: 9, centered: true),
-            token(.body, .body, .serif, .regular, lineSpacing: 7)
+            token(.dateHeading, .footnote, .serif, .medium, tracking: 0.45, centered: true),
+            token(.sourceHeader, .subheadline, .serif, .semibold, tracking: 0.7, centered: true),
+            token(.sectionTitle, .largeTitle, .serif, .black, tracking: 1.15, uppercase: true, centered: true),
+            token(.verse, .body, .serif, .regular, lineSpacing: 4, paragraphAlignment: .leading),
+            token(.body, .body, .serif, .regular, lineSpacing: 5)
         ]
     )
 
