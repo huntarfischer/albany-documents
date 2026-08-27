@@ -8,14 +8,20 @@ public struct ScrollReaderView: View {
     public let materialStore: MaterialProfileStore
 
     @StateObject private var session: ScrollReaderSession
+    private let pagesEnabled: Bool
+    private let onRequestPages: (() -> Void)?
 
     public init(
         edition: Edition,
         materialStore: MaterialProfileStore,
-        persistence: ReaderLocationPersistence = UserDefaultsReaderLocationPersistence()
+        persistence: ReaderLocationPersistence = UserDefaultsReaderLocationPersistence(),
+        pagesEnabled: Bool = false,
+        onRequestPages: (() -> Void)? = nil
     ) {
         self.edition = edition
         self.materialStore = materialStore
+        self.pagesEnabled = pagesEnabled
+        self.onRequestPages = onRequestPages
         _session = StateObject(
             wrappedValue: ScrollReaderSession(
                 edition: edition,
@@ -27,49 +33,78 @@ public struct ScrollReaderView: View {
     public init(
         edition: Edition,
         materialStore: MaterialProfileStore,
-        session: ScrollReaderSession
+        session: ScrollReaderSession,
+        pagesEnabled: Bool = false,
+        onRequestPages: (() -> Void)? = nil
     ) {
         self.edition = edition
         self.materialStore = materialStore
+        self.pagesEnabled = pagesEnabled
+        self.onRequestPages = onRequestPages
         _session = StateObject(wrappedValue: session)
     }
 
     public var body: some View {
-        ZStack(alignment: .top) {
-            ScrollView {
-                LazyVStack(spacing: -14) {
-                    ForEach(edition.orderedReadingUnits) { unit in
-                        ReadingUnitSurface(
-                            unit: unit,
-                            materialStore: materialStore,
-                            materialSetting: session.materialSetting,
-                            textScale: session.textScale,
-                            entryContext: unit.id == session.location.readingUnitID ? .jumpIntoSection : .naturalSectionEntry
-                        )
-                        .id(unit.id)
-                        .background(
-                            GeometryReader { proxy in
-                                Color.clear.preference(
-                                    key: ReaderUnitOffsetPreferenceKey.self,
-                                    value: [
-                                        unit.id: proxy.frame(in: .named("JJWW_SCROLL_READER")).minY
-                                    ]
-                                )
-                            }
-                        )
+        ScrollViewReader { proxy in
+            ZStack(alignment: .top) {
+                ScrollView {
+                    LazyVStack(spacing: -14) {
+                        ForEach(edition.orderedReadingUnits) { unit in
+                            ReadingUnitSurface(
+                                unit: unit,
+                                materialStore: materialStore,
+                                materialSetting: session.materialSetting,
+                                textScale: session.textScale,
+                                entryContext: unit.id == session.location.readingUnitID ? .jumpIntoSection : .naturalSectionEntry
+                            )
+                            .id(unit.id)
+                            .background(
+                                GeometryReader { geometry in
+                                    Color.clear.preference(
+                                        key: ReaderUnitOffsetPreferenceKey.self,
+                                        value: [
+                                            unit.id: geometry.frame(in: .named("JJWW_SCROLL_READER")).minY
+                                        ]
+                                    )
+                                }
+                            )
+                        }
+                    }
+                    .padding(.bottom, 90)
+                }
+                .coordinateSpace(name: "JJWW_SCROLL_READER")
+                .background(Color(red: 0.08, green: 0.072, blue: 0.058))
+                .dynamicTypeSize(session.textScale.dynamicTypeSize)
+                .textSelection(.enabled)
+                .onPreferenceChange(ReaderUnitOffsetPreferenceKey.self) { offsets in
+                    updateVisibleUnit(from: offsets)
+                }
+                .onChange(of: session.navigationRevision) { _, _ in
+                    scrollToSessionLocation(with: proxy, animated: true)
+                }
+                .onAppear {
+                    DispatchQueue.main.async {
+                        scrollToSessionLocation(with: proxy, animated: false)
                     }
                 }
-                .padding(.bottom, 90)
-            }
-            .coordinateSpace(name: "JJWW_SCROLL_READER")
-            .background(Color(red: 0.08, green: 0.072, blue: 0.058))
-            .dynamicTypeSize(session.textScale.dynamicTypeSize)
-            .textSelection(.enabled)
-            .onPreferenceChange(ReaderUnitOffsetPreferenceKey.self) { offsets in
-                updateVisibleUnit(from: offsets)
-            }
 
-            ReaderChrome(session: session)
+                ReaderChrome(
+                    session: session,
+                    pagesEnabled: pagesEnabled,
+                    onRequestPages: onRequestPages
+                )
+            }
+        }
+    }
+
+    private func scrollToSessionLocation(with proxy: ScrollViewProxy, animated: Bool) {
+        let lineID = "\(session.location.blockID).line.\(session.location.canonicalLine)"
+        if animated {
+            withAnimation(.easeOut(duration: 0.22)) {
+                proxy.scrollTo(lineID, anchor: .top)
+            }
+        } else {
+            proxy.scrollTo(lineID, anchor: .top)
         }
     }
 
@@ -131,6 +166,7 @@ public struct ReadingUnitSurface: View {
                             typographyProfile: typographyProfile,
                             seed: seed
                         )
+                        .id(presentation.id)
                     }
                 }
                 .frame(maxWidth: readingMeasure(for: unit), alignment: unit.kind == .cover ? .center : .leading)
@@ -270,6 +306,8 @@ public struct ReadingUnitSurface: View {
 
 private struct ReaderChrome: View {
     @ObservedObject var session: ScrollReaderSession
+    let pagesEnabled: Bool
+    let onRequestPages: (() -> Void)?
 
     var body: some View {
         VStack(spacing: 0) {
@@ -318,11 +356,15 @@ private struct ReaderChrome: View {
                             in: Capsule()
                         )
                     Button("PAGES") {
-                        session.requestPagesMode()
+                        if let onRequestPages {
+                            onRequestPages()
+                        } else {
+                            session.requestPagesMode()
+                        }
                     }
-                    .disabled(true)
+                    .disabled(!pagesEnabled)
                     .font(.system(size: 10, weight: .black, design: .monospaced))
-                    .opacity(0.36)
+                    .opacity(pagesEnabled ? 1 : 0.36)
                 }
             }
             .buttonStyle(.plain)
