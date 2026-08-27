@@ -20,7 +20,7 @@ public struct MaterialSurfaceView<Content: View>: View {
             Rectangle().fill(recipe.baseTone.swiftUIColor)
 
             Canvas { context, size in
-                drawSpots(recipe.mottles, in: &context, size: size, foxing: false)
+                drawMottledWashes(recipe.mottles, in: &context, size: size)
             }
             .blendMode(.multiply)
 
@@ -63,6 +63,38 @@ public struct MaterialSurfaceView<Content: View>: View {
             content
         }
         .clipped()
+    }
+
+    private func drawMottledWashes(
+        _ spots: [MaterialSpot],
+        in context: inout GraphicsContext,
+        size: CGSize
+    ) {
+        let minDimension = min(size.width, size.height)
+        context.addFilter(.blur(radius: max(8, minDimension * 0.035)))
+
+        for spot in spots {
+            let radius = max(1, CGFloat(spot.radius) * minDimension)
+            let aspect = 2.2 + abs(spot.tone) * 2.4
+            let width = radius * aspect
+            let height = radius * (0.48 + abs(spot.tone) * 0.42)
+            let xOffset = CGFloat(spot.tone) * radius * 0.55
+            let rect = CGRect(
+                x: CGFloat(spot.x) * size.width - width / 2 + xOffset,
+                y: CGFloat(spot.y) * size.height - height / 2,
+                width: width,
+                height: height
+            )
+
+            let color = spot.tone >= 0
+                ? Color.white.opacity(spot.opacity * 0.22)
+                : Color.black.opacity(spot.opacity * 0.14)
+
+            context.fill(
+                Path(roundedRect: rect, cornerRadius: height * 0.44),
+                with: .color(color)
+            )
+        }
     }
 
     private func drawSpots(
