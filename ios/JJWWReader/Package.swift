@@ -23,7 +23,8 @@ let package = Package(
         .executable(name: "jjww-scroll-reader-snapshot", targets: ["JJWWScrollReaderSnapshot"]),
         .executable(name: "jjww-pagination-snapshot", targets: ["JJWWPaginationSnapshot"]),
         .executable(name: "jjww-pages-reader-snapshot", targets: ["JJWWPagesReaderSnapshot"]),
-        .executable(name: "jjww-stage7-binding-snapshot", targets: ["JJWWBookShellSnapshot"])
+        .executable(name: "jjww-stage7-binding-snapshot", targets: ["JJWWBookShellSnapshot"]),
+        .executable(name: "jjww-stage7-5-snapshot", targets: ["JJWWStage75Snapshot"])
     ],
     targets: [
         .target(
@@ -96,6 +97,10 @@ let package = Package(
         ),
         .executableTarget(
             name: "JJWWBookShellSnapshot",
+            dependencies: ["JJWWReaderCore", "JJWWMaterials", "JJWWScrollReader", "JJWWPagination", "JJWWPagesReader", "JJWWBookShell"]
+        ),
+        .executableTarget(
+            name: "JJWWStage75Snapshot",
             dependencies: ["JJWWReaderCore", "JJWWMaterials", "JJWWScrollReader", "JJWWPagination", "JJWWPagesReader", "JJWWBookShell"]
         ),
         .testTarget(
