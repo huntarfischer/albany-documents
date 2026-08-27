@@ -237,6 +237,7 @@ public final class ScrollReaderSession: ObservableObject {
     @Published public var textScale: ReaderTextScale
     @Published public private(set) var displayMode: ReaderDisplayMode
     @Published public private(set) var location: ReaderLocation
+    @Published public private(set) var navigationRevision: Int = 0
 
     private let persistence: ReaderLocationPersistence
 
@@ -276,13 +277,19 @@ public final class ScrollReaderSession: ObservableObject {
             canonicalLine: line,
             utf16OffsetInLine: 0
         )
-        guard next != location else { return }
-        location = next
-        persistence.save(next, editionID: edition.id)
+        setLocation(next, requestScrollNavigation: false)
+    }
+
+    public func move(to next: ReaderLocation, requestScrollNavigation: Bool) {
+        guard ScrollReaderSession.contains(next, in: edition) else { return }
+        setLocation(next, requestScrollNavigation: requestScrollNavigation)
     }
 
     public func requestPagesMode() {
-        // Stage 4 intentionally keeps Pages unavailable. Stage 6 will own the transition.
+        displayMode = .pages
+    }
+
+    public func requestScrollMode() {
         displayMode = .scroll
     }
 
@@ -307,6 +314,17 @@ public final class ScrollReaderSession: ObservableObject {
         textScale = scale
     }
 
+    private func setLocation(_ next: ReaderLocation, requestScrollNavigation: Bool) {
+        let changed = next != location
+        if changed {
+            location = next
+            persistence.save(next, editionID: edition.id)
+        }
+        if requestScrollNavigation {
+            navigationRevision &+= 1
+        }
+    }
+
     private static func firstLocation(in edition: Edition) -> ReaderLocation {
         guard let unit = edition.orderedReadingUnits.first,
               let block = unit.blocks.first else {
@@ -319,7 +337,7 @@ public final class ScrollReaderSession: ObservableObject {
         )
     }
 
-    private static func contains(_ location: ReaderLocation, in edition: Edition) -> Bool {
+    public static func contains(_ location: ReaderLocation, in edition: Edition) -> Bool {
         guard let unit = edition.readingUnit(id: location.readingUnitID),
               let block = unit.blocks.first(where: { $0.id == location.blockID }) else {
             return false
