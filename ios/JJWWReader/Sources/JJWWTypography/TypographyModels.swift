@@ -74,6 +74,12 @@ public enum TypographyWeight: String, Codable, Sendable {
     }
 }
 
+public enum TypographyParagraphAlignment: String, Codable, CaseIterable, Sendable {
+    case leading
+    case centered
+    case justified
+}
+
 public struct TypographyToken: Codable, Equatable, Sendable {
     public let role: TypographyRole
     public let textStyle: TypographyDynamicTextStyle
@@ -82,7 +88,8 @@ public struct TypographyToken: Codable, Equatable, Sendable {
     public let tracking: Double
     public let lineSpacing: Double
     public let uppercase: Bool
-    public let centered: Bool
+    public let paragraphAlignment: TypographyParagraphAlignment
+    public let hyphenationFactor: Double
 
     public init(
         role: TypographyRole,
@@ -92,7 +99,9 @@ public struct TypographyToken: Codable, Equatable, Sendable {
         tracking: Double = 0,
         lineSpacing: Double = 0,
         uppercase: Bool = false,
-        centered: Bool = false
+        centered: Bool = false,
+        paragraphAlignment: TypographyParagraphAlignment? = nil,
+        hyphenationFactor: Double = 0
     ) {
         self.role = role
         self.textStyle = textStyle
@@ -101,8 +110,12 @@ public struct TypographyToken: Codable, Equatable, Sendable {
         self.tracking = tracking
         self.lineSpacing = lineSpacing
         self.uppercase = uppercase
-        self.centered = centered
+        self.paragraphAlignment = paragraphAlignment ?? (centered ? .centered : .leading)
+        self.hyphenationFactor = min(1, max(0, hyphenationFactor))
     }
+
+    public var centered: Bool { paragraphAlignment == .centered }
+    public var justified: Bool { paragraphAlignment == .justified }
 
     public var font: Font {
         .system(textStyle.swiftUIStyle, design: design.swiftUIDesign, weight: weight.swiftUIWeight)
@@ -146,7 +159,15 @@ public enum TypographyCatalog {
             token(.dateHeading, .title3, .serif, .bold, tracking: 1.2, uppercase: true, centered: true),
             token(.sourceHeader, .title2, .serif, .black, tracking: 0.6, uppercase: true, centered: true),
             token(.sectionTitle, .headline, .serif, .black, tracking: 0.8, uppercase: true, centered: true),
-            token(.body, .body, .serif, .regular, lineSpacing: 2)
+            token(
+                .body,
+                .body,
+                .serif,
+                .regular,
+                lineSpacing: 2,
+                paragraphAlignment: .justified,
+                hyphenationFactor: 0.86
+            )
         ]
     )
 
@@ -206,7 +227,9 @@ public enum TypographyCatalog {
         tracking: Double = 0,
         lineSpacing: Double = 0,
         uppercase: Bool = false,
-        centered: Bool = false
+        centered: Bool = false,
+        paragraphAlignment: TypographyParagraphAlignment? = nil,
+        hyphenationFactor: Double = 0
     ) -> TypographyToken {
         TypographyToken(
             role: role,
@@ -216,7 +239,9 @@ public enum TypographyCatalog {
             tracking: tracking,
             lineSpacing: lineSpacing,
             uppercase: uppercase,
-            centered: centered
+            centered: centered,
+            paragraphAlignment: paragraphAlignment,
+            hyphenationFactor: hyphenationFactor
         )
     }
 }
@@ -230,14 +255,20 @@ public struct TypographicText: View {
         self.token = token
     }
 
+    @ViewBuilder
     public var body: some View {
-        Text(token.uppercase ? text.uppercased() : text)
-            .font(token.font)
-            .fontWeight(token.weight.swiftUIWeight)
-            .tracking(token.tracking)
-            .lineSpacing(token.lineSpacing)
-            .multilineTextAlignment(token.centered ? .center : .leading)
-            .fixedSize(horizontal: false, vertical: true)
-            .accessibilityLabel(Text(text))
+        if token.justified {
+            JustifiedTypographicText(text, token: token)
+                .accessibilityLabel(Text(text))
+        } else {
+            Text(token.uppercase ? text.uppercased() : text)
+                .font(token.font)
+                .fontWeight(token.weight.swiftUIWeight)
+                .tracking(token.tracking)
+                .lineSpacing(token.lineSpacing)
+                .multilineTextAlignment(token.centered ? .center : .leading)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityLabel(Text(text))
+        }
     }
 }
