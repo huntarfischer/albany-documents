@@ -1,0 +1,53 @@
+name: JJWW Reader Stage 3 Typography + Ink
+
+on:
+  push:
+    branches:
+      - feature/jjww-reader-stage3
+    paths:
+      - 'ios/JJWWReader/**'
+      - '.github/workflows/jjww-reader-stage3-typography-ink.yml'
+  pull_request:
+    paths:
+      - 'ios/JJWWReader/**'
+      - '.github/workflows/jjww-reader-stage3-typography-ink.yml'
+
+jobs:
+  typography-ink-gate:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Stage 0 through Stage 3 tests
+        working-directory: ios/JJWWReader
+        run: swift test
+
+      - name: Re-run canonical plain-text gate
+        working-directory: ios/JJWWReader
+        run: swift run jjww-stage0-print > /tmp/jjww-stage0-print.txt
+
+      - name: Render Stage 3 typography and Ink Awakening gate
+        working-directory: ios/JJWWReader
+        run: |
+          mkdir -p /tmp/jjww-stage3
+          swift run jjww-typography-specimens /tmp/jjww-stage3/typography-ink-stage3.png
+          file /tmp/jjww-stage3/typography-ink-stage3.png
+
+      - name: Render revised material sheet without circular mottles
+        working-directory: ios/JJWWReader
+        run: |
+          swift run jjww-material-specimens --state full --output /tmp/jjww-stage3/materials-full-stage3.png
+          file /tmp/jjww-stage3/materials-full-stage3.png
+
+      - name: Verify production typography and materials build without labs
+        working-directory: ios/JJWWReader
+        run: |
+          swift build -c release --target JJWWMaterials
+          swift build -c release --target JJWWTypography
+
+      - name: Upload Stage 3 gate artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: jjww-stage3-typography-ink
+          path: /tmp/jjww-stage3/**
+          if-no-files-found: error
