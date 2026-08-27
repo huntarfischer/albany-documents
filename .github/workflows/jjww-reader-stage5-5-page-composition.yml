@@ -1,0 +1,51 @@
+name: JJWW Reader Stage 5.5 Page Composition
+
+on:
+  push:
+    branches:
+      - feature/jjww-reader-stage5-5
+    paths:
+      - 'ios/JJWWReader/**'
+      - '.github/workflows/jjww-reader-stage5-5-page-composition.yml'
+  pull_request:
+    paths:
+      - 'ios/JJWWReader/**'
+      - '.github/workflows/jjww-reader-stage5-5-page-composition.yml'
+
+jobs:
+  page-composition-gate:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Stage 0 through Stage 5.5 tests
+        working-directory: ios/JJWWReader
+        run: swift test
+
+      - name: Re-run canonical plain-text gate
+        working-directory: ios/JJWWReader
+        run: swift run jjww-stage0-print > /tmp/jjww-stage0-print.txt
+
+      - name: Render Stage 5.5 page composition gate
+        working-directory: ios/JJWWReader
+        run: |
+          mkdir -p /tmp/jjww-stage5-5
+          swift run jjww-pagination-snapshot \
+            /tmp/jjww-stage5-5/page-composition-stage5-5.png \
+            ../../jesse-james-and-the-widow-whipple-canonical-v1.1.json
+          file /tmp/jjww-stage5-5/page-composition-stage5-5.png
+          file /tmp/jjww-stage5-5/pagination-transitions-stage5-5.png
+          cat /tmp/jjww-stage5-5/page-composition-summary-stage5-5.json
+
+      - name: Verify production pagination and typography build
+        working-directory: ios/JJWWReader
+        run: |
+          swift build -c release --target JJWWPagination
+          swift build -c release --target JJWWTypography
+
+      - name: Upload Stage 5.5 gate artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: jjww-stage5-5-page-composition
+          path: /tmp/jjww-stage5-5/**
+          if-no-files-found: error
