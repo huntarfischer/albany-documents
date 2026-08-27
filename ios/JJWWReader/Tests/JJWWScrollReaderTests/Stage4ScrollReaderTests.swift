@@ -119,9 +119,9 @@ struct Stage4ScrollReaderTests {
         #expect(restored.location.blockID == "trial.jesse")
     }
 
-    @Test("Pages remains a disabled Stage 4 placeholder")
+    @Test("Display mode defaults to Scroll and accepts explicit Stage 6 mode requests")
     @MainActor
-    func pagesPlaceholder() throws {
+    func displayModeRequests() throws {
         let edition = try Stage0Fixture.load(canonicalURL: canonicalURL)
         let session = ScrollReaderSession(
             edition: edition,
@@ -130,6 +130,8 @@ struct Stage4ScrollReaderTests {
 
         #expect(session.displayMode == .scroll)
         session.requestPagesMode()
+        #expect(session.displayMode == .pages)
+        session.requestScrollMode()
         #expect(session.displayMode == .scroll)
     }
 }
