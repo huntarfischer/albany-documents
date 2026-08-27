@@ -13,13 +13,15 @@ let package = Package(
         .library(name: "JJWWTypography", targets: ["JJWWTypography"]),
         .library(name: "JJWWScrollReader", targets: ["JJWWScrollReader"]),
         .library(name: "JJWWPagination", targets: ["JJWWPagination"]),
+        .library(name: "JJWWPagesReader", targets: ["JJWWPagesReader"]),
         .library(name: "JJWWMaterialLab", targets: ["JJWWMaterialLab"]),
         .executable(name: "jjww-stage0-print", targets: ["JJWWStage0Print"]),
         .executable(name: "jjww-material-specimens", targets: ["JJWWMaterialSpecimens"]),
         .executable(name: "jjww-material-lab-snapshot", targets: ["JJWWMaterialLabSnapshot"]),
         .executable(name: "jjww-typography-specimens", targets: ["JJWWTypographySpecimens"]),
         .executable(name: "jjww-scroll-reader-snapshot", targets: ["JJWWScrollReaderSnapshot"]),
-        .executable(name: "jjww-pagination-snapshot", targets: ["JJWWPaginationSnapshot"])
+        .executable(name: "jjww-pagination-snapshot", targets: ["JJWWPaginationSnapshot"]),
+        .executable(name: "jjww-pages-reader-snapshot", targets: ["JJWWPagesReaderSnapshot"])
     ],
     targets: [
         .target(
@@ -45,6 +47,10 @@ let package = Package(
         .target(
             name: "JJWWPagination",
             dependencies: ["JJWWReaderCore", "JJWWMaterials", "JJWWTypography", "JJWWScrollReader"]
+        ),
+        .target(
+            name: "JJWWPagesReader",
+            dependencies: ["JJWWReaderCore", "JJWWMaterials", "JJWWTypography", "JJWWScrollReader", "JJWWPagination"]
         ),
         .target(
             name: "JJWWMaterialLab",
@@ -74,6 +80,10 @@ let package = Package(
             name: "JJWWPaginationSnapshot",
             dependencies: ["JJWWReaderCore", "JJWWMaterials", "JJWWTypography", "JJWWScrollReader", "JJWWPagination"]
         ),
+        .executableTarget(
+            name: "JJWWPagesReaderSnapshot",
+            dependencies: ["JJWWReaderCore", "JJWWMaterials", "JJWWScrollReader", "JJWWPagination", "JJWWPagesReader"]
+        ),
         .testTarget(
             name: "JJWWReaderCoreTests",
             dependencies: ["JJWWReaderCore"]
@@ -93,6 +103,10 @@ let package = Package(
         .testTarget(
             name: "JJWWPaginationTests",
             dependencies: ["JJWWReaderCore", "JJWWTypography", "JJWWScrollReader", "JJWWPagination"]
+        ),
+        .testTarget(
+            name: "JJWWPagesReaderTests",
+            dependencies: ["JJWWReaderCore", "JJWWMaterials", "JJWWScrollReader", "JJWWPagination", "JJWWPagesReader"]
         ),
         .testTarget(
             name: "JJWWMaterialLabTests",
