@@ -115,20 +115,27 @@ public struct ComposedPageLeafView: View {
     public let page: PageSlice
     public let edition: Edition
     public let materialStore: MaterialProfileStore
+    public let materialState: MaterialState
 
     private let engine = MaterialEngine()
 
-    public init(page: PageSlice, edition: Edition, materialStore: MaterialProfileStore) {
+    public init(
+        page: PageSlice,
+        edition: Edition,
+        materialStore: MaterialProfileStore,
+        materialState: MaterialState = .full
+    ) {
         self.page = page
         self.edition = edition
         self.materialStore = materialStore
+        self.materialState = materialState
     }
 
     public var body: some View {
         if let materialProfile = materialStore.profile(id: page.materialProfile.id),
            let composition = PageCompositionCatalog.profile(id: page.compositionProfileID) {
             let seed = MaterialSeed.derive(base: 1827, salt: "page.\(page.pageIndex).\(page.layoutSegmentID)")
-            let recipe = engine.resolve(profile: materialProfile, state: .full, seed: seed)
+            let recipe = engine.resolve(profile: materialProfile, state: materialState, seed: seed)
 
             MaterialSurfaceView(recipe: recipe) {
                 VStack(alignment: .leading, spacing: 0) {
