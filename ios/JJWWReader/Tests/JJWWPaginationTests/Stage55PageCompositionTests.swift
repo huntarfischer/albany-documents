@@ -34,6 +34,29 @@ struct Stage55PageCompositionTests {
         }
     }
 
+    @Test("Scroll and Pages derive source character from the same composition values")
+    func sharedCompositionIdentity() throws {
+        let edition = try Stage0Fixture.load(canonicalURL: canonicalURL)
+
+        for unit in edition.orderedReadingUnits where unit.kind != .cover {
+            let shared = ReaderCompositionCatalog.profile(for: unit)
+            let page = PageCompositionCatalog.profile(for: unit)
+
+            #expect(page.id == shared.id)
+            #expect(page.headerScale == shared.headerScale)
+            #expect(page.headerTrackingDelta == shared.headerTrackingDelta)
+            #expect(page.headerTopSpace == shared.headerTopSpace)
+            #expect(page.headerBottomSpace == shared.headerBottomSpace)
+            #expect(page.bodyLeadingMultiplier == shared.bodyLeadingMultiplier)
+            #expect(page.ruleThickness == shared.ruleThickness)
+            #expect(page.ruleLengthFraction == shared.ruleLengthFraction)
+            #expect(page.printWear == shared.printWear)
+            #expect(page.openingMargins.top == shared.openingInsets.top)
+            #expect(page.openingMargins.leading == shared.openingInsets.leading)
+            #expect(page.continuationMargins.top == shared.continuationInsets.top)
+        }
+    }
+
     @Test("Profile tuning round-trips exactly through versionable JSON")
     func profileRoundTrip() throws {
         var tuned = PageCompositionCatalog.argus
