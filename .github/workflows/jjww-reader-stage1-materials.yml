@@ -1,0 +1,43 @@
+name: JJWW Reader Stage 1 Materials
+
+on:
+  push:
+    branches:
+      - feature/jjww-reader-stage1
+    paths:
+      - 'ios/JJWWReader/**'
+      - '.github/workflows/jjww-reader-stage1-materials.yml'
+  pull_request:
+    paths:
+      - 'ios/JJWWReader/**'
+      - '.github/workflows/jjww-reader-stage1-materials.yml'
+
+jobs:
+  material-gate:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Stage 0 + Stage 1 tests
+        working-directory: ios/JJWWReader
+        run: swift test
+
+      - name: Re-run Stage 0 plain-text gate
+        working-directory: ios/JJWWReader
+        run: swift run jjww-stage0-print > /tmp/jjww-stage0-print.txt
+
+      - name: Render material specimen sheets
+        working-directory: ios/JJWWReader
+        run: |
+          mkdir -p /tmp/jjww-material-specimens
+          swift run jjww-material-specimens --state full --output /tmp/jjww-material-specimens/materials-full.png
+          swift run jjww-material-specimens --state reduced --output /tmp/jjww-material-specimens/materials-reduced.png
+          swift run jjww-material-specimens --state clean --output /tmp/jjww-material-specimens/materials-clean.png
+          file /tmp/jjww-material-specimens/*.png
+
+      - name: Upload material specimen sheets
+        uses: actions/upload-artifact@v4
+        with:
+          name: jjww-stage1-material-specimens
+          path: /tmp/jjww-material-specimens/*.png
+          if-no-files-found: error

@@ -1,0 +1,89 @@
+{
+  "formatVersion": "0.1",
+  "profiles": [
+    {
+      "id": "jjwwEditorial",
+      "version": "0.1",
+      "displayName": "JJWW Editorial Cloth",
+      "baseTone": {"red": 0.91, "green": 0.27, "blue": 0.055, "alpha": 1.0},
+      "mottling": {"amount": 0.09, "scale": 0.75, "count": 12},
+      "grain": {"amount": 0.12, "scale": 0.62, "resolution": 192},
+      "fibers": {"density": 0.08, "minLength": 0.015, "maxLength": 0.065, "opacity": 0.10, "width": 0.65},
+      "flecks": {"density": 0.03, "minRadius": 0.001, "maxRadius": 0.003, "opacity": 0.08},
+      "foxing": {"amount": 0.0, "minRadius": 0.01, "maxRadius": 0.03, "count": 0},
+      "edgeVariation": {"amount": 0.08, "width": 0.05},
+      "clothWeave": {"enabled": true, "verticalDensity": 0.86, "horizontalDensity": 0.58, "opacity": 0.16, "width": 0.52},
+      "scanOverlay": {"assetName": null, "opacity": 0.0, "scale": 1.0, "offsetX": 0.0, "offsetY": 0.0}
+    },
+    {
+      "id": "argus1827",
+      "version": "0.1",
+      "displayName": "Albany Argus 1827",
+      "baseTone": {"red": 0.82, "green": 0.79, "blue": 0.68, "alpha": 1.0},
+      "mottling": {"amount": 0.22, "scale": 0.70, "count": 17},
+      "grain": {"amount": 0.18, "scale": 0.78, "resolution": 192},
+      "fibers": {"density": 0.42, "minLength": 0.012, "maxLength": 0.065, "opacity": 0.12, "width": 0.48},
+      "flecks": {"density": 0.18, "minRadius": 0.0008, "maxRadius": 0.0032, "opacity": 0.13},
+      "foxing": {"amount": 0.055, "minRadius": 0.012, "maxRadius": 0.045, "count": 4},
+      "edgeVariation": {"amount": 0.12, "width": 0.065},
+      "clothWeave": {"enabled": false, "verticalDensity": 0.0, "horizontalDensity": 0.0, "opacity": 0.0, "width": 0.0},
+      "scanOverlay": {"assetName": null, "opacity": 0.0, "scale": 1.0, "offsetX": 0.0, "offsetY": 0.0}
+    },
+    {
+      "id": "dailyAdvertiser1827",
+      "version": "0.1",
+      "displayName": "Daily Advertiser 1827",
+      "baseTone": {"red": 0.87, "green": 0.83, "blue": 0.71, "alpha": 1.0},
+      "mottling": {"amount": 0.17, "scale": 0.78, "count": 14},
+      "grain": {"amount": 0.15, "scale": 0.84, "resolution": 192},
+      "fibers": {"density": 0.34, "minLength": 0.012, "maxLength": 0.058, "opacity": 0.10, "width": 0.46},
+      "flecks": {"density": 0.13, "minRadius": 0.0008, "maxRadius": 0.0030, "opacity": 0.10},
+      "foxing": {"amount": 0.04, "minRadius": 0.012, "maxRadius": 0.038, "count": 3},
+      "edgeVariation": {"amount": 0.095, "width": 0.055},
+      "clothWeave": {"enabled": false, "verticalDensity": 0.0, "horizontalDensity": 0.0, "opacity": 0.0, "width": 0.0},
+      "scanOverlay": {"assetName": null, "opacity": 0.0, "scale": 1.0, "offsetX": 0.0, "offsetY": 0.0}
+    },
+    {
+      "id": "confessionPamphlet1827",
+      "version": "0.1",
+      "displayName": "Confession Pamphlet",
+      "baseTone": {"red": 0.89, "green": 0.83, "blue": 0.69, "alpha": 1.0},
+      "mottling": {"amount": 0.16, "scale": 0.88, "count": 13},
+      "grain": {"amount": 0.14, "scale": 0.90, "resolution": 192},
+      "fibers": {"density": 0.27, "minLength": 0.015, "maxLength": 0.075, "opacity": 0.09, "width": 0.50},
+      "flecks": {"density": 0.10, "minRadius": 0.001, "maxRadius": 0.0035, "opacity": 0.09},
+      "foxing": {"amount": 0.07, "minRadius": 0.014, "maxRadius": 0.052, "count": 5},
+      "edgeVariation": {"amount": 0.10, "width": 0.055},
+      "clothWeave": {"enabled": false, "verticalDensity": 0.0, "horizontalDensity": 0.0, "opacity": 0.0, "width": 0.0},
+      "scanOverlay": {"assetName": null, "opacity": 0.0, "scale": 1.0, "offsetX": 0.0, "offsetY": 0.0}
+    },
+    {
+      "id": "trialRecord1827",
+      "version": "0.1",
+      "displayName": "Trial Record 1827",
+      "baseTone": {"red": 0.86, "green": 0.84, "blue": 0.76, "alpha": 1.0},
+      "mottling": {"amount": 0.10, "scale": 0.95, "count": 10},
+      "grain": {"amount": 0.11, "scale": 0.96, "resolution": 192},
+      "fibers": {"density": 0.20, "minLength": 0.015, "maxLength": 0.060, "opacity": 0.07, "width": 0.45},
+      "flecks": {"density": 0.07, "minRadius": 0.0008, "maxRadius": 0.0028, "opacity": 0.07},
+      "foxing": {"amount": 0.035, "minRadius": 0.014, "maxRadius": 0.042, "count": 2},
+      "edgeVariation": {"amount": 0.07, "width": 0.05},
+      "clothWeave": {"enabled": false, "verticalDensity": 0.0, "horizontalDensity": 0.0, "opacity": 0.0, "width": 0.0},
+      "scanOverlay": {"assetName": null, "opacity": 0.0, "scale": 1.0, "offsetX": 0.0, "offsetY": 0.0}
+    },
+    {
+      "id": "farewell1827",
+      "version": "0.1",
+      "displayName": "Farewell Leaf",
+      "baseTone": {"red": 0.92, "green": 0.88, "blue": 0.77, "alpha": 1.0},
+      "mottling": {"amount": 0.065, "scale": 1.05, "count": 8},
+      "grain": {"amount": 0.075, "scale": 1.0, "resolution": 192},
+      "fibers": {"density": 0.11, "minLength": 0.018, "maxLength": 0.070, "opacity": 0.055, "width": 0.42},
+      "flecks": {"density": 0.025, "minRadius": 0.0008, "maxRadius": 0.0024, "opacity": 0.05},
+      "foxing": {"amount": 0.018, "minRadius": 0.014, "maxRadius": 0.038, "count": 1},
+      "edgeVariation": {"amount": 0.045, "width": 0.045},
+      "clothWeave": {"enabled": false, "verticalDensity": 0.0, "horizontalDensity": 0.0, "opacity": 0.0, "width": 0.0},
+      "scanOverlay": {"assetName": null, "opacity": 0.0, "scale": 1.0, "offsetX": 0.0, "offsetY": 0.0}
+    }
+  ]
+}

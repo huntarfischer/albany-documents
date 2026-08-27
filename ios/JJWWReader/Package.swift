@@ -9,7 +9,9 @@ let package = Package(
     ],
     products: [
         .library(name: "JJWWReaderCore", targets: ["JJWWReaderCore"]),
-        .executable(name: "jjww-stage0-print", targets: ["JJWWStage0Print"])
+        .library(name: "JJWWMaterials", targets: ["JJWWMaterials"]),
+        .executable(name: "jjww-stage0-print", targets: ["JJWWStage0Print"]),
+        .executable(name: "jjww-material-specimens", targets: ["JJWWMaterialSpecimens"])
     ],
     targets: [
         .target(
@@ -18,13 +20,27 @@ let package = Package(
                 .process("Resources")
             ]
         ),
+        .target(
+            name: "JJWWMaterials",
+            resources: [
+                .process("Resources")
+            ]
+        ),
         .executableTarget(
             name: "JJWWStage0Print",
             dependencies: ["JJWWReaderCore"]
         ),
+        .executableTarget(
+            name: "JJWWMaterialSpecimens",
+            dependencies: ["JJWWMaterials"]
+        ),
         .testTarget(
             name: "JJWWReaderCoreTests",
             dependencies: ["JJWWReaderCore"]
+        ),
+        .testTarget(
+            name: "JJWWMaterialsTests",
+            dependencies: ["JJWWMaterials"]
         )
     ]
 )
