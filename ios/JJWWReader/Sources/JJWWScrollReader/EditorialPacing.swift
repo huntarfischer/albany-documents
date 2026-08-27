@@ -141,6 +141,9 @@ public enum FarewellArtifactLayout {
     }
 }
 
+/// Stage 7.5a treats the supplied orange book cloth as the reading table itself.
+/// An editorial interval is therefore authored exposure of that table, not a
+/// separate orange object inserted between papers.
 public struct EditorialIntervalView: View {
     public let profile: EditorialIntervalProfile
     public let seed: UInt64
@@ -151,81 +154,9 @@ public struct EditorialIntervalView: View {
     }
 
     public var body: some View {
-        ZStack {
-            Color(red: 0.073, green: 0.066, blue: 0.056)
-
-            if profile.orangeBandHeight > 0 {
-                EditorialOrangeCloth(seed: seed)
-                    .frame(height: clothHeight)
-                    .padding(.horizontal, clothSideInset)
-                    .offset(
-                        x: CGFloat(profile.horizontalDrift),
-                        y: clothVerticalOffset
-                    )
-                    .rotationEffect(.degrees(rotation))
-                    .shadow(color: .black.opacity(0.40), radius: 8, y: 5)
-            }
-
-            if profile.style == .dramaticVoid {
-                VStack(spacing: 0) {
-                    Spacer()
-                    Rectangle()
-                        .fill(Color(red: 0.90, green: 0.27, blue: 0.06).opacity(0.78))
-                        .frame(width: 54, height: 2)
-                    Spacer().frame(height: 42)
-                }
-            }
-        }
-        .frame(height: profile.height)
-        .accessibilityHidden(true)
-    }
-
-    /// The cloth is a physical object underneath the sheets. These dimensions are
-    /// deliberately larger than the literal orangeBandHeight so adjacent papers
-    /// occlude it and reveal only the authored amount of cloth.
-    private var clothHeight: CGFloat {
-        switch profile.style {
-        case .articleOrangeOverlap:
-            return CGFloat(profile.height + profile.overlapDepth * 1.45)
-        case .articlePaperBreath:
-            return max(62, CGFloat(profile.orangeBandHeight + 42))
-        case .sourcePaperBridge:
-            return max(92, CGFloat(profile.orangeBandHeight + 58))
-        case .orangeSequenceBreak:
-            return CGFloat(profile.height + profile.overlapDepth * 1.20)
-        case .dramaticVoid:
-            return 66
-        }
-    }
-
-    private var clothSideInset: CGFloat {
-        switch profile.style {
-        case .articleOrangeOverlap: return 8
-        case .articlePaperBreath: return 42
-        case .sourcePaperBridge: return 25
-        case .orangeSequenceBreak: return 6
-        case .dramaticVoid: return 88
-        }
-    }
-
-    private var clothVerticalOffset: CGFloat {
-        switch profile.style {
-        case .articleOrangeOverlap: return -2
-        case .articlePaperBreath: return 4
-        case .sourcePaperBridge: return 2
-        case .orangeSequenceBreak: return -1
-        case .dramaticVoid: return 10
-        }
-    }
-
-    private var rotation: Double {
-        switch profile.style {
-        case .articleOrangeOverlap: return -0.55
-        case .articlePaperBreath: return 0.42
-        case .sourcePaperBridge: return -0.28
-        case .orangeSequenceBreak: return 0.12
-        case .dramaticVoid: return 0
-        }
+        JJWWCoverClothTexture(seed: 0x4A4A5757)
+            .frame(height: profile.height)
+            .accessibilityHidden(true)
     }
 }
 
@@ -265,59 +196,5 @@ public struct FarewellColumnOrnament: View {
         }
         .frame(width: 12)
         .accessibilityHidden(true)
-    }
-}
-
-private struct EditorialOrangeCloth: View {
-    let seed: UInt64
-
-    var body: some View {
-        JJWWCoverClothTexture(seed: seed)
-            .clipShape(ClothRevealShape(seed: seed))
-            .overlay(
-                ClothRevealShape(seed: seed)
-                    .stroke(Color.black.opacity(0.18), lineWidth: 0.55)
-            )
-            .accessibilityHidden(true)
-    }
-}
-
-/// A restrained torn/fabric edge. The paper still owns the foreground silhouette;
-/// this only prevents the revealed cloth from reading as a UI rectangle.
-private struct ClothRevealShape: Shape {
-    let seed: UInt64
-
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        let steps = max(14, Int(rect.width / 24))
-
-        path.move(to: CGPoint(x: 4 + jitter(0, salt: 11, amplitude: 2), y: 5))
-        for index in 0...steps {
-            let x = rect.width * CGFloat(index) / CGFloat(steps)
-            let y = 5 + jitter(index, salt: 29, amplitude: 4.2)
-            path.addLine(to: CGPoint(x: x, y: y))
-        }
-
-        path.addLine(to: CGPoint(x: rect.width - 3, y: rect.height - 5))
-
-        for index in stride(from: steps, through: 0, by: -1) {
-            let x = rect.width * CGFloat(index) / CGFloat(steps)
-            let y = rect.height - 5 + jitter(index, salt: 71, amplitude: 5.4)
-            path.addLine(to: CGPoint(x: x, y: y))
-        }
-
-        path.closeSubpath()
-        return path
-    }
-
-    private func jitter(_ index: Int, salt: UInt64, amplitude: CGFloat) -> CGFloat {
-        var value = seed
-        value &+= UInt64(index) &* 0x9E3779B97F4A7C15
-        value &+= salt &* 0xBF58476D1CE4E5B9
-        value = (value ^ (value >> 30)) &* 0xBF58476D1CE4E5B9
-        value = (value ^ (value >> 27)) &* 0x94D049BB133111EB
-        value ^= value >> 31
-        let unit = Double(value % 10_000) / 9_999.0
-        return CGFloat(unit * 2 - 1) * amplitude
     }
 }
