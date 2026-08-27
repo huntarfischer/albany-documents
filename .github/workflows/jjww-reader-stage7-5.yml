@@ -1,0 +1,52 @@
+name: JJWW Reader Stage 7.5 Editorial Pacing
+
+on:
+  push:
+    branches:
+      - feature/jjww-reader-stage7-5
+    paths:
+      - 'ios/JJWWReader/**'
+      - '.github/workflows/jjww-reader-stage7-5.yml'
+  pull_request:
+    paths:
+      - 'ios/JJWWReader/**'
+      - '.github/workflows/jjww-reader-stage7-5.yml'
+
+jobs:
+  editorial-pacing-gate:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Stage 0 through Stage 7.5 tests
+        working-directory: ios/JJWWReader
+        run: swift test
+
+      - name: Re-run canonical plain-text gate
+        working-directory: ios/JJWWReader
+        run: swift run jjww-stage0-print > /tmp/jjww-stage0-print.txt
+
+      - name: Render Stage 7.5 production gate
+        working-directory: ios/JJWWReader
+        run: |
+          mkdir -p /tmp/jjww-stage7-5
+          swift run jjww-stage7-5-snapshot \
+            /tmp/jjww-stage7-5/stage7-5-editorial-pacing-v0.1.png \
+            ../../jesse-james-and-the-widow-whipple-canonical-v1.1.json
+          file /tmp/jjww-stage7-5/stage7-5-editorial-pacing-v0.1.png
+          cat /tmp/jjww-stage7-5/stage7-5-summary-v0.1.json
+
+      - name: Verify production readers build
+        working-directory: ios/JJWWReader
+        run: |
+          swift build -c release --target JJWWBookShell
+          swift build -c release --target JJWWScrollReader
+          swift build -c release --target JJWWPagesReader
+          swift build -c release --target JJWWPagination
+
+      - name: Upload Stage 7.5 gate artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: jjww-stage7-5-editorial-pacing
+          path: /tmp/jjww-stage7-5/**
+          if-no-files-found: error
