@@ -25,6 +25,7 @@ public final class ReaderLocationCoordinator: ObservableObject {
 
     private let paginationEngine: PaginationEngine
     private var geometry: PageGeometry
+    private var preservedScrollLocation: ReaderLocation?
 
     public init(
         edition: Edition,
@@ -61,27 +62,27 @@ public final class ReaderLocationCoordinator: ObservableObject {
     public var canTurnForward: Bool { currentPageIndex + 1 < pagination.pages.count }
 
     public func enterPages() {
+        preservedScrollLocation = scrollSession.location
         currentPageIndex = ReaderLocationCoordinator.pageIndex(
             containing: scrollSession.location,
             in: pagination
         ) ?? min(currentPageIndex, max(0, pagination.pages.count - 1))
-
-        if let currentPage {
-            scrollSession.move(to: currentPage.startLocation, requestScrollNavigation: false)
-        }
         scrollSession.requestPagesMode()
     }
 
     public func enterScroll() {
-        if let currentPage {
-            scrollSession.move(to: currentPage.startLocation, requestScrollNavigation: true)
+        let destination = preservedScrollLocation ?? currentPage?.startLocation
+        if let destination {
+            scrollSession.move(to: destination, requestScrollNavigation: true)
         }
+        preservedScrollLocation = nil
         scrollSession.requestScrollMode()
     }
 
     public func showPage(index: Int) {
         guard pagination.pages.indices.contains(index) else { return }
         currentPageIndex = index
+        preservedScrollLocation = nil
         let page = pagination.pages[index]
         scrollSession.move(to: page.startLocation, requestScrollNavigation: false)
     }
@@ -100,7 +101,7 @@ public final class ReaderLocationCoordinator: ObservableObject {
         textScale: ReaderTextScale,
         geometry newGeometry: PageGeometry? = nil
     ) throws {
-        let semanticLocation = scrollSession.location
+        let semanticLocation = preservedScrollLocation ?? scrollSession.location
         scrollSession.changingTextScale(to: textScale)
         if let newGeometry { geometry = newGeometry }
 
@@ -118,7 +119,9 @@ public final class ReaderLocationCoordinator: ObservableObject {
             in: result
         ) ?? min(currentPageIndex, max(0, result.pages.count - 1))
 
-        if scrollSession.displayMode == .pages, let currentPage {
+        if preservedScrollLocation == nil,
+           scrollSession.displayMode == .pages,
+           let currentPage {
             scrollSession.move(to: currentPage.startLocation, requestScrollNavigation: false)
         }
     }
