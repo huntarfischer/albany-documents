@@ -10,10 +10,12 @@ let package = Package(
     products: [
         .library(name: "JJWWReaderCore", targets: ["JJWWReaderCore"]),
         .library(name: "JJWWMaterials", targets: ["JJWWMaterials"]),
+        .library(name: "JJWWTypography", targets: ["JJWWTypography"]),
         .library(name: "JJWWMaterialLab", targets: ["JJWWMaterialLab"]),
         .executable(name: "jjww-stage0-print", targets: ["JJWWStage0Print"]),
         .executable(name: "jjww-material-specimens", targets: ["JJWWMaterialSpecimens"]),
-        .executable(name: "jjww-material-lab-snapshot", targets: ["JJWWMaterialLabSnapshot"])
+        .executable(name: "jjww-material-lab-snapshot", targets: ["JJWWMaterialLabSnapshot"]),
+        .executable(name: "jjww-typography-specimens", targets: ["JJWWTypographySpecimens"])
     ],
     targets: [
         .target(
@@ -29,8 +31,12 @@ let package = Package(
             ]
         ),
         .target(
+            name: "JJWWTypography",
+            dependencies: ["JJWWReaderCore", "JJWWMaterials"]
+        ),
+        .target(
             name: "JJWWMaterialLab",
-            dependencies: ["JJWWMaterials"]
+            dependencies: ["JJWWMaterials", "JJWWTypography"]
         ),
         .executableTarget(
             name: "JJWWStage0Print",
@@ -42,7 +48,11 @@ let package = Package(
         ),
         .executableTarget(
             name: "JJWWMaterialLabSnapshot",
-            dependencies: ["JJWWMaterials", "JJWWMaterialLab"]
+            dependencies: ["JJWWMaterials", "JJWWMaterialLab", "JJWWTypography"]
+        ),
+        .executableTarget(
+            name: "JJWWTypographySpecimens",
+            dependencies: ["JJWWMaterials", "JJWWTypography"]
         ),
         .testTarget(
             name: "JJWWReaderCoreTests",
@@ -53,8 +63,12 @@ let package = Package(
             dependencies: ["JJWWMaterials"]
         ),
         .testTarget(
+            name: "JJWWTypographyTests",
+            dependencies: ["JJWWTypography"]
+        ),
+        .testTarget(
             name: "JJWWMaterialLabTests",
-            dependencies: ["JJWWMaterials", "JJWWMaterialLab"]
+            dependencies: ["JJWWMaterials", "JJWWMaterialLab", "JJWWTypography"]
         )
     ]
 )
