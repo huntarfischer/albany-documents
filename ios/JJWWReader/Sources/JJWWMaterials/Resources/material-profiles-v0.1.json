@@ -24,7 +24,7 @@
       "grain": {"amount": 0.18, "scale": 0.78, "resolution": 192},
       "fibers": {"density": 0.42, "minLength": 0.012, "maxLength": 0.065, "opacity": 0.12, "width": 0.48},
       "flecks": {"density": 0.18, "minRadius": 0.0008, "maxRadius": 0.0032, "opacity": 0.13},
-      "foxing": {"amount": 0.055, "minRadius": 0.012, "maxRadius": 0.045, "count": 4},
+      "foxing": {"amount": 0.0, "minRadius": 0.012, "maxRadius": 0.045, "count": 0},
       "edgeVariation": {"amount": 0.12, "width": 0.065},
       "clothWeave": {"enabled": false, "verticalDensity": 0.0, "horizontalDensity": 0.0, "opacity": 0.0, "width": 0.0},
       "scanOverlay": {"assetName": null, "opacity": 0.0, "scale": 1.0, "offsetX": 0.0, "offsetY": 0.0}
@@ -38,7 +38,7 @@
       "grain": {"amount": 0.15, "scale": 0.84, "resolution": 192},
       "fibers": {"density": 0.34, "minLength": 0.012, "maxLength": 0.058, "opacity": 0.10, "width": 0.46},
       "flecks": {"density": 0.13, "minRadius": 0.0008, "maxRadius": 0.0030, "opacity": 0.10},
-      "foxing": {"amount": 0.04, "minRadius": 0.012, "maxRadius": 0.038, "count": 3},
+      "foxing": {"amount": 0.0, "minRadius": 0.012, "maxRadius": 0.038, "count": 0},
       "edgeVariation": {"amount": 0.095, "width": 0.055},
       "clothWeave": {"enabled": false, "verticalDensity": 0.0, "horizontalDensity": 0.0, "opacity": 0.0, "width": 0.0},
       "scanOverlay": {"assetName": null, "opacity": 0.0, "scale": 1.0, "offsetX": 0.0, "offsetY": 0.0}
@@ -52,7 +52,7 @@
       "grain": {"amount": 0.14, "scale": 0.90, "resolution": 192},
       "fibers": {"density": 0.27, "minLength": 0.015, "maxLength": 0.075, "opacity": 0.09, "width": 0.50},
       "flecks": {"density": 0.10, "minRadius": 0.001, "maxRadius": 0.0035, "opacity": 0.09},
-      "foxing": {"amount": 0.07, "minRadius": 0.014, "maxRadius": 0.052, "count": 5},
+      "foxing": {"amount": 0.0, "minRadius": 0.014, "maxRadius": 0.052, "count": 0},
       "edgeVariation": {"amount": 0.10, "width": 0.055},
       "clothWeave": {"enabled": false, "verticalDensity": 0.0, "horizontalDensity": 0.0, "opacity": 0.0, "width": 0.0},
       "scanOverlay": {"assetName": null, "opacity": 0.0, "scale": 1.0, "offsetX": 0.0, "offsetY": 0.0}
@@ -66,7 +66,7 @@
       "grain": {"amount": 0.11, "scale": 0.96, "resolution": 192},
       "fibers": {"density": 0.20, "minLength": 0.015, "maxLength": 0.060, "opacity": 0.07, "width": 0.45},
       "flecks": {"density": 0.07, "minRadius": 0.0008, "maxRadius": 0.0028, "opacity": 0.07},
-      "foxing": {"amount": 0.035, "minRadius": 0.014, "maxRadius": 0.042, "count": 2},
+      "foxing": {"amount": 0.0, "minRadius": 0.014, "maxRadius": 0.042, "count": 0},
       "edgeVariation": {"amount": 0.07, "width": 0.05},
       "clothWeave": {"enabled": false, "verticalDensity": 0.0, "horizontalDensity": 0.0, "opacity": 0.0, "width": 0.0},
       "scanOverlay": {"assetName": null, "opacity": 0.0, "scale": 1.0, "offsetX": 0.0, "offsetY": 0.0}
@@ -80,7 +80,7 @@
       "grain": {"amount": 0.075, "scale": 1.0, "resolution": 192},
       "fibers": {"density": 0.11, "minLength": 0.018, "maxLength": 0.070, "opacity": 0.055, "width": 0.42},
       "flecks": {"density": 0.025, "minRadius": 0.0008, "maxRadius": 0.0024, "opacity": 0.05},
-      "foxing": {"amount": 0.018, "minRadius": 0.014, "maxRadius": 0.038, "count": 1},
+      "foxing": {"amount": 0.0, "minRadius": 0.014, "maxRadius": 0.038, "count": 0},
       "edgeVariation": {"amount": 0.045, "width": 0.045},
       "clothWeave": {"enabled": false, "verticalDensity": 0.0, "horizontalDensity": 0.0, "opacity": 0.0, "width": 0.0},
       "scanOverlay": {"assetName": null, "opacity": 0.0, "scale": 1.0, "offsetX": 0.0, "offsetY": 0.0}
