@@ -11,23 +11,12 @@ import AppKit
 /// The title is active cover identity. The couple is intentionally available
 /// to the book shell without being inserted into ordinary reading surfaces.
 public enum JJWWBookIdentityAssets {
-    public static var titleArtData: Data? {
-        decodedResource(named: "jjww-title-art")
+    public static var titleArtURL: URL? {
+        Bundle.module.url(forResource: "jjww-title-art", withExtension: "png")
     }
 
-    public static var coupleCutoutData: Data? {
-        decodedResource(named: "jjww-couple-cutout")
-    }
-
-    private static func decodedResource(named name: String) -> Data? {
-        guard let url = Bundle.module.url(forResource: name, withExtension: "b64"),
-              let encoded = try? String(contentsOf: url, encoding: .utf8) else {
-            return nil
-        }
-
-        return Data(
-            base64Encoded: encoded.trimmingCharacters(in: .whitespacesAndNewlines)
-        )
+    public static var coupleCutoutURL: URL? {
+        Bundle.module.url(forResource: "jjww-couple-cutout", withExtension: "png")
     }
 }
 
@@ -41,27 +30,29 @@ public struct JJWWTitleArt: View {
 
     @ViewBuilder
     private var artwork: some View {
-        #if canImport(UIKit)
-        if let data = JJWWBookIdentityAssets.titleArtData,
-           let image = UIImage(data: data) {
-            Image(uiImage: image)
-                .resizable()
-                .scaledToFit()
+        if let url = JJWWBookIdentityAssets.titleArtURL {
+            #if canImport(UIKit)
+            if let image = UIImage(contentsOfFile: url.path) {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+            } else {
+                fallback
+            }
+            #elseif canImport(AppKit)
+            if let image = NSImage(contentsOf: url) {
+                Image(nsImage: image)
+                    .resizable()
+                    .scaledToFit()
+            } else {
+                fallback
+            }
+            #else
+            fallback
+            #endif
         } else {
             fallback
         }
-        #elseif canImport(AppKit)
-        if let data = JJWWBookIdentityAssets.titleArtData,
-           let image = NSImage(data: data) {
-            Image(nsImage: image)
-                .resizable()
-                .scaledToFit()
-        } else {
-            fallback
-        }
-        #else
-        fallback
-        #endif
     }
 
     private var fallback: some View {
@@ -82,26 +73,28 @@ public struct JJWWCoupleCutout: View {
 
     @ViewBuilder
     private var artwork: some View {
-        #if canImport(UIKit)
-        if let data = JJWWBookIdentityAssets.coupleCutoutData,
-           let image = UIImage(data: data) {
-            Image(uiImage: image)
-                .resizable()
-                .scaledToFit()
+        if let url = JJWWBookIdentityAssets.coupleCutoutURL {
+            #if canImport(UIKit)
+            if let image = UIImage(contentsOfFile: url.path) {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+            } else {
+                Color.clear
+            }
+            #elseif canImport(AppKit)
+            if let image = NSImage(contentsOf: url) {
+                Image(nsImage: image)
+                    .resizable()
+                    .scaledToFit()
+            } else {
+                Color.clear
+            }
+            #else
+            Color.clear
+            #endif
         } else {
             Color.clear
         }
-        #elseif canImport(AppKit)
-        if let data = JJWWBookIdentityAssets.coupleCutoutData,
-           let image = NSImage(data: data) {
-            Image(nsImage: image)
-                .resizable()
-                .scaledToFit()
-        } else {
-            Color.clear
-        }
-        #else
-        Color.clear
-        #endif
     }
 }
