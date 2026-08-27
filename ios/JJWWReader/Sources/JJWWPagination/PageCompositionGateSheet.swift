@@ -130,7 +130,7 @@ public struct ComposedPageLeafView: View {
             MaterialSurfaceView(recipe: recipe) {
                 VStack(alignment: .leading, spacing: 0) {
                     ForEach(page.fragments) { fragment in
-                        fragmentView(fragment, composition: composition, seed: seed.rawValue)
+                        fragmentView(fragment, composition: composition, seed: seed)
                         if shouldDrawRule(after: fragment, composition: composition) {
                             pageRule(composition)
                         }
