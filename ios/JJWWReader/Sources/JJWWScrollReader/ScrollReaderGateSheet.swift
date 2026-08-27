@@ -6,18 +6,21 @@ public struct ScrollReaderGateSheet: View {
     public let edition: Edition
     public let materialStore: MaterialProfileStore
 
+    private let phoneWidth: CGFloat = 390
+    private let phoneHeight: CGFloat = 844
+
     public init(edition: Edition, materialStore: MaterialProfileStore) {
         self.edition = edition
         self.materialStore = materialStore
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 18) {
+        VStack(alignment: .leading, spacing: 24) {
             HStack(alignment: .bottom) {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("JJWW · STAGE 4")
                         .font(.system(size: 34, weight: .black, design: .serif))
-                    Text("THE SCROLL READER · five-section contact sheet")
+                    Text("THE SCROLL READER · portrait iPhone review gate")
                         .font(.system(size: 12, weight: .black, design: .monospaced))
                         .tracking(1.2)
                         .opacity(0.58)
@@ -37,87 +40,87 @@ public struct ScrollReaderGateSheet: View {
             .foregroundStyle(.white)
 
             let units = edition.orderedReadingUnits
-            VStack(spacing: 18) {
-                gateRow(Array(units.prefix(2)))
-                gateRow(Array(units.dropFirst(2).prefix(2)))
-                gateRow(Array(units.dropFirst(4).prefix(2)))
+            VStack(alignment: .leading, spacing: 28) {
+                phoneRow(Array(units.prefix(4)))
+                phoneRow(Array(units.dropFirst(4).prefix(4)))
             }
 
             HStack {
-                Text("FULL MATERIAL · STANDARD TYPE")
+                Text("FULL MATERIAL · STANDARD TYPE · 390 × 844 PT VIEWPORT")
                 Spacer()
                 Text("same Edition / ReadingUnit model · no source-specific reader views")
             }
             .font(.system(size: 10, weight: .semibold, design: .monospaced))
             .foregroundStyle(.white.opacity(0.52))
         }
-        .padding(28)
-        .frame(width: 1900, height: 1760, alignment: .topLeading)
+        .padding(32)
+        .frame(width: 1760, height: 1960, alignment: .topLeading)
         .background(Color(red: 0.075, green: 0.067, blue: 0.055))
     }
 
     @ViewBuilder
-    private func gateRow(_ units: [ReadingUnit]) -> some View {
-        HStack(spacing: 18) {
+    private func phoneRow(_ units: [ReadingUnit]) -> some View {
+        HStack(alignment: .top, spacing: 28) {
             ForEach(units) { unit in
-                gateCard(unit)
+                phonePreview(unit)
             }
-            if units.count == 1 {
-                Color.clear
+            if units.count < 4 {
+                ForEach(0..<(4 - units.count), id: \.self) { _ in
+                    Color.clear
+                        .frame(width: phoneWidth)
+                }
             }
         }
-        .frame(maxWidth: .infinity)
     }
 
-    private func gateCard(_ unit: ReadingUnit) -> some View {
-        VStack(alignment: .leading, spacing: 0) {
-            HStack {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("\(unit.sequence) · \(unit.id)")
-                        .font(.system(size: 11, weight: .black, design: .monospaced))
-                    Text("lines \(unit.canonicalAnchor.startLine)–\(unit.canonicalAnchor.endLine)")
-                        .font(.system(size: 10, design: .monospaced))
-                        .opacity(0.52)
-                }
-                Spacer()
-                Text(unit.materialProfile.id)
-                    .font(.system(size: 10, weight: .semibold, design: .monospaced))
-                    .opacity(0.56)
-            }
-            .padding(.horizontal, 14)
-            .padding(.vertical, 10)
-            .foregroundStyle(.white)
-            .background(.black.opacity(0.50))
+    private func phonePreview(_ unit: ReadingUnit) -> some View {
+        VStack(alignment: .leading, spacing: 9) {
+            ZStack(alignment: .top) {
+                RoundedRectangle(cornerRadius: 42, style: .continuous)
+                    .fill(Color.black)
 
-            ReadingUnitSurface(
-                unit: unit,
-                materialStore: materialStore,
-                materialSetting: .full,
-                textScale: .standard,
-                entryContext: .jumpIntoSection,
-                lineLimit: previewLineCount(for: unit),
-                animateOpening: false
+                ReadingUnitSurface(
+                    unit: unit,
+                    materialStore: materialStore,
+                    materialSetting: .full,
+                    textScale: .standard,
+                    entryContext: .jumpIntoSection,
+                    lineLimit: previewLineCount(for: unit),
+                    animateOpening: false
+                )
+                .frame(width: phoneWidth - 16, height: phoneHeight - 16, alignment: .top)
+                .clipped()
+                .clipShape(RoundedRectangle(cornerRadius: 35, style: .continuous))
+                .padding(8)
+            }
+            .frame(width: phoneWidth, height: phoneHeight)
+            .overlay(
+                RoundedRectangle(cornerRadius: 42, style: .continuous)
+                    .stroke(.white.opacity(0.20), lineWidth: 1)
             )
-            .frame(maxWidth: .infinity, minHeight: 430, maxHeight: 430, alignment: .top)
-            .clipped()
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text("\(unit.sequence) · \(unit.id)")
+                    .font(.system(size: 11, weight: .black, design: .monospaced))
+                Text("\(unit.materialProfile.id) · lines \(unit.canonicalAnchor.startLine)–\(unit.canonicalAnchor.endLine)")
+                    .font(.system(size: 9, design: .monospaced))
+                    .opacity(0.52)
+            }
+            .foregroundStyle(.white)
+            .frame(width: phoneWidth, alignment: .leading)
         }
-        .frame(maxWidth: .infinity)
-        .background(.black.opacity(0.18))
-        .overlay(
-            Rectangle().stroke(.white.opacity(0.14), lineWidth: 1)
-        )
     }
 
     private func previewLineCount(for unit: ReadingUnit) -> Int {
         switch unit.kind {
-        case .cover: return 5
+        case .cover: return 10
         case .section:
             switch unit.sourcePresentation?.sourceKind {
-            case .periodical: return 12
-            case .confessionPamphlet: return 11
-            case .trialPamphlet: return 13
-            case .literaryArtifact: return 16
-            case nil: return 10
+            case .periodical: return 24
+            case .confessionPamphlet: return 24
+            case .trialPamphlet: return 28
+            case .literaryArtifact: return 32
+            case nil: return 22
             }
         }
     }
