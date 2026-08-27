@@ -5,7 +5,7 @@ import JJWWScrollReader
 import JJWWPagination
 import JJWWPagesReader
 
-/// Stage 7.5 reviews only production renderers. The two Scroll phones are crops
+/// Stage 7.5a reviews only production renderers. The two Scroll phones are crops
 /// of the live periodical stack, not hand-built mockups; the Farewell phones are
 /// real paginated leaves from the Pages reader.
 public struct Stage75GateSheet: View {
@@ -27,9 +27,9 @@ public struct Stage75GateSheet: View {
         VStack(alignment: .leading, spacing: 18) {
             HStack(alignment: .bottom) {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("JJWW · STAGE 7.5")
+                    Text("JJWW · STAGE 7.5A")
                         .font(.system(size: 32, weight: .black, design: .serif))
-                    Text("EDITORIAL INTERVALS · OVERLAPPING PAPERS · FAREWELL BROADSIDE")
+                    Text("CLOTH TABLE · OVERLAPPING PAPERS · FAREWELL BROADSIDE")
                         .font(.system(size: 11, weight: .black, design: .monospaced))
                         .tracking(1.0)
                         .opacity(0.58)
@@ -60,7 +60,7 @@ public struct Stage75GateSheet: View {
             }
 
             HStack {
-                Text("SPACE IS PUNCTUATION · ORANGE MARKS SEQUENCE BREAKS · PAPERS REMAIN DISTINCT OBJECTS")
+                Text("CLOTH IS THE TABLE · SPACE IS PUNCTUATION · PAPERS REMAIN DISTINCT OBJECTS")
                 Spacer()
                 Text("Farewell columns are serialized for phone reading; ornament remains subordinate to text")
             }
@@ -99,7 +99,7 @@ public struct Stage75GateSheet: View {
     private func articleCrop(offset: CGFloat) -> some View {
         if let argus = edition.readingUnit(id: "argus-may-8-9-1827") {
             ZStack(alignment: .top) {
-                Color(red: 0.073, green: 0.066, blue: 0.056)
+                JJWWCoverClothTexture(seed: 0x4A4A5757)
                 PeriodicalStackReadingUnitSurface(
                     unit: argus,
                     materialStore: materialStore,
