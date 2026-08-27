@@ -1,0 +1,51 @@
+name: JJWW Reader Stage 6 Pages
+
+on:
+  push:
+    branches:
+      - feature/jjww-reader-stage6
+    paths:
+      - 'ios/JJWWReader/**'
+      - '.github/workflows/jjww-reader-stage6-pages.yml'
+  pull_request:
+    paths:
+      - 'ios/JJWWReader/**'
+      - '.github/workflows/jjww-reader-stage6-pages.yml'
+
+jobs:
+  pages-gate:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Stage 0 through Stage 6 tests
+        working-directory: ios/JJWWReader
+        run: swift test
+
+      - name: Re-run canonical plain-text gate
+        working-directory: ios/JJWWReader
+        run: swift run jjww-stage0-print > /tmp/jjww-stage0-print.txt
+
+      - name: Render Stage 6 Pages gate
+        working-directory: ios/JJWWReader
+        run: |
+          mkdir -p /tmp/jjww-stage6
+          swift run jjww-pages-reader-snapshot \
+            /tmp/jjww-stage6/pages-reader-stage6.png \
+            ../../jesse-james-and-the-widow-whipple-canonical-v1.1.json
+          file /tmp/jjww-stage6/pages-reader-stage6.png
+          cat /tmp/jjww-stage6/pages-reader-summary-stage6.json
+
+      - name: Verify production reader builds
+        working-directory: ios/JJWWReader
+        run: |
+          swift build -c release --target JJWWPagesReader
+          swift build -c release --target JJWWPagination
+          swift build -c release --target JJWWTypography
+
+      - name: Upload Stage 6 gate artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: jjww-stage6-pages
+          path: /tmp/jjww-stage6/**
+          if-no-files-found: error
