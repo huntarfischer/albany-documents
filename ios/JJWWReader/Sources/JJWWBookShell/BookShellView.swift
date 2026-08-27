@@ -184,10 +184,9 @@ public struct BookCoverThresholdView: View {
             VStack(spacing: 10) {
                 Spacer().frame(height: 48)
 
-                JJWWTitleArt()
+                JJWWTitleArt(color: JJWWEditorialPalette.ink)
                     .frame(maxWidth: 310)
                     .padding(.horizontal, 4)
-                    .shadow(color: .black.opacity(0.22), radius: 1, y: 0.6)
 
                 Spacer()
 
