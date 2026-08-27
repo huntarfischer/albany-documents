@@ -66,7 +66,7 @@ public struct PrintWearText: View {
 
     public var body: some View {
         let rendered = token.uppercase ? text.uppercased() : text
-        let intensity = min(0.42, max(0, profile.intensity(for: token.role)))
+        let intensity = min(0.46, max(0, profile.intensity(for: token.role)))
 
         ZStack {
             baseText(rendered)
@@ -81,8 +81,8 @@ public struct PrintWearText: View {
 
             if profile.darkDeposit > 0.001 {
                 baseText(rendered)
-                    .opacity(min(0.14, profile.darkDeposit * 0.55))
-                    .offset(x: 0.22, y: 0.16)
+                    .opacity(min(0.16, profile.darkDeposit * 0.62))
+                    .offset(x: 0.24, y: 0.16)
                     .blendMode(.multiply)
                     .accessibilityHidden(true)
             }
@@ -137,19 +137,19 @@ private struct PrintWearMask: View {
 
             var rng = PrintWearSplitMix64(seed: seed ^ 0x50_52_49_4E_54_57_52)
             let area = max(1, size.width * size.height)
-            let density = 0.00024 + intensity * 0.00055
-            let count = max(4, min(180, Int(area * density)))
+            let density = 0.00005 + intensity * 0.00120
+            let count = max(1, min(180, Int(area * density)))
 
             context.blendMode = .destinationOut
             for _ in 0..<count {
                 let x = rng.unit() * size.width
                 let y = rng.unit() * size.height
-                let elongated = rng.unit() < 0.62
-                let base = 0.45 + rng.unit() * (1.8 + 2.8 * erosion)
-                let width = elongated ? base * (1.8 + 2.2 * starvation) : base
-                let height = elongated ? base * (0.42 + 0.6 * erosion) : base
+                let elongated = rng.unit() < 0.66
+                let base = 0.65 + rng.unit() * (2.30 + 3.20 * erosion)
+                let width = elongated ? base * (2.0 + 2.5 * starvation) : base
+                let height = elongated ? base * (0.34 + 0.58 * erosion) : base
                 let rect = CGRect(x: x - width / 2, y: y - height / 2, width: width, height: height)
-                let alpha = min(0.82, 0.18 + intensity * 1.25 + rng.unit() * 0.18)
+                let alpha = min(0.92, 0.22 + intensity * 1.70 + rng.unit() * 0.20)
                 context.fill(Path(ellipseIn: rect), with: .color(.white.opacity(alpha)))
             }
         }
