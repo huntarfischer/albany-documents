@@ -1,6 +1,7 @@
 import SwiftUI
 import JJWWReaderCore
 import JJWWMaterials
+import JJWWTypography
 import JJWWScrollReader
 import JJWWPagination
 import JJWWPagesReader
@@ -60,7 +61,7 @@ public struct BookShellGateSheet: View {
                 }
 
                 phone(label: "GALLERY · DROP + PLACE") {
-                    EditorialGalleryView(store: gallery)
+                    StaticGalleryPreview(store: gallery)
                 }
             }
 
@@ -101,17 +102,10 @@ public struct BookShellGateSheet: View {
     private var boundScrollPreview: some View {
         if let unit = edition.readingUnit(id: "argus-may-8-9-1827") {
             ZStack(alignment: .topTrailing) {
-                ReadingUnitSurface(
+                SnapshotSafeScrollUnitPreview(
                     unit: unit,
-                    materialStore: materialStore,
-                    materialSetting: .full,
-                    textScale: .standard,
-                    entryContext: .jumpIntoSection,
-                    lineLimit: 14,
-                    animateOpening: false
+                    materialStore: materialStore
                 )
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                .background(JJWWEditorialPalette.ink)
 
                 StaticBindingChrome(title: unit.sourcePresentation?.displayTitle ?? unit.id, mode: .scroll)
 
@@ -147,6 +141,150 @@ public struct BookShellGateSheet: View {
         } else {
             Color.red.opacity(0.2)
         }
+    }
+}
+
+private struct SnapshotSafeScrollUnitPreview: View {
+    let unit: ReadingUnit
+    let materialStore: MaterialProfileStore
+
+    private let engine = MaterialEngine()
+
+    var body: some View {
+        if let material = materialStore.profile(id: unit.materialProfile.id),
+           let typography = TypographyCatalog.profile(id: unit.typographyProfile.id) {
+            let seed = MaterialSeed.derive(base: 1827, salt: "stage7.scroll.\(unit.id)")
+            let recipe = engine.resolve(profile: material, state: .full, seed: seed)
+            let presentations = unit.blocks.flatMap {
+                ReaderLineRoleResolver.presentations(for: $0, in: unit)
+            }
+
+            MaterialSurfaceView(recipe: recipe) {
+                VStack(alignment: .leading, spacing: 0) {
+                    ForEach(Array(presentations.prefix(11))) { presentation in
+                        line(presentation, typography: typography)
+                    }
+                }
+                .frame(width: 306, alignment: .topLeading)
+                .padding(.horizontal, 36)
+                .padding(.top, 86)
+                .padding(.bottom, 54)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                .foregroundStyle(Color.black.opacity(max(0.62, recipe.ink.density)))
+            }
+        } else {
+            Color.red.opacity(0.2)
+        }
+    }
+
+    @ViewBuilder
+    private func line(
+        _ presentation: ReaderLinePresentation,
+        typography: TypographyProfileDefinition
+    ) -> some View {
+        let text = presentation.canonicalLine.text
+        let token = typography.token(presentation.role)
+
+        if text.isEmpty {
+            Color.clear.frame(height: 7)
+        } else if token.justified {
+            JustifiedTypographicText(
+                text,
+                token: token,
+                snapshotLayoutWidth: 306
+            )
+            .frame(width: 306, alignment: .leading)
+            .padding(.bottom, 7)
+        } else {
+            TypographicText(text, token: token)
+                .frame(maxWidth: .infinity, alignment: token.centered ? .center : .leading)
+                .padding(.top, headerTop(presentation.role))
+                .padding(.bottom, headerBottom(presentation.role))
+        }
+    }
+
+    private func headerTop(_ role: TypographyRole) -> CGFloat {
+        switch role {
+        case .dateHeading: return 10
+        case .sourceHeader: return 6
+        case .sectionTitle: return 8
+        default: return 0
+        }
+    }
+
+    private func headerBottom(_ role: TypographyRole) -> CGFloat {
+        switch role {
+        case .dateHeading: return 3
+        case .sourceHeader: return 6
+        case .sectionTitle: return 12
+        default: return 6
+        }
+    }
+}
+
+private struct StaticGalleryPreview: View {
+    let store: EditorialGalleryStore
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 3) {
+                Text("EDITORIAL GALLERY")
+                    .font(.system(size: 22, weight: .black, design: .serif))
+                Text("DROP IMAGE → REVIEW → PLACE")
+                    .font(.system(size: 8, weight: .black, design: .monospaced))
+                    .tracking(0.8)
+                    .opacity(0.54)
+            }
+            .foregroundStyle(JJWWEditorialPalette.cream)
+
+            ForEach(Array(store.assets.prefix(3))) { asset in
+                HStack(spacing: 10) {
+                    EditorialAssetImage(asset: asset, contentMode: .fill)
+                        .frame(width: 116, height: 148)
+                        .clipped()
+
+                    VStack(alignment: .leading, spacing: 7) {
+                        Text(asset.descriptor.title)
+                            .font(.system(size: 14, weight: .bold, design: .serif))
+                            .lineLimit(3)
+                        Text(asset.descriptor.filename)
+                            .font(.system(size: 8, weight: .medium, design: .monospaced))
+                            .lineLimit(3)
+                            .opacity(0.56)
+                        Spacer(minLength: 0)
+                        Text(status(asset))
+                            .font(.system(size: 8, weight: .black, design: .monospaced))
+                            .tracking(0.5)
+                            .padding(.horizontal, 7)
+                            .padding(.vertical, 4)
+                            .background(asset.isAvailable ? JJWWEditorialPalette.orange : Color.black.opacity(0.08))
+                    }
+                    .foregroundStyle(JJWWEditorialPalette.ink)
+                    .padding(.vertical, 8)
+                }
+                .padding(8)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(JJWWEditorialPalette.cream)
+                .overlay(Rectangle().stroke(Color.white.opacity(0.18), lineWidth: 0.5))
+            }
+
+            Spacer(minLength: 0)
+
+            Text("NEW FILES APPEAR AUTOMATICALLY AS UNPLACED")
+                .font(.system(size: 8, weight: .black, design: .monospaced))
+                .tracking(0.6)
+                .foregroundStyle(JJWWEditorialPalette.cream.opacity(0.52))
+        }
+        .padding(14)
+        .background(JJWWEditorialPalette.ink)
+    }
+
+    private func status(_ asset: ResolvedEditorialAsset) -> String {
+        if !asset.isAvailable { return "MISSING · DROP INTO GALLERY" }
+        if let placement = asset.descriptor.placement {
+            return "L\(placement.canonicalLine) \(placement.edge.rawValue.uppercased())"
+        }
+        return asset.discoveredAutomatically ? "NEW · UNPLACED" : "UNPLACED"
     }
 }
 
