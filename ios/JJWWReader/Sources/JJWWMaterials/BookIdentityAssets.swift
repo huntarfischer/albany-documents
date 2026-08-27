@@ -21,10 +21,15 @@ public enum JJWWBookIdentityAssets {
 }
 
 public struct JJWWTitleArt: View {
-    public init() {}
+    public let color: Color
+
+    public init(color: Color = .white) {
+        self.color = color
+    }
 
     public var body: some View {
         artwork
+            .foregroundStyle(color)
             .accessibilityLabel(Text("Jesse James and the Widow Whipple"))
     }
 
@@ -34,6 +39,7 @@ public struct JJWWTitleArt: View {
             #if canImport(UIKit)
             if let image = UIImage(contentsOfFile: url.path) {
                 Image(uiImage: image)
+                    .renderingMode(.template)
                     .resizable()
                     .scaledToFit()
             } else {
@@ -42,6 +48,7 @@ public struct JJWWTitleArt: View {
             #elseif canImport(AppKit)
             if let image = NSImage(contentsOf: url) {
                 Image(nsImage: image)
+                    .renderingMode(.template)
                     .resizable()
                     .scaledToFit()
             } else {
@@ -59,7 +66,7 @@ public struct JJWWTitleArt: View {
         Text("JESSE JAMES\nAND THE\nWIDOW WHIPPLE")
             .font(.system(size: 30, weight: .black, design: .serif))
             .multilineTextAlignment(.center)
-            .foregroundStyle(.black)
+            .foregroundStyle(color)
     }
 }
 
