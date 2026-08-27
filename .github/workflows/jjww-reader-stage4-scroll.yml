@@ -1,0 +1,47 @@
+name: JJWW Reader Stage 4 Scroll
+
+on:
+  push:
+    branches:
+      - feature/jjww-reader-stage4
+    paths:
+      - 'ios/JJWWReader/**'
+      - '.github/workflows/jjww-reader-stage4-scroll.yml'
+  pull_request:
+    paths:
+      - 'ios/JJWWReader/**'
+      - '.github/workflows/jjww-reader-stage4-scroll.yml'
+
+jobs:
+  scroll-reader-gate:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Stage 0 through Stage 4 tests
+        working-directory: ios/JJWWReader
+        run: swift test
+
+      - name: Re-run canonical plain-text gate
+        working-directory: ios/JJWWReader
+        run: swift run jjww-stage0-print > /tmp/jjww-stage0-print.txt
+
+      - name: Render Stage 4 scroll reader gate
+        working-directory: ios/JJWWReader
+        run: |
+          mkdir -p /tmp/jjww-stage4
+          swift run jjww-scroll-reader-snapshot \
+            /tmp/jjww-stage4/scroll-reader-stage4.png \
+            ../../jesse-james-and-the-widow-whipple-canonical-v1.1.json
+          file /tmp/jjww-stage4/scroll-reader-stage4.png
+
+      - name: Verify production scroll reader builds
+        working-directory: ios/JJWWReader
+        run: swift build -c release --target JJWWScrollReader
+
+      - name: Upload Stage 4 gate artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: jjww-stage4-scroll-reader
+          path: /tmp/jjww-stage4/**
+          if-no-files-found: error
