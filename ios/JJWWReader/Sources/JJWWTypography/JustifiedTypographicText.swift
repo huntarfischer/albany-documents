@@ -15,19 +15,22 @@ public struct JustifiedTypographicText: View {
     private let pointScale: Double
     private let trackingDelta: Double
     private let lineSpacingMultiplier: Double
+    private let snapshotLayoutWidth: Double?
 
     public init(
         _ text: String,
         token: TypographyToken,
         pointScale: Double = 1,
         trackingDelta: Double = 0,
-        lineSpacingMultiplier: Double = 1
+        lineSpacingMultiplier: Double = 1,
+        snapshotLayoutWidth: Double? = nil
     ) {
         self.text = text
         self.token = token
         self.pointScale = pointScale
         self.trackingDelta = trackingDelta
         self.lineSpacingMultiplier = lineSpacingMultiplier
+        self.snapshotLayoutWidth = snapshotLayoutWidth
     }
 
     @ViewBuilder
@@ -41,13 +44,24 @@ public struct JustifiedTypographicText: View {
             lineSpacingMultiplier: lineSpacingMultiplier
         )
         #elseif canImport(AppKit)
-        AppKitJustifiedText(
-            text: token.uppercase ? text.uppercased() : text,
-            token: token,
-            pointScale: pointScale,
-            trackingDelta: trackingDelta,
-            lineSpacingMultiplier: lineSpacingMultiplier
-        )
+        if let snapshotLayoutWidth, snapshotLayoutWidth > 1 {
+            AppKitRasterizedJustifiedText(
+                text: token.uppercase ? text.uppercased() : text,
+                token: token,
+                pointScale: pointScale,
+                trackingDelta: trackingDelta,
+                lineSpacingMultiplier: lineSpacingMultiplier,
+                width: CGFloat(snapshotLayoutWidth)
+            )
+        } else {
+            AppKitJustifiedText(
+                text: token.uppercase ? text.uppercased() : text,
+                token: token,
+                pointScale: pointScale,
+                trackingDelta: trackingDelta,
+                lineSpacingMultiplier: lineSpacingMultiplier
+            )
+        }
         #else
         Text(token.uppercase ? text.uppercased() : text)
             .font(token.font)
@@ -136,6 +150,99 @@ private struct UIKitJustifiedText: UIViewRepresentable {
 #endif
 
 #if canImport(AppKit)
+/// The live macOS development surface may host NSTextView directly. The CI
+/// image gate cannot reliably capture NSViewRepresentable children, so page
+/// snapshots can opt into this TextKit-to-bitmap path. It uses the same
+/// attributed paragraph style, hyphenation, tracking, and font as the live
+/// justified view, but hands SwiftUI a plain raster image that ImageRenderer
+/// can capture without prohibited-view placeholders.
+private struct AppKitRasterizedJustifiedText: View {
+    let raster: AppKitJustifiedRaster
+
+    init(
+        text: String,
+        token: TypographyToken,
+        pointScale: Double,
+        trackingDelta: Double,
+        lineSpacingMultiplier: Double,
+        width: CGFloat
+    ) {
+        raster = AppKitJustifiedRasterizer.render(
+            text: text,
+            token: token,
+            pointScale: pointScale,
+            trackingDelta: trackingDelta,
+            lineSpacingMultiplier: lineSpacingMultiplier,
+            width: width
+        )
+    }
+
+    var body: some View {
+        Image(nsImage: raster.image)
+            .resizable()
+            .interpolation(.high)
+            .frame(width: raster.size.width, height: raster.size.height)
+            .fixedSize()
+            .accessibilityHidden(true)
+    }
+}
+
+private struct AppKitJustifiedRaster {
+    let image: NSImage
+    let size: CGSize
+}
+
+private enum AppKitJustifiedRasterizer {
+    @MainActor
+    static func render(
+        text: String,
+        token: TypographyToken,
+        pointScale: Double,
+        trackingDelta: Double,
+        lineSpacingMultiplier: Double,
+        width: CGFloat
+    ) -> AppKitJustifiedRaster {
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.alignment = .justified
+        paragraph.hyphenationFactor = Float(token.hyphenationFactor)
+        paragraph.lineSpacing = CGFloat(token.lineSpacing * lineSpacingMultiplier)
+
+        let attributed = NSAttributedString(
+            string: text,
+            attributes: [
+                .font: appKitPlatformFont(token: token, pointScale: pointScale),
+                .foregroundColor: NSColor.labelColor.withAlphaComponent(0.84),
+                .kern: CGFloat(token.tracking + trackingDelta),
+                .paragraphStyle: paragraph
+            ]
+        )
+
+        let storage = NSTextStorage(attributedString: attributed)
+        let manager = NSLayoutManager()
+        manager.usesFontLeading = true
+        let container = NSTextContainer(
+            size: CGSize(width: max(1, width), height: CGFloat.greatestFiniteMagnitude)
+        )
+        container.lineFragmentPadding = 0
+        storage.addLayoutManager(manager)
+        manager.addTextContainer(container)
+        manager.ensureLayout(for: container)
+
+        let glyphRange = manager.glyphRange(for: container)
+        let used = manager.usedRect(for: container)
+        let height = max(1, ceil(used.maxY))
+        let size = CGSize(width: max(1, width), height: height)
+        let image = NSImage(size: size)
+
+        image.lockFocusFlipped(true)
+        manager.drawBackground(forGlyphRange: glyphRange, at: .zero)
+        manager.drawGlyphs(forGlyphRange: glyphRange, at: .zero)
+        image.unlockFocus()
+
+        return AppKitJustifiedRaster(image: image, size: size)
+    }
+}
+
 private struct AppKitJustifiedText: NSViewRepresentable {
     let text: String
     let token: TypographyToken
@@ -185,34 +292,35 @@ private struct AppKitJustifiedText: NSViewRepresentable {
         return NSAttributedString(
             string: text,
             attributes: [
-                .font: platformFont,
+                .font: appKitPlatformFont(token: token, pointScale: pointScale),
                 .foregroundColor: NSColor.labelColor.withAlphaComponent(0.84),
                 .kern: CGFloat(token.tracking + trackingDelta),
                 .paragraphStyle: paragraph
             ]
         )
     }
+}
 
-    private var platformFont: NSFont {
-        let size = basePointSize(for: token.textStyle) * CGFloat(max(0.75, pointScale))
-        if token.design == .serif {
-            let name: String
-            switch token.weight {
-            case .bold, .black, .semibold: name = "Times New Roman Bold"
-            default: name = "Times New Roman"
-            }
-            return NSFont(name: name, size: size) ?? NSFont.systemFont(ofSize: size)
-        }
-        let weight: NSFont.Weight
+@MainActor
+private func appKitPlatformFont(token: TypographyToken, pointScale: Double) -> NSFont {
+    let size = basePointSize(for: token.textStyle) * CGFloat(max(0.75, pointScale))
+    if token.design == .serif {
+        let name: String
         switch token.weight {
-        case .regular: weight = .regular
-        case .medium: weight = .medium
-        case .semibold: weight = .semibold
-        case .bold: weight = .bold
-        case .black: weight = .black
+        case .bold, .black, .semibold: name = "Times New Roman Bold"
+        default: name = "Times New Roman"
         }
-        return NSFont.systemFont(ofSize: size, weight: weight)
+        return NSFont(name: name, size: size) ?? NSFont.systemFont(ofSize: size)
     }
+    let weight: NSFont.Weight
+    switch token.weight {
+    case .regular: weight = .regular
+    case .medium: weight = .medium
+    case .semibold: weight = .semibold
+    case .bold: weight = .bold
+    case .black: weight = .black
+    }
+    return NSFont.systemFont(ofSize: size, weight: weight)
 }
 #endif
 
