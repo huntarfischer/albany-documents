@@ -7,19 +7,20 @@ import JJWWPagination
 #if os(macOS)
 import AppKit
 
-private struct Stage5Summary: Codable {
+private struct Stage55Summary: Codable {
     struct UnitSummary: Codable {
         let readingUnitID: String
         let pageCount: Int
         let firstPage: Int?
         let lastPage: Int?
+        let openingKind: String?
+        let compositionProfileID: String?
     }
 
     let status: String
     let totalPages: Int
     let geometry: PageGeometry
     let units: [UnitSummary]
-    let transitionPairs: [[Int]]
 }
 
 @main
@@ -27,7 +28,7 @@ struct PaginationSnapshotCommand {
     @MainActor
     static func main() throws {
         let arguments = Array(CommandLine.arguments.dropFirst())
-        let output = arguments.first ?? "pagination-transitions-stage5.png"
+        let output = arguments.first ?? "page-composition-stage5-5.png"
         let canonicalPath = arguments.dropFirst().first
             ?? "../../jesse-james-and-the-widow-whipple-canonical-v1.1.json"
 
@@ -36,48 +37,58 @@ struct PaginationSnapshotCommand {
         let engine = PaginationEngine()
         let configuration = PaginationConfiguration(
             geometry: .phonePortrait,
-            textScale: .standard
+            textScale: .standard,
+            pageCompositionProfileVersion: "page-composition-stage5.5-v0.1"
         )
         let result = try engine.paginate(edition: edition, configuration: configuration)
 
         try render(
-            PaginationGateSheet(edition: edition, result: result, materialStore: materialStore),
+            PageCompositionGateSheet(edition: edition, result: result, materialStore: materialStore),
             to: output
+        )
+
+        let outputURL = URL(fileURLWithPath: output)
+        let transitionsURL = outputURL
+            .deletingLastPathComponent()
+            .appendingPathComponent("pagination-transitions-stage5-5.png")
+        try render(
+            PaginationGateSheet(edition: edition, result: result, materialStore: materialStore),
+            to: transitionsURL.path
         )
 
         let units = edition.orderedReadingUnits.filter { $0.kind != .cover }
         let unitSummaries = units.map { unit in
             let pages = result.pages(representing: unit.id)
-            return Stage5Summary.UnitSummary(
+            return Stage55Summary.UnitSummary(
                 readingUnitID: unit.id,
                 pageCount: pages.count,
                 firstPage: pages.first?.pageNumber,
-                lastPage: pages.last?.pageNumber
+                lastPage: pages.last?.pageNumber,
+                openingKind: pages.first?.compositionKind.rawValue,
+                compositionProfileID: pages.first?.compositionProfileID
             )
         }
-        var transitions: [[Int]] = []
-        if units.count >= 2 {
-            for index in 0..<(units.count - 1) {
-                if let left = result.pages(representing: units[index].id).last?.pageNumber,
-                   let right = result.pages(representing: units[index + 1].id).first?.pageNumber {
-                    transitions.append([left, right])
-                }
-            }
-        }
-        let summary = Stage5Summary(
-            status: "PASS_STATIC_PAGINATION_GATE",
+        let summary = Stage55Summary(
+            status: "PASS_PAGE_COMPOSITION_GATE",
             totalPages: result.pages.count,
             geometry: configuration.geometry,
-            units: unitSummaries,
-            transitionPairs: transitions
+            units: unitSummaries
         )
-        let data = try JSONEncoder.pretty.encode(summary)
-        let outputURL = URL(fileURLWithPath: output)
-        let summaryURL = outputURL.deletingLastPathComponent().appendingPathComponent("pagination-summary-stage5.json")
-        try data.write(to: summaryURL)
+        let summaryData = try JSONEncoder.pretty.encode(summary)
+        let summaryURL = outputURL
+            .deletingLastPathComponent()
+            .appendingPathComponent("page-composition-summary-stage5-5.json")
+        try summaryData.write(to: summaryURL)
+
+        let profilesURL = outputURL
+            .deletingLastPathComponent()
+            .appendingPathComponent("page-composition-profiles-stage5-5.json")
+        try PageCompositionProfileCodec.encodeCatalog().write(to: profilesURL)
 
         print(output)
+        print(transitionsURL.path)
         print(summaryURL.path)
+        print(profilesURL.path)
         print("pages=\(result.pages.count)")
     }
 
