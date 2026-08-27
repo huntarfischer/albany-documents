@@ -16,10 +16,14 @@ enum JJWWMaterialLabSnapshot {
             let exportDirectory = exportDirectoryURL(from: arguments)
             let store = try MaterialProfileStore.bundled()
 
-            let lab = MaterialLabView(profiles: store.profiles)
+            // ImageRenderer does not reliably capture AppKit-backed interactive controls
+            // such as Slider/Picker/TextField. The live DEBUG MaterialLabView remains the
+            // interactive tool. CI renders this explicit gate sheet so the visual artifact
+            // honestly shows the material preview plus the complete control/data contract.
+            let gate = MaterialLabGateSheet(profiles: store.profiles)
                 .frame(width: 1600, height: 1100)
 
-            let renderer = ImageRenderer(content: lab)
+            let renderer = ImageRenderer(content: gate)
             renderer.proposedSize = ProposedViewSize(width: 1600, height: 1100)
             renderer.scale = 1
 
@@ -47,7 +51,7 @@ enum JJWWMaterialLabSnapshot {
                 }
             }
 
-            print("Wrote Stage 2 Material Lab snapshot to \(outputURL.path)")
+            print("Wrote Stage 2 Material Lab CI gate sheet to \(outputURL.path)")
         } catch {
             fputs("Material Lab snapshot failed: \(error)\n", stderr)
             exit(EXIT_FAILURE)
