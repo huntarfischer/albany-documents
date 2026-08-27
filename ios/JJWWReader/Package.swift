@@ -11,11 +11,13 @@ let package = Package(
         .library(name: "JJWWReaderCore", targets: ["JJWWReaderCore"]),
         .library(name: "JJWWMaterials", targets: ["JJWWMaterials"]),
         .library(name: "JJWWTypography", targets: ["JJWWTypography"]),
+        .library(name: "JJWWScrollReader", targets: ["JJWWScrollReader"]),
         .library(name: "JJWWMaterialLab", targets: ["JJWWMaterialLab"]),
         .executable(name: "jjww-stage0-print", targets: ["JJWWStage0Print"]),
         .executable(name: "jjww-material-specimens", targets: ["JJWWMaterialSpecimens"]),
         .executable(name: "jjww-material-lab-snapshot", targets: ["JJWWMaterialLabSnapshot"]),
-        .executable(name: "jjww-typography-specimens", targets: ["JJWWTypographySpecimens"])
+        .executable(name: "jjww-typography-specimens", targets: ["JJWWTypographySpecimens"]),
+        .executable(name: "jjww-scroll-reader-snapshot", targets: ["JJWWScrollReaderSnapshot"])
     ],
     targets: [
         .target(
@@ -33,6 +35,10 @@ let package = Package(
         .target(
             name: "JJWWTypography",
             dependencies: ["JJWWReaderCore", "JJWWMaterials"]
+        ),
+        .target(
+            name: "JJWWScrollReader",
+            dependencies: ["JJWWReaderCore", "JJWWMaterials", "JJWWTypography"]
         ),
         .target(
             name: "JJWWMaterialLab",
@@ -54,6 +60,10 @@ let package = Package(
             name: "JJWWTypographySpecimens",
             dependencies: ["JJWWMaterials", "JJWWTypography"]
         ),
+        .executableTarget(
+            name: "JJWWScrollReaderSnapshot",
+            dependencies: ["JJWWReaderCore", "JJWWMaterials", "JJWWTypography", "JJWWScrollReader"]
+        ),
         .testTarget(
             name: "JJWWReaderCoreTests",
             dependencies: ["JJWWReaderCore"]
@@ -65,6 +75,10 @@ let package = Package(
         .testTarget(
             name: "JJWWTypographyTests",
             dependencies: ["JJWWTypography"]
+        ),
+        .testTarget(
+            name: "JJWWScrollReaderTests",
+            dependencies: ["JJWWReaderCore", "JJWWMaterials", "JJWWTypography", "JJWWScrollReader"]
         ),
         .testTarget(
             name: "JJWWMaterialLabTests",
