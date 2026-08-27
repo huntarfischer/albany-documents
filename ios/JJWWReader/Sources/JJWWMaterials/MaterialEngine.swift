@@ -51,6 +51,11 @@ public struct ResolvedScanOverlay: Equatable, Sendable {
     public let offsetY: Double
 }
 
+public struct ResolvedInkRecipe: Equatable, Sendable {
+    public let density: Double
+    public let bleed: Double
+}
+
 public struct MaterialResolvedRecipe: Equatable, Sendable {
     public let profileID: String
     public let profileVersion: String
@@ -65,6 +70,7 @@ public struct MaterialResolvedRecipe: Equatable, Sendable {
     public let edge: EdgeRecipe
     public let clothThreads: [MaterialThread]
     public let scanOverlay: ResolvedScanOverlay
+    public let ink: ResolvedInkRecipe
 
     public var decorativeMarkCount: Int {
         mottles.count + fibers.count + flecks.count + foxing.count + clothThreads.count
@@ -191,7 +197,7 @@ public struct MaterialEngine: Sendable {
             profileVersion: profile.version,
             state: state,
             seed: seed,
-            baseTone: profile.baseTone,
+            baseTone: adjustedBaseTone(profile.baseTone, tuning: profile.effectivePaperTuning),
             mottles: mottles,
             grain: GrainRecipe(
                 enabled: tuning.grainEnabled && profile.grain.amount > 0,
@@ -214,7 +220,25 @@ public struct MaterialEngine: Sendable {
                 scale: profile.scanOverlay.scale,
                 offsetX: profile.scanOverlay.offsetX,
                 offsetY: profile.scanOverlay.offsetY
+            ),
+            ink: ResolvedInkRecipe(
+                density: clamped(profile.effectiveInk.density),
+                bleed: max(0, profile.effectiveInk.bleed)
             )
+        )
+    }
+
+    private func adjustedBaseTone(
+        _ base: MaterialRGBA,
+        tuning: PaperTuningProfile
+    ) -> MaterialRGBA {
+        let warmth = max(-1, min(1, tuning.warmth))
+        let brightness = max(-1, min(1, tuning.brightness))
+        return MaterialRGBA(
+            red: clamped(base.red + brightness + warmth * 0.085),
+            green: clamped(base.green + brightness + warmth * 0.025),
+            blue: clamped(base.blue + brightness - warmth * 0.075),
+            alpha: base.alpha
         )
     }
 

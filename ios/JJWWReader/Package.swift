@@ -10,8 +10,10 @@ let package = Package(
     products: [
         .library(name: "JJWWReaderCore", targets: ["JJWWReaderCore"]),
         .library(name: "JJWWMaterials", targets: ["JJWWMaterials"]),
+        .library(name: "JJWWMaterialLab", targets: ["JJWWMaterialLab"]),
         .executable(name: "jjww-stage0-print", targets: ["JJWWStage0Print"]),
-        .executable(name: "jjww-material-specimens", targets: ["JJWWMaterialSpecimens"])
+        .executable(name: "jjww-material-specimens", targets: ["JJWWMaterialSpecimens"]),
+        .executable(name: "jjww-material-lab-snapshot", targets: ["JJWWMaterialLabSnapshot"])
     ],
     targets: [
         .target(
@@ -26,6 +28,10 @@ let package = Package(
                 .process("Resources")
             ]
         ),
+        .target(
+            name: "JJWWMaterialLab",
+            dependencies: ["JJWWMaterials"]
+        ),
         .executableTarget(
             name: "JJWWStage0Print",
             dependencies: ["JJWWReaderCore"]
@@ -34,6 +40,10 @@ let package = Package(
             name: "JJWWMaterialSpecimens",
             dependencies: ["JJWWMaterials"]
         ),
+        .executableTarget(
+            name: "JJWWMaterialLabSnapshot",
+            dependencies: ["JJWWMaterials", "JJWWMaterialLab"]
+        ),
         .testTarget(
             name: "JJWWReaderCoreTests",
             dependencies: ["JJWWReaderCore"]
@@ -41,6 +51,10 @@ let package = Package(
         .testTarget(
             name: "JJWWMaterialsTests",
             dependencies: ["JJWWMaterials"]
+        ),
+        .testTarget(
+            name: "JJWWMaterialLabTests",
+            dependencies: ["JJWWMaterials", "JJWWMaterialLab"]
         )
     ]
 )

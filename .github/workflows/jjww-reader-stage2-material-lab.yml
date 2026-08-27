@@ -1,0 +1,48 @@
+name: JJWW Reader Stage 2 Material Lab
+
+on:
+  push:
+    branches:
+      - feature/jjww-reader-stage2
+    paths:
+      - 'ios/JJWWReader/**'
+      - '.github/workflows/jjww-reader-stage2-material-lab.yml'
+  pull_request:
+    paths:
+      - 'ios/JJWWReader/**'
+      - '.github/workflows/jjww-reader-stage2-material-lab.yml'
+
+jobs:
+  material-lab-gate:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Stage 0 through Stage 2 tests
+        working-directory: ios/JJWWReader
+        run: swift test
+
+      - name: Re-run Stage 0 canonical plain-text gate
+        working-directory: ios/JJWWReader
+        run: swift run jjww-stage0-print > /tmp/jjww-stage0-print.txt
+
+      - name: Render Stage 2 Material Lab and export baseline profiles
+        working-directory: ios/JJWWReader
+        run: |
+          mkdir -p /tmp/jjww-stage2 /tmp/jjww-stage2/profiles
+          swift run jjww-material-lab-snapshot \
+            --output /tmp/jjww-stage2/material-lab-stage2.png \
+            --export-dir /tmp/jjww-stage2/profiles
+          file /tmp/jjww-stage2/material-lab-stage2.png
+          test "$(find /tmp/jjww-stage2/profiles -name '*.json' | wc -l | tr -d ' ')" = "6"
+
+      - name: Verify production material target builds without Material Lab
+        working-directory: ios/JJWWReader
+        run: swift build -c release --target JJWWMaterials
+
+      - name: Upload Material Lab gate artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: jjww-stage2-material-lab
+          path: /tmp/jjww-stage2/**
+          if-no-files-found: error

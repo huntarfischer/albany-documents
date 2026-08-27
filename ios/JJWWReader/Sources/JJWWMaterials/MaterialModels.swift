@@ -20,6 +20,30 @@ public struct MaterialRGBA: Codable, Equatable, Sendable {
     }
 }
 
+public struct PaperTuningProfile: Codable, Equatable, Sendable {
+    public var warmth: Double
+    public var brightness: Double
+
+    public init(warmth: Double = 0, brightness: Double = 0) {
+        self.warmth = warmth
+        self.brightness = brightness
+    }
+
+    public static let neutral = PaperTuningProfile()
+}
+
+public struct InkProfile: Codable, Equatable, Sendable {
+    public var density: Double
+    public var bleed: Double
+
+    public init(density: Double = 0.88, bleed: Double = 0) {
+        self.density = density
+        self.bleed = bleed
+    }
+
+    public static let standard = InkProfile()
+}
+
 public struct MottlingProfile: Codable, Equatable, Sendable {
     public var amount: Double
     public var scale: Double
@@ -102,6 +126,16 @@ public struct MaterialProfileDefinition: Codable, Equatable, Sendable, Identifia
     public var edgeVariation: EdgeVariationProfile
     public var clothWeave: ClothWeaveProfile
     public var scanOverlay: ScanOverlayProfile
+    public var paperTuning: PaperTuningProfile?
+    public var ink: InkProfile?
+
+    public var effectivePaperTuning: PaperTuningProfile {
+        paperTuning ?? .neutral
+    }
+
+    public var effectiveInk: InkProfile {
+        ink ?? .standard
+    }
 
     public init(
         id: String,
@@ -115,7 +149,9 @@ public struct MaterialProfileDefinition: Codable, Equatable, Sendable, Identifia
         foxing: FoxingProfile,
         edgeVariation: EdgeVariationProfile,
         clothWeave: ClothWeaveProfile,
-        scanOverlay: ScanOverlayProfile = .init()
+        scanOverlay: ScanOverlayProfile = .init(),
+        paperTuning: PaperTuningProfile? = nil,
+        ink: InkProfile? = nil
     ) {
         self.id = id
         self.version = version
@@ -129,6 +165,8 @@ public struct MaterialProfileDefinition: Codable, Equatable, Sendable, Identifia
         self.edgeVariation = edgeVariation
         self.clothWeave = clothWeave
         self.scanOverlay = scanOverlay
+        self.paperTuning = paperTuning
+        self.ink = ink
     }
 }
 
