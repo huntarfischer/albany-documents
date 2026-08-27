@@ -9,7 +9,8 @@ import AppKit
 /// The actual orange book cloth supplied from the current JJWW cover.
 ///
 /// This is shared material, not decorative chrome: Scroll interval reveals and
-/// any later binding/overview surfaces can all expose the same physical cloth.
+/// later binding/overview surfaces expose the same physical cloth. The bundled
+/// crop is tiled at its native visual scale so the weave survives shallow reveals.
 public struct JJWWCoverClothTexture: View {
     public let seed: UInt64
 
@@ -22,7 +23,7 @@ public struct JJWWCoverClothTexture: View {
             ZStack {
                 fallback
                 texture
-                    .scaleEffect(1.08)
+                    .padding(-24)
                     .offset(x: xDrift, y: yDrift)
             }
             .frame(width: geometry.size.width, height: geometry.size.height)
@@ -40,16 +41,14 @@ public struct JJWWCoverClothTexture: View {
             #if canImport(UIKit)
             if let image = UIImage(contentsOfFile: url.path) {
                 Image(uiImage: image)
-                    .resizable()
-                    .scaledToFill()
+                    .resizable(resizingMode: .tile)
             } else {
                 fallback
             }
             #elseif canImport(AppKit)
             if let image = NSImage(contentsOf: url) {
                 Image(nsImage: image)
-                    .resizable()
-                    .scaledToFill()
+                    .resizable(resizingMode: .tile)
             } else {
                 fallback
             }

@@ -171,7 +171,7 @@ public struct BookCoverThresholdView: View {
 
     private var fallbackCover: some View {
         ZStack {
-            OrangeClothField(seed: 1985)
+            JJWWCoverClothTexture(seed: 1985)
 
             CreamArchFrameShape()
                 .fill(JJWWEditorialPalette.cream)
@@ -182,11 +182,15 @@ public struct BookCoverThresholdView: View {
                 .padding(22)
 
             VStack(spacing: 10) {
-                Spacer().frame(height: 52)
-                CutPaperLabel("JESSE JAMES", rotationDegrees: -0.5)
-                CutPaperLabel("AND THE", rotationDegrees: 0.6)
-                CutPaperLabel("WIDOW WHIPPLE", rotationDegrees: -0.35)
+                Spacer().frame(height: 48)
+
+                JJWWTitleArt()
+                    .frame(maxWidth: 310)
+                    .padding(.horizontal, 4)
+                    .shadow(color: .black.opacity(0.22), radius: 1, y: 0.6)
+
                 Spacer()
+
                 Text("EAN WESLYNN")
                     .font(.system(size: 30, weight: .black, design: .serif))
                     .foregroundStyle(.white)
