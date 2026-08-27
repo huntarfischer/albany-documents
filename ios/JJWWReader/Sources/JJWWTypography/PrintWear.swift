@@ -92,12 +92,23 @@ public struct PrintWearText: View {
         .accessibilityLabel(Text(text))
     }
 
+    @ViewBuilder
     private func baseText(_ rendered: String) -> some View {
-        Text(rendered)
-            .font(resolvedFont)
-            .tracking(token.tracking + trackingDelta)
-            .lineSpacing(token.lineSpacing * lineSpacingMultiplier)
-            .multilineTextAlignment(token.centered ? .center : .leading)
+        if token.justified {
+            JustifiedTypographicText(
+                rendered,
+                token: token,
+                pointScale: pointScale,
+                trackingDelta: trackingDelta,
+                lineSpacingMultiplier: lineSpacingMultiplier
+            )
+        } else {
+            Text(rendered)
+                .font(resolvedFont)
+                .tracking(token.tracking + trackingDelta)
+                .lineSpacing(token.lineSpacing * lineSpacingMultiplier)
+                .multilineTextAlignment(token.centered ? .center : .leading)
+        }
     }
 
     private var resolvedFont: Font {
