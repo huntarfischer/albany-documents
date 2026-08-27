@@ -239,40 +239,8 @@ private struct EditorialOrangeCloth: View {
     let seed: UInt64
 
     var body: some View {
-        Canvas { context, size in
-            context.fill(
-                Path(CGRect(origin: .zero, size: size)),
-                with: .color(Color(red: 0.89, green: 0.24, blue: 0.045))
-            )
-
-            var state = seed ^ 0x4F_52_41_4E_47_45
-            func unit() -> Double {
-                state &+= 0x9E3779B97F4A7C15
-                var z = state
-                z = (z ^ (z >> 30)) &* 0xBF58476D1CE4E5B9
-                z = (z ^ (z >> 27)) &* 0x94D049BB133111EB
-                let value = z ^ (z >> 31)
-                return Double(value >> 11) / Double(1 << 53)
-            }
-
-            for _ in 0..<74 {
-                let y = CGFloat(unit()) * size.height
-                let alpha = 0.035 + unit() * 0.055
-                var line = Path()
-                line.move(to: CGPoint(x: 0, y: y))
-                line.addLine(to: CGPoint(x: size.width, y: y + CGFloat((unit() - 0.5) * 1.4)))
-                context.stroke(line, with: .color(.black.opacity(alpha)), lineWidth: 0.55)
-            }
-
-            for _ in 0..<24 {
-                let x = CGFloat(unit()) * size.width
-                var line = Path()
-                line.move(to: CGPoint(x: x, y: 0))
-                line.addLine(to: CGPoint(x: x + CGFloat((unit() - 0.5) * 1.2), y: size.height))
-                context.stroke(line, with: .color(.white.opacity(0.028 + unit() * 0.032)), lineWidth: 0.45)
-            }
-        }
-        .overlay(Rectangle().stroke(Color.black.opacity(0.16), lineWidth: 0.5))
-        .accessibilityHidden(true)
+        JJWWCoverClothTexture(seed: seed)
+            .overlay(Rectangle().stroke(Color.black.opacity(0.16), lineWidth: 0.5))
+            .accessibilityHidden(true)
     }
 }
