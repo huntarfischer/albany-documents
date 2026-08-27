@@ -58,12 +58,15 @@ public struct PageCompositionGateSheet: View {
     }
 
     private var reviewUnitIDs: [String] {
-        [
-            "may-8-9-albany-argus",
-            "confession-of-jesse-james-strang",
-            "trial-of-jesse-james-strang",
-            "farewell-address"
+        let materialIDs = [
+            MaterialProfile.argus1827.id,
+            MaterialProfile.confessionPamphlet1827.id,
+            MaterialProfile.trialRecord1827.id,
+            MaterialProfile.farewell1827.id
         ]
+        return materialIDs.compactMap { materialID in
+            edition.orderedReadingUnits.first(where: { $0.materialProfile.id == materialID })?.id
+        }
     }
 
     private var openingPages: [PageSlice] {
