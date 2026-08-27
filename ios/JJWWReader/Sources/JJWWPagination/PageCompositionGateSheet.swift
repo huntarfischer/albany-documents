@@ -178,6 +178,7 @@ public struct ComposedPageLeafView: View {
                   let typography = TypographyCatalog.profile(id: unit.typographyProfile.id) {
             let token = typography.token(fragment.role)
             let openingHeader = page.beginsSectionTransition && isHeader(fragment.role)
+            let contentWidth = max(1, 390 - page.resolvedMargins.leading - page.resolvedMargins.trailing)
             PrintWearText(
                 fragment.text,
                 token: token,
@@ -185,7 +186,8 @@ public struct ComposedPageLeafView: View {
                 seed: seed ^ UInt64(fragment.canonicalLine),
                 pointScale: openingHeader ? composition.headerScale : 1,
                 trackingDelta: openingHeader ? composition.headerTrackingDelta : 0,
-                lineSpacingMultiplier: openingHeader ? composition.headerLineSpacingMultiplier : composition.bodyLeadingMultiplier
+                lineSpacingMultiplier: openingHeader ? composition.headerLineSpacingMultiplier : composition.bodyLeadingMultiplier,
+                snapshotLayoutWidth: token.justified ? contentWidth : nil
             )
             .frame(maxWidth: .infinity, alignment: token.centered ? .center : .leading)
             .padding(.top, openingHeader && isFirstOpeningHeader(fragment) ? CGFloat(composition.headerTopSpace) : 0)
