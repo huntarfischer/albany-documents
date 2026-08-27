@@ -147,6 +147,11 @@ public struct InkAwakeningText: View {
     private let seed: UInt64
     private let entryContext: InkAwakeningEntryContext
     private let explicitlyInstant: Bool
+    private let printWearProfile: PrintWearProfile?
+    private let pointScale: Double
+    private let trackingDelta: Double
+    private let lineSpacingMultiplier: Double
+    private let snapshotLayoutWidth: Double?
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var progress: Double = 0
@@ -158,7 +163,12 @@ public struct InkAwakeningText: View {
         profile: InkAwakeningProfile,
         seed: UInt64,
         entryContext: InkAwakeningEntryContext = .naturalSectionEntry,
-        explicitlyInstant: Bool = false
+        explicitlyInstant: Bool = false,
+        printWearProfile: PrintWearProfile? = nil,
+        pointScale: Double = 1,
+        trackingDelta: Double = 0,
+        lineSpacingMultiplier: Double = 1,
+        snapshotLayoutWidth: Double? = nil
     ) {
         self.text = text
         self.token = token
@@ -166,6 +176,11 @@ public struct InkAwakeningText: View {
         self.seed = seed
         self.entryContext = entryContext
         self.explicitlyInstant = explicitlyInstant
+        self.printWearProfile = printWearProfile
+        self.pointScale = pointScale
+        self.trackingDelta = trackingDelta
+        self.lineSpacingMultiplier = lineSpacingMultiplier
+        self.snapshotLayoutWidth = snapshotLayoutWidth
     }
 
     public var body: some View {
@@ -175,7 +190,7 @@ public struct InkAwakeningText: View {
     }
 
     private func awakenedText(progress: Double) -> some View {
-        TypographicText(text, token: token)
+        resolvedTypography
             .mask(
                 InkAwakeningMask(
                     progress: progress,
@@ -184,6 +199,24 @@ public struct InkAwakeningText: View {
                 )
             )
             .opacity(progress <= 0.001 ? 0.001 : 1)
+    }
+
+    @ViewBuilder
+    private var resolvedTypography: some View {
+        if let printWearProfile {
+            PrintWearText(
+                text,
+                token: token,
+                profile: printWearProfile,
+                seed: seed,
+                pointScale: pointScale,
+                trackingDelta: trackingDelta,
+                lineSpacingMultiplier: lineSpacingMultiplier,
+                snapshotLayoutWidth: snapshotLayoutWidth
+            )
+        } else {
+            TypographicText(text, token: token)
+        }
     }
 
     private func resolveIfNeeded() {
