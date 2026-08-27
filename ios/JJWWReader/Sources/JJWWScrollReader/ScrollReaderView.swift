@@ -45,11 +45,12 @@ public struct ScrollReaderView: View {
     }
 
     public var body: some View {
+        let units = edition.orderedReadingUnits
         ScrollViewReader { proxy in
             ZStack(alignment: .top) {
                 ScrollView {
-                    LazyVStack(spacing: -14) {
-                        ForEach(edition.orderedReadingUnits) { unit in
+                    LazyVStack(spacing: 0) {
+                        ForEach(Array(units.enumerated()), id: \.element.id) { index, unit in
                             ReadingUnitSurface(
                                 unit: unit,
                                 materialStore: materialStore,
@@ -68,6 +69,24 @@ public struct ScrollReaderView: View {
                                     )
                                 }
                             )
+                            .zIndex(2)
+
+                            if index + 1 < units.count,
+                               let interval = EditorialIntervalCatalog.sourceBoundary(
+                                   from: unit,
+                                   to: units[index + 1]
+                               ) {
+                                EditorialIntervalView(
+                                    profile: interval,
+                                    seed: MaterialSeed.derive(
+                                        base: 1827,
+                                        salt: "source.interval.\(unit.id).\(units[index + 1].id)"
+                                    )
+                                )
+                                .padding(.top, -CGFloat(interval.overlapDepth))
+                                .padding(.bottom, -CGFloat(interval.overlapDepth * 0.48))
+                                .zIndex(1)
+                            }
                         }
                     }
                     .padding(.bottom, 90)
@@ -151,9 +170,33 @@ public struct ReadingUnitSurface: View {
         self.snapshotLayoutWidth = snapshotLayoutWidth
     }
 
+    @ViewBuilder
     public var body: some View {
-        if let materialProfile = materialStore.profile(id: unit.materialProfile.id),
-           let typographyProfile = TypographyCatalog.profile(id: unit.typographyProfile.id) {
+        if lineLimit == nil,
+           unit.sourcePresentation?.sourceKind == .periodical,
+           unit.blocks.count > 1 {
+            PeriodicalStackReadingUnitSurface(
+                unit: unit,
+                materialStore: materialStore,
+                materialSetting: materialSetting,
+                textScale: textScale,
+                entryContext: entryContext,
+                animateOpening: animateOpening,
+                snapshotLayoutWidth: snapshotLayoutWidth
+            )
+        } else if lineLimit == nil,
+                  unit.id == FarewellArtifactLayout.unitID {
+            FarewellReadingUnitSurface(
+                unit: unit,
+                materialStore: materialStore,
+                materialSetting: materialSetting,
+                textScale: textScale,
+                entryContext: entryContext,
+                animateOpening: animateOpening,
+                snapshotLayoutWidth: snapshotLayoutWidth
+            )
+        } else if let materialProfile = materialStore.profile(id: unit.materialProfile.id),
+                  let typographyProfile = TypographyCatalog.profile(id: unit.typographyProfile.id) {
             let seed = MaterialSeed.derive(base: 1827, salt: "scroll.\(unit.id)")
             let recipe = engine.resolve(
                 profile: materialProfile,
