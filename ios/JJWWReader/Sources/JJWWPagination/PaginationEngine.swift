@@ -362,7 +362,15 @@ public final class PaginationEngine {
         let scale = pointScale(for: textScale)
         let headerScale = isOpeningHeader ? CGFloat(composition.headerScale) : 1
         let paragraph = NSMutableParagraphStyle()
-        paragraph.alignment = token.centered ? .center : .left
+        switch token.paragraphAlignment {
+        case .leading:
+            paragraph.alignment = .left
+        case .centered:
+            paragraph.alignment = .center
+        case .justified:
+            paragraph.alignment = .justified
+        }
+        paragraph.hyphenationFactor = Float(token.hyphenationFactor)
         let leadingMultiplier = isOpeningHeader
             ? CGFloat(composition.headerLineSpacingMultiplier)
             : CGFloat(composition.bodyLeadingMultiplier)
