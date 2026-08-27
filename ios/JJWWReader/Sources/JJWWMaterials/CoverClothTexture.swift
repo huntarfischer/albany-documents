@@ -10,7 +10,7 @@ import AppKit
 ///
 /// This is shared material, not decorative chrome: Scroll interval reveals and
 /// later binding/overview surfaces expose the same physical cloth. The bundled
-/// crop is tiled at its native visual scale so the weave survives shallow reveals.
+/// crop is tiled and modestly enlarged so the weave remains legible at phone scale.
 public struct JJWWCoverClothTexture: View {
     public let seed: UInt64
 
@@ -23,8 +23,11 @@ public struct JJWWCoverClothTexture: View {
             ZStack {
                 fallback
                 texture
-                    .padding(-24)
+                    .padding(-42)
+                    .scaleEffect(1.72)
                     .offset(x: xDrift, y: yDrift)
+                    .contrast(1.16)
+                    .saturation(1.04)
             }
             .frame(width: geometry.size.width, height: geometry.size.height)
             .clipped()
@@ -42,6 +45,7 @@ public struct JJWWCoverClothTexture: View {
             if let image = UIImage(contentsOfFile: url.path) {
                 Image(uiImage: image)
                     .resizable(resizingMode: .tile)
+                    .interpolation(.high)
             } else {
                 fallback
             }
@@ -49,6 +53,7 @@ public struct JJWWCoverClothTexture: View {
             if let image = NSImage(contentsOf: url) {
                 Image(nsImage: image)
                     .resizable(resizingMode: .tile)
+                    .interpolation(.high)
             } else {
                 fallback
             }
