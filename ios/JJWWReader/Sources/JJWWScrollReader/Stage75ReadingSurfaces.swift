@@ -79,7 +79,7 @@ public struct PeriodicalStackReadingUnitSurface: View {
                 }
             }
             .padding(.vertical, 12)
-            .background(Color(red: 0.073, green: 0.066, blue: 0.056))
+            .background(JJWWCoverClothTexture(seed: 0x4A4A5757))
             .dynamicTypeSize(textScale.dynamicTypeSize)
             .accessibilityElement(children: .contain)
         } else {
@@ -155,8 +155,8 @@ private struct PeriodicalPaperBlockSurface: View {
         }
         .clipShape(DeckledPaperShape(seed: seed))
         .overlay(DeckledPaperShape(seed: seed).stroke(Color.black.opacity(0.13), lineWidth: 0.65))
-        .shadow(color: .black.opacity(0.30), radius: 8, y: 5)
-        .padding(.horizontal, 7)
+        .shadow(color: .black.opacity(0.38), radius: 9, y: 6)
+        .padding(.horizontal, sheetHorizontalInset)
         .offset(x: sheetDrift)
         .rotationEffect(.degrees(sheetRotation))
     }
@@ -272,13 +272,18 @@ private struct PeriodicalPaperBlockSurface: View {
         }
     }
 
+    private var sheetHorizontalInset: CGFloat {
+        let values: [CGFloat] = [7, 13, 9, 16]
+        return values[blockIndex % values.count]
+    }
+
     private var sheetDrift: CGFloat {
-        let values: [CGFloat] = [-3.5, 5.5, -4.5, 3.0]
+        let values: [CGFloat] = [-5, 7, -6, 4]
         return values[blockIndex % values.count]
     }
 
     private var sheetRotation: Double {
-        let values = [-0.16, 0.20, -0.11, 0.14]
+        let values = [-0.14, 0.18, -0.10, 0.12]
         return values[blockIndex % values.count]
     }
 }
