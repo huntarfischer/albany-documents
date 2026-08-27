@@ -1,6 +1,6 @@
 # JJWW Reader — Stage 7
 
-Status: `IMPLEMENTED_PENDING_GATE`
+Status: `GREEN_STAGE7_GATE`
 
 Branch: `feature/jjww-reader-stage7`
 
@@ -116,4 +116,8 @@ Four portrait 390 × 844 phone states in one row:
 3. bound Pages reader
 4. editorial Gallery
 
-The visual gate must show that the app descends from the supplied cover without wallpapering the cover language over the historical documents.
+Gate result: `PASS`.
+
+The snapshot-safe gate uses the same TextKit justification/hyphenation rules as the live iOS newspaper renderer, so the review image does not contain AppKit prohibited-view placeholders.
+
+The gate shows that the app descends from the supplied cover language without wallpapering it over the historical documents.
