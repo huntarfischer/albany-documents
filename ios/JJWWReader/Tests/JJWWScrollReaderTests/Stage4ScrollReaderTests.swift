@@ -55,7 +55,7 @@ struct Stage4ScrollReaderTests {
             let presentations = unit.blocks.flatMap {
                 ReaderLineRoleResolver.presentations(for: $0, in: unit)
             }
-            #expect(presentations.contains(where: \.usesInkAwakening))
+            #expect(presentations.contains { $0.usesInkAwakening })
         }
 
         let farewell = try #require(edition.readingUnit(id: "farewell-address"))
