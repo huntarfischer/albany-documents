@@ -144,81 +144,26 @@ public struct BookShellGateSheet: View {
     }
 }
 
+/// The gate now renders the same ReadingUnitSurface used by the live Scroll
+/// reader. Snapshot safety is supplied as a layout-width hint to the shared
+/// justified renderer, rather than by maintaining a second typography mock.
 private struct SnapshotSafeScrollUnitPreview: View {
     let unit: ReadingUnit
     let materialStore: MaterialProfileStore
 
-    private let engine = MaterialEngine()
-
     var body: some View {
-        if let material = materialStore.profile(id: unit.materialProfile.id),
-           let typography = TypographyCatalog.profile(id: unit.typographyProfile.id) {
-            let seed = MaterialSeed.derive(base: 1827, salt: "stage7.scroll.\(unit.id)")
-            let recipe = engine.resolve(profile: material, state: .full, seed: seed)
-            let presentations = unit.blocks.flatMap {
-                ReaderLineRoleResolver.presentations(for: $0, in: unit)
-            }
-
-            MaterialSurfaceView(recipe: recipe) {
-                VStack(alignment: .leading, spacing: 0) {
-                    ForEach(Array(presentations.prefix(11))) { presentation in
-                        line(presentation, typography: typography)
-                    }
-                }
-                .frame(width: 306, alignment: .topLeading)
-                .padding(.horizontal, 36)
-                .padding(.top, 86)
-                .padding(.bottom, 54)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                .foregroundStyle(Color.black.opacity(max(0.62, recipe.ink.density)))
-            }
-        } else {
-            Color.red.opacity(0.2)
-        }
-    }
-
-    @ViewBuilder
-    private func line(
-        _ presentation: ReaderLinePresentation,
-        typography: TypographyProfileDefinition
-    ) -> some View {
-        let text = presentation.canonicalLine.text
-        let token = typography.token(presentation.role)
-
-        if text.isEmpty {
-            Color.clear.frame(height: 7)
-        } else if token.justified {
-            JustifiedTypographicText(
-                text,
-                token: token,
-                snapshotLayoutWidth: 306
-            )
-            .frame(width: 306, alignment: .leading)
-            .padding(.bottom, 7)
-        } else {
-            TypographicText(text, token: token)
-                .frame(maxWidth: .infinity, alignment: token.centered ? .center : .leading)
-                .padding(.top, headerTop(presentation.role))
-                .padding(.bottom, headerBottom(presentation.role))
-        }
-    }
-
-    private func headerTop(_ role: TypographyRole) -> CGFloat {
-        switch role {
-        case .dateHeading: return 10
-        case .sourceHeader: return 6
-        case .sectionTitle: return 8
-        default: return 0
-        }
-    }
-
-    private func headerBottom(_ role: TypographyRole) -> CGFloat {
-        switch role {
-        case .dateHeading: return 3
-        case .sourceHeader: return 6
-        case .sectionTitle: return 12
-        default: return 6
-        }
+        ReadingUnitSurface(
+            unit: unit,
+            materialStore: materialStore,
+            materialSetting: .full,
+            textScale: .standard,
+            entryContext: .jumpIntoSection,
+            lineLimit: 14,
+            animateOpening: false,
+            snapshotLayoutWidth: 334
+        )
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .background(JJWWEditorialPalette.ink)
     }
 }
 
