@@ -1,0 +1,41 @@
+{
+  "version": "0.1",
+  "assets": [
+    {
+      "id": "jjww-cover-current",
+      "filename": "JJWW UPDATED COVER copy.jpeg",
+      "role": "cover",
+      "title": "Jesse James and the Widow Whipple cover",
+      "caption": null,
+      "credit": null,
+      "altText": "Cover of Jesse James and the Widow Whipple.",
+      "insertionStyle": "cover",
+      "placement": null,
+      "notes": "Exterior threshold only. The cover does not become an in-book title page."
+    },
+    {
+      "id": "real-good-stories-symbol",
+      "filename": "SYMBOL NAVY.png",
+      "role": "publisherMark",
+      "title": "REAL GOOD stories + stuff symbol",
+      "caption": null,
+      "credit": null,
+      "altText": "REAL GOOD stories + stuff publisher symbol.",
+      "insertionStyle": "inline",
+      "placement": null,
+      "notes": "Use sparingly as publisher/imprint mark, never as wallpaper."
+    },
+    {
+      "id": "jjww-albany-delayed-title-plate",
+      "filename": "new ALBANY FIRST MAP BW CROPPED TITLE.jpg",
+      "role": "delayedTitlePlate",
+      "title": "Albany map delayed title plate",
+      "caption": null,
+      "credit": null,
+      "altText": "Albany map title plate for Jesse James and the Widow Whipple.",
+      "insertionStyle": "fullPagePlate",
+      "placement": null,
+      "notes": "Authored delayed-opening-title beat. Do not move to the front. Assign the exact canonical placement only when the full manuscript image sequence is populated."
+    }
+  ]
+}
