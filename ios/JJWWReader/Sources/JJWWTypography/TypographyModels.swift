@@ -1,3 +1,4 @@
+import Foundation
 import SwiftUI
 import JJWWReaderCore
 
@@ -14,7 +15,7 @@ public enum TypographyRole: String, Codable, CaseIterable, Sendable {
     case editorialCutPaper
 }
 
-public enum TypographyDynamicTextStyle: String, Codable, Sendable {
+public enum TypographyDynamicTextStyle: String, Codable, CaseIterable, Sendable {
     case largeTitle
     case title
     case title2
@@ -40,7 +41,7 @@ public enum TypographyDynamicTextStyle: String, Codable, Sendable {
     }
 }
 
-public enum TypographyDesign: String, Codable, Sendable {
+public enum TypographyDesign: String, Codable, CaseIterable, Sendable {
     case serif
     case rounded
     case monospaced
@@ -56,7 +57,7 @@ public enum TypographyDesign: String, Codable, Sendable {
     }
 }
 
-public enum TypographyWeight: String, Codable, Sendable {
+public enum TypographyWeight: String, Codable, CaseIterable, Sendable {
     case regular
     case medium
     case semibold
@@ -81,16 +82,16 @@ public enum TypographyParagraphAlignment: String, Codable, CaseIterable, Sendabl
 }
 
 public struct TypographyToken: Codable, Equatable, Sendable {
-    public let role: TypographyRole
-    public let textStyle: TypographyDynamicTextStyle
-    public let design: TypographyDesign
-    public let weight: TypographyWeight
-    public let tracking: Double
-    public let lineSpacing: Double
-    public let uppercase: Bool
-    public let paragraphAlignment: TypographyParagraphAlignment
-    public let hyphenationFactor: Double
-    public let fontFamily: String?
+    public var role: TypographyRole
+    public var textStyle: TypographyDynamicTextStyle
+    public var design: TypographyDesign
+    public var weight: TypographyWeight
+    public var tracking: Double
+    public var lineSpacing: Double
+    public var uppercase: Bool
+    public var paragraphAlignment: TypographyParagraphAlignment
+    public var hyphenationFactor: Double
+    public var fontFamily: String?
 
     public init(
         role: TypographyRole,
@@ -134,9 +135,9 @@ public struct TypographyToken: Codable, Equatable, Sendable {
 }
 
 public struct TypographyProfileDefinition: Codable, Equatable, Identifiable, Sendable {
-    public let id: String
-    public let displayName: String
-    public let tokens: [TypographyToken]
+    public var id: String
+    public var displayName: String
+    public var tokens: [TypographyToken]
 
     public init(id: String, displayName: String, tokens: [TypographyToken]) {
         self.id = id
@@ -147,6 +148,41 @@ public struct TypographyProfileDefinition: Codable, Equatable, Identifiable, Sen
     public func token(_ role: TypographyRole) -> TypographyToken {
         tokens.first(where: { $0.role == role })
             ?? TypographyCatalog.fallbackToken(role)
+    }
+}
+
+/// Debug-time typography overrides used by the Stage 7.75 Reader Workshop.
+/// Production remains entirely catalog-driven when no override is installed.
+public final class TypographyTuningRegistry: @unchecked Sendable {
+    public static let shared = TypographyTuningRegistry()
+
+    private let lock = NSLock()
+    private var overrides: [String: TypographyProfileDefinition] = [:]
+
+    private init() {}
+
+    public func profile(id: String) -> TypographyProfileDefinition? {
+        lock.lock()
+        defer { lock.unlock() }
+        return overrides[id]
+    }
+
+    public func set(_ profile: TypographyProfileDefinition) {
+        lock.lock()
+        overrides[profile.id] = profile
+        lock.unlock()
+    }
+
+    public func remove(id: String) {
+        lock.lock()
+        overrides.removeValue(forKey: id)
+        lock.unlock()
+    }
+
+    public func removeAll() {
+        lock.lock()
+        overrides.removeAll()
+        lock.unlock()
     }
 }
 
@@ -226,8 +262,12 @@ public enum TypographyCatalog {
 
     public static let all: [TypographyProfileDefinition] = [editorial, newspaper, confession, trial, farewell]
 
-    public static func profile(id: String) -> TypographyProfileDefinition? {
+    public static func bundledProfile(id: String) -> TypographyProfileDefinition? {
         all.first { $0.id == id }
+    }
+
+    public static func profile(id: String) -> TypographyProfileDefinition? {
+        TypographyTuningRegistry.shared.profile(id: id) ?? bundledProfile(id: id)
     }
 
     static func fallbackToken(_ role: TypographyRole) -> TypographyToken {
