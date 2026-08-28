@@ -40,18 +40,18 @@ public enum EditorialIntervalCatalog {
     public static let articleOrangeOverlap = EditorialIntervalProfile(
         id: "interval.article.orangeOverlap.v0.1",
         style: .articleOrangeOverlap,
-        height: 126,
+        height: 112,
         orangeBandHeight: 74,
-        overlapDepth: 20,
+        overlapDepth: 24,
         horizontalDrift: 6
     )
 
     public static let articlePaperBreath = EditorialIntervalProfile(
         id: "interval.article.paperBreath.v0.1",
         style: .articlePaperBreath,
-        height: 104,
+        height: 78,
         orangeBandHeight: 22,
-        overlapDepth: 14,
+        overlapDepth: 18,
         horizontalDrift: -5
     )
 
@@ -141,9 +141,10 @@ public enum FarewellArtifactLayout {
     }
 }
 
-/// Stage 7.5a treats the supplied orange book cloth as the reading table itself.
-/// An editorial interval is therefore authored exposure of that table, not a
-/// separate orange object inserted between papers.
+/// Stage 7.5a treats an interval as authored exposure of the table below.
+/// It deliberately draws no orange object of its own. In a periodical stack the
+/// transparent space reveals that stack's continuous cloth background; elsewhere
+/// it reveals the Scroll reader's underlying table.
 public struct EditorialIntervalView: View {
     public let profile: EditorialIntervalProfile
     public let seed: UInt64
@@ -154,7 +155,7 @@ public struct EditorialIntervalView: View {
     }
 
     public var body: some View {
-        JJWWCoverClothTexture(seed: 0x4A4A5757)
+        Color.clear
             .frame(height: profile.height)
             .accessibilityHidden(true)
     }
