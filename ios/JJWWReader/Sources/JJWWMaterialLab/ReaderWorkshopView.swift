@@ -26,13 +26,11 @@ public final class ReaderWorkshopSession: ObservableObject {
         self.materialStore = materialStore
 
         let initial = edition.orderedReadingUnits.first(where: { $0.kind != .cover }) ?? edition.orderedReadingUnits[0]
-        self.selectedUnitID = initial.id
-        self.draftMaterial = materialStore.profile(id: initial.materialProfile.id)
-            ?? materialStore.profiles[0]
-        self.draftTypography = TypographyCatalog.profile(id: initial.typographyProfile.id)
-            ?? TypographyCatalog.editorial
-        self.draftComposition = ReaderCompositionCatalog.profile(for: initial)
-        self.selectedRole = self.draftTypography.tokens.first?.role ?? .body
+        selectedUnitID = initial.id
+        draftMaterial = materialStore.profile(id: initial.materialProfile.id) ?? materialStore.profiles[0]
+        draftTypography = TypographyCatalog.profile(id: initial.typographyProfile.id) ?? TypographyCatalog.editorial
+        draftComposition = ReaderCompositionCatalog.profile(for: initial)
+        selectedRole = draftTypography.tokens.first?.role ?? .body
     }
 
     public var selectedUnit: ReadingUnit {
@@ -46,10 +44,8 @@ public final class ReaderWorkshopSession: ObservableObject {
     public func selectUnit(_ id: String) {
         guard let unit = edition.readingUnit(id: id) else { return }
         selectedUnitID = id
-        draftMaterial = materialStore.profile(id: unit.materialProfile.id)
-            ?? materialStore.profiles[0]
-        draftTypography = TypographyCatalog.profile(id: unit.typographyProfile.id)
-            ?? TypographyCatalog.editorial
+        draftMaterial = materialStore.profile(id: unit.materialProfile.id) ?? materialStore.profiles[0]
+        draftTypography = TypographyCatalog.profile(id: unit.typographyProfile.id) ?? TypographyCatalog.editorial
         draftComposition = ReaderCompositionCatalog.profile(for: unit)
         selectedRole = draftTypography.tokens.first?.role ?? .body
         revision &+= 1
@@ -153,51 +149,51 @@ public struct ReaderWorkshopView: View {
     }
 
     public var body: some View {
-        NavigationStack {
-            VStack(spacing: 0) {
-                Picker("Reading unit", selection: Binding(
-                    get: { session.selectedUnitID },
-                    set: { session.selectUnit($0) }
-                )) {
-                    ForEach(session.availableUnits) { unit in
-                        Text(unit.sourcePresentation?.displayTitle ?? unit.id)
-                            .tag(unit.id)
-                    }
-                }
-                .pickerStyle(.menu)
-                .padding(.horizontal, 14)
-                .padding(.top, 8)
+        VStack(spacing: 0) {
+            HStack(spacing: 10) {
+                Text("READER WORKSHOP")
+                    .font(.headline.bold())
+                Spacer()
+                Button("Reset") { session.resetSelected() }
+                Button("Reset All") { session.resetAll() }
+            }
+            .padding(.horizontal, 14)
+            .padding(.top, 12)
 
-                Picker("Workshop pane", selection: $pane) {
-                    ForEach(Pane.allCases, id: \.self) { pane in
-                        Text(pane.rawValue).tag(pane)
-                    }
-                }
-                .pickerStyle(.segmented)
-                .padding(12)
-
-                Divider()
-
-                switch pane {
-                case .preview:
-                    productionPreview
-                case .material:
-                    materialControls
-                case .type:
-                    typographyControls
-                case .composition:
-                    compositionControls
-                case .export:
-                    exportPane
+            Picker("Reading unit", selection: Binding(
+                get: { session.selectedUnitID },
+                set: { session.selectUnit($0) }
+            )) {
+                ForEach(session.availableUnits) { unit in
+                    Text(unit.sourcePresentation?.displayTitle ?? unit.id)
+                        .tag(unit.id)
                 }
             }
-            .navigationTitle("Reader Workshop")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItemGroup(placement: .topBarTrailing) {
-                    Button("Reset") { session.resetSelected() }
-                    Button("Reset All") { session.resetAll() }
+            .pickerStyle(.menu)
+            .padding(.horizontal, 14)
+            .padding(.top, 8)
+
+            Picker("Workshop pane", selection: $pane) {
+                ForEach(Pane.allCases, id: \.self) { pane in
+                    Text(pane.rawValue).tag(pane)
                 }
+            }
+            .pickerStyle(.segmented)
+            .padding(12)
+
+            Divider()
+
+            switch pane {
+            case .preview:
+                productionPreview
+            case .material:
+                materialControls
+            case .type:
+                typographyControls
+            case .composition:
+                compositionControls
+            case .export:
+                exportPane
             }
         }
     }
@@ -245,19 +241,19 @@ public struct ReaderWorkshopView: View {
                 ), range: -0.30...0.30)
                 workshopSlider("Mottling", value: materialBinding(
                     get: { $0.mottling.amount },
-                    set: { $0.mottling.amount = $1 }
+                    set: { profile, value in profile.mottling.amount = value }
                 ), range: 0...0.60)
                 workshopSlider("Grain", value: materialBinding(
                     get: { $0.grain.amount },
-                    set: { $0.grain.amount = $1 }
+                    set: { profile, value in profile.grain.amount = value }
                 ), range: 0...0.50)
                 workshopSlider("Fibers", value: materialBinding(
                     get: { $0.fibers.density },
-                    set: { $0.fibers.density = $1 }
+                    set: { profile, value in profile.fibers.density = value }
                 ), range: 0...0.80)
                 workshopSlider("Edge wear", value: materialBinding(
                     get: { $0.edgeVariation.amount },
-                    set: { $0.edgeVariation.amount = $1 }
+                    set: { profile, value in profile.edgeVariation.amount = value }
                 ), range: 0...0.60)
             }
 
@@ -304,7 +300,6 @@ public struct ReaderWorkshopView: View {
                             session.updateSelectedToken { $0.fontFamily = value.isEmpty ? nil : value }
                         }
                     ))
-                    .textInputAutocapitalization(.words)
 
                     Picker("Text style", selection: Binding(
                         get: { token.textStyle },
@@ -419,7 +414,7 @@ public struct ReaderWorkshopView: View {
                 Spacer()
             }
 
-            Text("The bundle is drafting data only. Nothing here changes canonical text. Once a setting is approved, its profile values can be checked into the normal catalogs.")
+            Text("Drafting data only. Canonical text is never edited by the Workshop. Approved values can be checked into the normal profile catalogs.")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
 
@@ -440,7 +435,11 @@ public struct ReaderWorkshopView: View {
     ) -> Binding<Double> {
         Binding(
             get: { get(session.draftMaterial) },
-            set: { value in session.updateMaterial { set(&$0, value) } }
+            set: { value in
+                session.updateMaterial { profile in
+                    set(&profile, value)
+                }
+            }
         )
     }
 
