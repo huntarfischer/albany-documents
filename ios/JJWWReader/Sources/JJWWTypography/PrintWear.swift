@@ -9,6 +9,22 @@ public struct PrintWearProfile: Codable, Equatable, Identifiable, Sendable {
     public var darkDeposit: Double
     public var seedSalt: UInt64
 
+    // Stage 7.75 moves the hand-tuned 7.5b/c Argus finish into profile data so
+    // the Reader Workshop can change it without editing Swift. Optional values
+    // keep older exported profile JSON decodable.
+    public var wearScale: Double?
+    public var starvationCap: Double?
+    public var erosionCap: Double?
+    public var inkOpacity: Double?
+    public var usesMultiplyBlend: Bool?
+    public var datePointScale: Double?
+    public var sourceHeaderPointScale: Double?
+    public var sectionTitlePointScale: Double?
+    public var dateTrackingAdjustment: Double?
+    public var sourceHeaderTrackingAdjustment: Double?
+    public var sectionTitleTrackingAdjustment: Double?
+    public var sourceHeaderLineSpacingOverride: Double?
+
     public init(
         id: String,
         headerWear: Double,
@@ -16,7 +32,19 @@ public struct PrintWearProfile: Codable, Equatable, Identifiable, Sendable {
         strokeStarvation: Double,
         edgeErosion: Double,
         darkDeposit: Double,
-        seedSalt: UInt64
+        seedSalt: UInt64,
+        wearScale: Double? = nil,
+        starvationCap: Double? = nil,
+        erosionCap: Double? = nil,
+        inkOpacity: Double? = nil,
+        usesMultiplyBlend: Bool? = nil,
+        datePointScale: Double? = nil,
+        sourceHeaderPointScale: Double? = nil,
+        sectionTitlePointScale: Double? = nil,
+        dateTrackingAdjustment: Double? = nil,
+        sourceHeaderTrackingAdjustment: Double? = nil,
+        sectionTitleTrackingAdjustment: Double? = nil,
+        sourceHeaderLineSpacingOverride: Double? = nil
     ) {
         self.id = id
         self.headerWear = headerWear
@@ -25,6 +53,18 @@ public struct PrintWearProfile: Codable, Equatable, Identifiable, Sendable {
         self.edgeErosion = edgeErosion
         self.darkDeposit = darkDeposit
         self.seedSalt = seedSalt
+        self.wearScale = wearScale
+        self.starvationCap = starvationCap
+        self.erosionCap = erosionCap
+        self.inkOpacity = inkOpacity
+        self.usesMultiplyBlend = usesMultiplyBlend
+        self.datePointScale = datePointScale
+        self.sourceHeaderPointScale = sourceHeaderPointScale
+        self.sectionTitlePointScale = sectionTitlePointScale
+        self.dateTrackingAdjustment = dateTrackingAdjustment
+        self.sourceHeaderTrackingAdjustment = sourceHeaderTrackingAdjustment
+        self.sectionTitleTrackingAdjustment = sectionTitleTrackingAdjustment
+        self.sourceHeaderLineSpacingOverride = sourceHeaderLineSpacingOverride
     }
 
     public func intensity(for role: TypographyRole) -> Double {
@@ -70,10 +110,13 @@ public struct PrintWearText: View {
     public var body: some View {
         let canonicalRendered = token.uppercase ? text.uppercased() : text
         let rendered = displayText(for: canonicalRendered)
-        let wearScale = isArgusPrint ? 0.48 : 1.0
-        let intensity = min(0.46, max(0, profile.intensity(for: token.role) * wearScale))
-        let starvation = isArgusPrint ? min(profile.strokeStarvation, 0.10) : profile.strokeStarvation
-        let erosion = isArgusPrint ? min(profile.edgeErosion, 0.08) : profile.edgeErosion
+        let defaultWearScale = isArgusPrint ? 0.48 : 1.0
+        let resolvedWearScale = profile.wearScale ?? defaultWearScale
+        let intensity = min(0.46, max(0, profile.intensity(for: token.role) * resolvedWearScale))
+        let defaultStarvation = isArgusPrint ? min(profile.strokeStarvation, 0.10) : profile.strokeStarvation
+        let starvation = min(profile.strokeStarvation, profile.starvationCap ?? defaultStarvation)
+        let defaultErosion = isArgusPrint ? min(profile.edgeErosion, 0.08) : profile.edgeErosion
+        let erosion = min(profile.edgeErosion, profile.erosionCap ?? defaultErosion)
 
         ZStack {
             baseText(rendered)
@@ -86,10 +129,6 @@ public struct PrintWearText: View {
                     )
                 )
 
-            // Stage 7.5b: the Argus should read as a crisp letterpress impression.
-            // The old offset deposit made its fine Bodoni/Baskerville edges look
-            // digitally blurred at phone scale, so Argus wear is now subtractive
-            // only. Other source profiles retain their authored deposit behavior.
             if profile.darkDeposit > 0.001, !isArgusPrint {
                 baseText(rendered)
                     .opacity(min(0.16, profile.darkDeposit * 0.62))
@@ -98,11 +137,8 @@ public struct PrintWearText: View {
                     .accessibilityHidden(true)
             }
         }
-        // Stage 7.5c: crisp did not mean detached. Let a small amount of the
-        // warm paper participate in the Argus impression without reintroducing
-        // blur, halo, or offset ghosting.
-        .blendMode(isArgusPrint ? BlendMode.multiply : BlendMode.normal)
-        .opacity(isArgusPrint ? 0.94 : 1.0)
+        .blendMode((profile.usesMultiplyBlend ?? isArgusPrint) ? .multiply : .normal)
+        .opacity(profile.inkOpacity ?? (isArgusPrint ? 0.94 : 1.0))
         .fixedSize(horizontal: false, vertical: true)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(text))
@@ -129,7 +165,7 @@ public struct PrintWearText: View {
     }
 
     private var resolvedFont: Font {
-        let size = basePointSize(for: token.textStyle) * max(0.75, effectivePointScale)
+        let size = basePointSize(for: token.textStyle) * max(0.60, effectivePointScale)
         if let family = token.fontFamily {
             return .custom(family, size: size).weight(token.weight.swiftUIWeight)
         }
@@ -140,47 +176,44 @@ public struct PrintWearText: View {
         )
     }
 
-    /// The 7.5c finish keeps the semantic type tokens intact while correcting
-    /// the visual hierarchy of the Argus opening at phone scale.
     private var effectivePointScale: Double {
-        guard isArgusPrint else { return pointScale }
         switch token.role {
         case .dateHeading:
-            return pointScale * 0.68
+            return pointScale * (profile.datePointScale ?? (isArgusPrint ? 0.68 : 1.0))
         case .sourceHeader:
-            return pointScale
+            return pointScale * (profile.sourceHeaderPointScale ?? 1.0)
         case .sectionTitle:
-            return pointScale * 0.88
+            return pointScale * (profile.sectionTitlePointScale ?? (isArgusPrint ? 0.88 : 1.0))
         default:
             return pointScale
         }
     }
 
-    /// Argus gets role-specific tracking so the quiet metadata line stays quiet,
-    /// the Bodoni masthead remains narrow, and the article title does not spread.
     private var effectiveTrackingDelta: Double {
-        guard isArgusPrint else { return trackingDelta }
         switch token.role {
         case .dateHeading:
-            return -0.25
-        case .sectionTitle:
-            return 0
+            return trackingDelta + (profile.dateTrackingAdjustment ?? (isArgusPrint ? -0.25 : 0))
         case .sourceHeader:
-            return -0.20
+            return trackingDelta + (profile.sourceHeaderTrackingAdjustment ?? (isArgusPrint ? -0.20 : 0))
+        case .sectionTitle:
+            return trackingDelta + (profile.sectionTitleTrackingAdjustment ?? (isArgusPrint ? -trackingDelta : 0))
         default:
             return trackingDelta
         }
     }
 
     private var effectiveLineSpacing: CGFloat {
+        if token.role == .sourceHeader,
+           let override = profile.sourceHeaderLineSpacingOverride {
+            return override
+        }
         if isArgusPrint, token.role == .sourceHeader {
             return -1.5
         }
         return token.lineSpacing * lineSpacingMultiplier
     }
 
-    /// This is presentation-only lineation. The canonical source string remains
-    /// untouched and is still used for accessibility and provenance.
+    /// Presentation-only lineation. Canonical text and accessibility stay exact.
     private func displayText(for rendered: String) -> String {
         guard isArgusPrint,
               token.role == .sourceHeader,
