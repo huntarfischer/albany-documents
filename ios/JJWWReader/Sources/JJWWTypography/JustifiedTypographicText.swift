@@ -128,13 +128,9 @@ private struct UIKitJustifiedText: UIViewRepresentable {
     private var platformFont: UIFont {
         let size = basePointSize(for: token.textStyle) * CGFloat(max(0.75, pointScale))
 
-        if token.design == .baskerville {
-            return UIFont(name: "Baskerville", size: size)
-                ?? UIFont.systemFont(ofSize: size, weight: .regular)
-        }
-        if token.design == .bodoni {
-            return UIFont(name: "Bodoni 72", size: size)
-                ?? UIFont.systemFont(ofSize: size, weight: .bold)
+        if let family = token.fontFamily,
+           let font = UIFont(name: family, size: size) {
+            return font
         }
 
         let weight: UIFont.Weight
@@ -152,7 +148,6 @@ private struct UIKitJustifiedText: UIViewRepresentable {
         case .rounded: design = .rounded
         case .monospaced: design = .monospaced
         case .system: design = .default
-        case .baskerville, .bodoni: design = .serif
         }
         guard let descriptor = base.fontDescriptor.withDesign(design) else { return base }
         return UIFont(descriptor: descriptor, size: size)
@@ -316,15 +311,9 @@ private struct AppKitJustifiedText: NSViewRepresentable {
 private func appKitPlatformFont(token: TypographyToken, pointScale: Double) -> NSFont {
     let size = basePointSize(for: token.textStyle) * CGFloat(max(0.75, pointScale))
 
-    if token.design == .baskerville {
-        return NSFont(name: "Baskerville", size: size)
-            ?? NSFont(name: "Times New Roman", size: size)
-            ?? NSFont.systemFont(ofSize: size)
-    }
-    if token.design == .bodoni {
-        return NSFont(name: "Bodoni 72", size: size)
-            ?? NSFont(name: "Times New Roman Bold", size: size)
-            ?? NSFont.boldSystemFont(ofSize: size)
+    if let family = token.fontFamily,
+       let font = NSFont(name: family, size: size) {
+        return font
     }
 
     if token.design == .serif {
