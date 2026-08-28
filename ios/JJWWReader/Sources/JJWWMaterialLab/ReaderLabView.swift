@@ -24,6 +24,9 @@ public struct ReaderLabView: View {
             if let edition, let materialStore {
                 ReaderWorkshopView(edition: edition, materialStore: materialStore)
                     .tabItem { Label("Workshop", systemImage: "slider.horizontal.3") }
+
+                PeriodicalStagingLabView(edition: edition, materialStore: materialStore)
+                    .tabItem { Label("Staging", systemImage: "square.stack.3d.up") }
             }
 
             MaterialLabView(profiles: profiles)
