@@ -8,9 +8,9 @@ import AppKit
 
 /// The actual orange book cloth supplied from the current JJWW cover.
 ///
-/// This is shared material, not decorative chrome: Scroll interval reveals and
-/// later binding/overview surfaces expose the same physical cloth. The bundled
-/// crop is tiled and modestly enlarged so the weave remains legible at phone scale.
+/// Stage 7.5a treats this as the continuous reading table underneath the papers.
+/// The bundled 128 px crop is tiled at near-native scale so the weave remains
+/// visibly cloth rather than collapsing into a flat orange fill.
 public struct JJWWCoverClothTexture: View {
     public let seed: UInt64
 
@@ -23,11 +23,10 @@ public struct JJWWCoverClothTexture: View {
             ZStack {
                 fallback
                 texture
-                    .padding(-42)
-                    .scaleEffect(1.72)
                     .offset(x: xDrift, y: yDrift)
-                    .contrast(1.16)
-                    .saturation(1.04)
+                    .contrast(1.06)
+                    .saturation(1.03)
+                Color.black.opacity(0.018)
             }
             .frame(width: geometry.size.width, height: geometry.size.height)
             .clipped()
@@ -38,14 +37,14 @@ public struct JJWWCoverClothTexture: View {
     @ViewBuilder
     private var texture: some View {
         if let url = Bundle.module.url(
-            forResource: "jjww-cover-cloth-texture",
-            withExtension: "jpeg"
+            forResource: "jjww-cover-cloth-tile-128",
+            withExtension: "jpg"
         ) {
             #if canImport(UIKit)
             if let image = UIImage(contentsOfFile: url.path) {
                 Image(uiImage: image)
                     .resizable(resizingMode: .tile)
-                    .interpolation(.high)
+                    .interpolation(.medium)
             } else {
                 fallback
             }
@@ -53,7 +52,7 @@ public struct JJWWCoverClothTexture: View {
             if let image = NSImage(contentsOf: url) {
                 Image(nsImage: image)
                     .resizable(resizingMode: .tile)
-                    .interpolation(.high)
+                    .interpolation(.medium)
             } else {
                 fallback
             }
