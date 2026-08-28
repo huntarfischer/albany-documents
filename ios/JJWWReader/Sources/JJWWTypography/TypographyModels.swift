@@ -45,10 +45,12 @@ public enum TypographyDesign: String, Codable, Sendable {
     case rounded
     case monospaced
     case system
+    case baskerville
+    case bodoni
 
     var swiftUIDesign: Font.Design {
         switch self {
-        case .serif: return .serif
+        case .serif, .baskerville, .bodoni: return .serif
         case .rounded: return .rounded
         case .monospaced: return .monospaced
         case .system: return .default
@@ -118,7 +120,24 @@ public struct TypographyToken: Codable, Equatable, Sendable {
     public var justified: Bool { paragraphAlignment == .justified }
 
     public var font: Font {
-        .system(textStyle.swiftUIStyle, design: design.swiftUIDesign, weight: weight.swiftUIWeight)
+        switch design {
+        case .baskerville:
+            return .custom(
+                "Baskerville",
+                size: typographyBasePointSize(for: textStyle),
+                relativeTo: textStyle.swiftUIStyle
+            )
+            .weight(weight.swiftUIWeight)
+        case .bodoni:
+            return .custom(
+                "Bodoni 72",
+                size: typographyBasePointSize(for: textStyle),
+                relativeTo: textStyle.swiftUIStyle
+            )
+            .weight(weight.swiftUIWeight)
+        default:
+            return .system(textStyle.swiftUIStyle, design: design.swiftUIDesign, weight: weight.swiftUIWeight)
+        }
     }
 }
 
@@ -156,17 +175,17 @@ public enum TypographyCatalog {
         id: TypographyProfile.newspaper1827.id,
         displayName: "Newspaper 1827",
         tokens: [
-            token(.dateHeading, .title3, .serif, .bold, tracking: 1.2, uppercase: true, centered: true),
-            token(.sourceHeader, .title2, .serif, .black, tracking: 0.6, uppercase: true, centered: true),
-            token(.sectionTitle, .headline, .serif, .black, tracking: 0.8, uppercase: true, centered: true),
+            token(.dateHeading, .subheadline, .baskerville, .bold, tracking: 0.95, uppercase: true, centered: true),
+            token(.sourceHeader, .title, .bodoni, .black, tracking: -0.35, uppercase: true, centered: true),
+            token(.sectionTitle, .headline, .baskerville, .bold, tracking: 0.20, uppercase: true, centered: true),
             token(
                 .body,
                 .body,
-                .serif,
+                .baskerville,
                 .regular,
-                lineSpacing: 2,
+                lineSpacing: 1,
                 paragraphAlignment: .justified,
-                hyphenationFactor: 0.86
+                hyphenationFactor: 0.74
             )
         ]
     )
@@ -273,5 +292,19 @@ public struct TypographicText: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityLabel(Text(text))
         }
+    }
+}
+
+private func typographyBasePointSize(for style: TypographyDynamicTextStyle) -> CGFloat {
+    switch style {
+    case .largeTitle: return 34
+    case .title: return 28
+    case .title2: return 22
+    case .title3: return 20
+    case .headline: return 17
+    case .body: return 17
+    case .callout: return 16
+    case .subheadline: return 15
+    case .footnote: return 13
     }
 }
