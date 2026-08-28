@@ -98,6 +98,11 @@ public struct PrintWearText: View {
                     .accessibilityHidden(true)
             }
         }
+        // Stage 7.5c: crisp did not mean detached. Let a small amount of the
+        // warm paper participate in the Argus impression without reintroducing
+        // blur, halo, or offset ghosting.
+        .blendMode(isArgusPrint ? BlendMode.multiply : BlendMode.normal)
+        .opacity(isArgusPrint ? 0.94 : 1.0)
         .fixedSize(horizontal: false, vertical: true)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(text))
@@ -135,13 +140,13 @@ public struct PrintWearText: View {
         )
     }
 
-    /// The 7.5b finish keeps the semantic type tokens intact while correcting
+    /// The 7.5c finish keeps the semantic type tokens intact while correcting
     /// the visual hierarchy of the Argus opening at phone scale.
     private var effectivePointScale: Double {
         guard isArgusPrint else { return pointScale }
         switch token.role {
         case .dateHeading:
-            return pointScale * 0.86
+            return pointScale * 0.68
         case .sourceHeader:
             return pointScale
         case .sectionTitle:
@@ -151,13 +156,14 @@ public struct PrintWearText: View {
         }
     }
 
-    /// Stage 7.5a's shared header tracking delta was useful for generic serif
-    /// headings but opened the Bodoni masthead back up. Argus gets role-specific
-    /// tracking so the masthead remains narrow and the other headings stay calm.
+    /// Argus gets role-specific tracking so the quiet metadata line stays quiet,
+    /// the Bodoni masthead remains narrow, and the article title does not spread.
     private var effectiveTrackingDelta: Double {
         guard isArgusPrint else { return trackingDelta }
         switch token.role {
-        case .dateHeading, .sectionTitle:
+        case .dateHeading:
+            return -0.25
+        case .sectionTitle:
             return 0
         case .sourceHeader:
             return -0.20
@@ -168,7 +174,7 @@ public struct PrintWearText: View {
 
     private var effectiveLineSpacing: CGFloat {
         if isArgusPrint, token.role == .sourceHeader {
-            return -1.0
+            return -1.5
         }
         return token.lineSpacing * lineSpacingMultiplier
     }
