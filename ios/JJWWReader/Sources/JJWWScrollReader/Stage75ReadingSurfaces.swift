@@ -165,8 +165,8 @@ private struct PeriodicalPaperBlockSurface: View {
             DeckledPaperShape(seed: seed)
                 .stroke(Color(red: 0.20, green: 0.16, blue: 0.10).opacity(0.22), lineWidth: 0.85)
         )
-        .shadow(color: .black.opacity(0.22), radius: 2.2, y: 2.4)
-        .shadow(color: .black.opacity(0.34), radius: 9.5, y: 6.5)
+        .shadow(color: .black.opacity(0.23), radius: 2.0, y: 2.2)
+        .shadow(color: .black.opacity(0.33), radius: 9.5, y: 6.5)
         .padding(.horizontal, sheetHorizontalInset)
         .offset(x: sheetDrift)
         .rotationEffect(.degrees(sheetRotation))
@@ -322,14 +322,14 @@ private struct PeriodicalBackingPaperStack: View {
                         )
                         .overlay(
                             DeckledPaperShape(seed: layerSeed)
-                                .stroke(Color.black.opacity(layer == 0 ? 0.14 : 0.10), lineWidth: 0.7)
+                                .stroke(Color.black.opacity(layer == 0 ? 0.13 : 0.09), lineWidth: 0.7)
                         )
                         .rotationEffect(.degrees(backingRotation(layer)))
                         .offset(x: backingX(layer), y: backingY(layer))
                         .shadow(
-                            color: .black.opacity(layer == 0 ? 0.18 : 0.12),
-                            radius: layer == 0 ? 4.5 : 5.5,
-                            y: layer == 0 ? 4.5 : 6
+                            color: .black.opacity(layer == 0 ? 0.17 : 0.11),
+                            radius: layer == 0 ? 4.0 : 5.0,
+                            y: layer == 0 ? 3.5 : 5.0
                         )
                 }
             }
@@ -341,26 +341,32 @@ private struct PeriodicalBackingPaperStack: View {
 
     private func backingColor(_ layer: Int) -> Color {
         if layer == 0 {
-            return Color(red: 0.88, green: 0.84, blue: 0.73)
+            return Color(red: 0.91, green: 0.87, blue: 0.77)
         }
-        return Color(red: 0.82, green: 0.78, blue: 0.66)
+        return Color(red: 0.86, green: 0.82, blue: 0.71)
     }
 
     private func backingX(_ layer: Int) -> CGFloat {
-        let primary: [CGFloat] = [3.5, -3.0, 4.0, -2.5]
-        let secondary: [CGFloat] = [-4.5, 5.0, -3.5, 4.5]
+        let primary: [CGFloat] = [3.5, 4.0, -3.5, -3.0]
+        let secondary: [CGFloat] = [-4.5, -4.0, 4.5, 4.0]
         return layer == 0
             ? primary[blockIndex % primary.count]
             : secondary[blockIndex % secondary.count]
     }
 
     private func backingY(_ layer: Int) -> CGFloat {
-        layer == 0 ? 8 : 14
+        let stage = blockIndex % 4
+        if layer == 0 {
+            let primary: [CGFloat] = [7, -5, 6, -4]
+            return primary[stage]
+        }
+        let secondary: [CGFloat] = [13, 9, 12, 10]
+        return secondary[stage]
     }
 
     private func backingRotation(_ layer: Int) -> Double {
-        let primary = [0.26, -0.20, 0.22, -0.24]
-        let secondary = [-0.31, 0.29, -0.25, 0.27]
+        let primary = [0.24, -0.22, 0.20, -0.23]
+        let secondary = [-0.29, 0.27, -0.24, 0.26]
         return layer == 0
             ? primary[blockIndex % primary.count]
             : secondary[blockIndex % secondary.count]
@@ -576,65 +582,75 @@ private struct DeckledPaperShape: Shape {
 
     func path(in rect: CGRect) -> Path {
         var path = Path()
-        let horizontalSteps = max(26, Int(rect.width / 12))
-        let verticalSteps = max(20, Int(rect.height / 22))
-        let inset: CGFloat = 4.5
+        let horizontalSteps = max(30, Int(rect.width / 10))
+        let verticalSteps = max(22, Int(rect.height / 20))
+        let inset: CGFloat = 4.6
 
-        func noise(_ index: Int, salt: UInt64, primary: Double, secondary: Double) -> CGFloat {
-            let phase = Double((seed ^ salt) % 997) * 0.017
-            let x = Double(index)
-            return CGFloat(
-                sin(x * 1.37 + phase) * primary
-                + sin(x * 0.53 + phase * 1.71) * secondary
-            )
+        func hash01(_ index: Int, salt: UInt64) -> CGFloat {
+            var value = seed &+ salt &+ (UInt64(index) &* 0x9E3779B97F4A7C15)
+            value ^= value >> 30
+            value = value &* 0xBF58476D1CE4E5B9
+            value ^= value >> 27
+            value = value &* 0x94D049BB133111EB
+            value ^= value >> 31
+            return CGFloat(Double(value & 0xFFFF) / 65535.0)
         }
 
-        func periodicBite(_ index: Int, modulus: Int, depth: CGFloat, salt: UInt64) -> CGFloat {
-            let offset = Int((seed ^ salt) % UInt64(modulus))
-            return (index + offset).isMultiple(of: modulus) ? depth : 0
+        func signed(_ index: Int, salt: UInt64) -> CGFloat {
+            hash01(index, salt: salt) * 2 - 1
         }
 
-        let startY = inset + noise(0, salt: 0x11, primary: 1.35, secondary: 0.75)
-        path.move(to: CGPoint(x: inset, y: startY))
+        func tear(_ index: Int, salt: UInt64, threshold: CGFloat, maximum: CGFloat) -> CGFloat {
+            let value = hash01(index, salt: salt)
+            guard value > threshold else { return 0 }
+            return 1.2 + ((value - threshold) / (1 - threshold)) * maximum
+        }
 
-        // Quiet top edge: hand-cut, but not theatrically torn.
+        path.move(to: CGPoint(x: inset, y: inset + signed(0, salt: 0x10) * 1.3))
+
+        // Top: rough enough to show handmade paper, quieter than the lower tear.
         for i in 0...horizontalSteps {
             let progress = CGFloat(i) / CGFloat(horizontalSteps)
             let x = inset + (rect.width - inset * 2) * progress
-            let rawY = inset + noise(i, salt: 0x21, primary: 1.45, secondary: 0.85)
-            let y = min(rect.maxY - inset, max(1.3, rawY))
+            let bite = tear(i, salt: 0x20, threshold: 0.94, maximum: 1.6)
+            let rawY = inset
+                + signed(i, salt: 0x21) * 1.45
+                + CGFloat(sin(Double(i) * 0.67 + Double(seed % 23))) * 0.45
+                + bite
+            let y = min(rect.maxY - inset, max(1.2, rawY))
             path.addLine(to: CGPoint(x: x, y: y))
         }
 
-        // Side edges retain visible fiber variation while staying readable.
         for i in 1...verticalSteps {
             let progress = CGFloat(i) / CGFloat(verticalSteps)
             let y = inset + (rect.height - inset * 2) * progress
-            let bite = periodicBite(i, modulus: 17, depth: 1.4, salt: 0x31)
-            let rawX = rect.maxX - inset + noise(i, salt: 0x32, primary: 1.25, secondary: 0.70) - bite
-            let x = min(rect.maxX - 1.2, max(rect.midX, rawX))
+            let bite = tear(i, salt: 0x30, threshold: 0.95, maximum: 1.8)
+            let rawX = rect.maxX - inset + signed(i, salt: 0x31) * 1.35 - bite
+            let x = min(rect.maxX - 1.1, max(rect.midX, rawX))
             path.addLine(to: CGPoint(x: x, y: y))
         }
 
-        // Bottom edge carries the strongest tears and occasional deeper bites.
+        // Bottom: irregular torn fibers with a few deeper, non-repeating bites.
         for i in stride(from: horizontalSteps, through: 0, by: -1) {
             let progress = CGFloat(i) / CGFloat(horizontalSteps)
             let x = inset + (rect.width - inset * 2) * progress
-            let bite = periodicBite(i, modulus: 11, depth: 4.2, salt: 0x41)
-                + periodicBite(i, modulus: 19, depth: 2.6, salt: 0x42)
+            let deepTear = tear(i, salt: 0x40, threshold: 0.84, maximum: 5.4)
+            let smallTear = tear(i, salt: 0x41, threshold: 0.91, maximum: 2.2)
             let rawY = rect.maxY - inset
-                + noise(i, salt: 0x43, primary: 2.65, secondary: 1.55)
-                - bite
-            let y = min(rect.maxY - 1.1, max(rect.midY, rawY))
+                + signed(i, salt: 0x42) * 2.25
+                + CGFloat(sin(Double(i) * 0.39 + Double(seed % 29))) * 0.8
+                - deepTear
+                - smallTear
+            let y = min(rect.maxY - 1.0, max(rect.midY, rawY))
             path.addLine(to: CGPoint(x: x, y: y))
         }
 
         for i in stride(from: verticalSteps, through: 1, by: -1) {
             let progress = CGFloat(i) / CGFloat(verticalSteps)
             let y = inset + (rect.height - inset * 2) * progress
-            let bite = periodicBite(i, modulus: 13, depth: 1.6, salt: 0x51)
-            let rawX = inset + noise(i, salt: 0x52, primary: 1.35, secondary: 0.75) + bite
-            let x = max(1.2, min(rect.midX, rawX))
+            let bite = tear(i, salt: 0x50, threshold: 0.94, maximum: 1.9)
+            let rawX = inset + signed(i, salt: 0x51) * 1.45 + bite
+            let x = max(1.1, min(rect.midX, rawX))
             path.addLine(to: CGPoint(x: x, y: y))
         }
 
