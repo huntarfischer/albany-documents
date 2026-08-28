@@ -74,7 +74,7 @@ public struct PeriodicalStackReadingUnitSurface: View {
                                 salt: "article.interval.\(unit.id).\(absoluteIndex)"
                             )
                         )
-                        .frame(height: max(1, interval.height * staging.intervalHeightScale))
+                        .frame(height: CGFloat(max(1, interval.height * staging.intervalHeightScale)))
                         .padding(.top, -CGFloat(interval.overlapDepth * staging.intervalHeightScale))
                         .padding(.bottom, -CGFloat(interval.overlapDepth * 0.58 * staging.intervalHeightScale))
                         .zIndex(1)
@@ -172,13 +172,13 @@ private struct PeriodicalPaperBlockSurface: View {
         )
         .shadow(
             color: .black.opacity(staging.contactShadowOpacity),
-            radius: staging.contactShadowRadius,
-            y: staging.contactShadowY
+            radius: CGFloat(staging.contactShadowRadius),
+            y: CGFloat(staging.contactShadowY)
         )
         .shadow(
             color: .black.opacity(staging.ambientShadowOpacity),
-            radius: staging.ambientShadowRadius,
-            y: staging.ambientShadowY
+            radius: CGFloat(staging.ambientShadowRadius),
+            y: CGFloat(staging.ambientShadowY)
         )
         .padding(.horizontal, sheetHorizontalInset)
         .offset(x: sheetDrift)
@@ -327,33 +327,36 @@ private struct PeriodicalBackingPaperStack: View {
         GeometryReader { geometry in
             ZStack {
                 ForEach(Array((0..<layerCount).reversed()), id: \.self) { layer in
-                    let layerSeed = seed ^ UInt64(0x75A0 + blockIndex * 31 + layer * 17)
-                    DeckledPaperShape(seed: layerSeed, scale: staging.deckleScale)
-                        .fill(backingColor(layer))
-                        .frame(
-                            width: max(0, geometry.size.width - CGFloat(layer * 3 + 2)),
-                            height: max(0, geometry.size.height - CGFloat(layer * 2 + 1))
-                        )
-                        .overlay(
-                            DeckledPaperShape(seed: layerSeed, scale: staging.deckleScale)
-                                .stroke(Color.black.opacity(layer == 0 ? 0.13 : 0.09), lineWidth: 0.7)
-                        )
-                        .rotationEffect(.degrees(backingRotation(layer) * staging.backingDriftScale))
-                        .offset(
-                            x: backingX(layer) * CGFloat(staging.backingDriftScale),
-                            y: backingY(layer) * CGFloat(staging.backingDriftScale)
-                        )
-                        .shadow(
-                            color: .black.opacity(layer == 0 ? 0.17 : 0.11),
-                            radius: layer == 0 ? 4.0 : 5.0,
-                            y: layer == 0 ? 3.5 : 5.0
-                        )
+                    backingLayer(layer, size: geometry.size)
                 }
             }
             .frame(width: geometry.size.width, height: geometry.size.height)
         }
         .allowsHitTesting(false)
         .accessibilityHidden(true)
+    }
+
+    private func backingLayer(_ layer: Int, size: CGSize) -> some View {
+        let layerSeed = seed ^ UInt64(0x75A0 + blockIndex * 31 + layer * 17)
+        let width = max(0, size.width - CGFloat(layer * 3 + 2))
+        let height = max(0, size.height - CGFloat(layer * 2 + 1))
+        let rotation = backingRotation(layer) * staging.backingDriftScale
+        let x = backingX(layer) * CGFloat(staging.backingDriftScale)
+        let y = backingY(layer) * CGFloat(staging.backingDriftScale)
+        let shadowOpacity = layer == 0 ? 0.17 : 0.11
+        let shadowRadius: CGFloat = layer == 0 ? 4.0 : 5.0
+        let shadowY: CGFloat = layer == 0 ? 3.5 : 5.0
+
+        return DeckledPaperShape(seed: layerSeed, scale: staging.deckleScale)
+            .fill(backingColor(layer))
+            .frame(width: width, height: height)
+            .overlay(
+                DeckledPaperShape(seed: layerSeed, scale: staging.deckleScale)
+                    .stroke(Color.black.opacity(layer == 0 ? 0.13 : 0.09), lineWidth: 0.7)
+            )
+            .rotationEffect(.degrees(rotation))
+            .offset(x: x, y: y)
+            .shadow(color: .black.opacity(shadowOpacity), radius: shadowRadius, y: shadowY)
     }
 
     private func backingColor(_ layer: Int) -> Color {
@@ -627,7 +630,6 @@ private struct DeckledPaperShape: Shape {
 
         path.move(to: CGPoint(x: inset, y: inset + signed(0, salt: 0x10) * 1.3))
 
-        // Top: rough enough to show handmade paper, quieter than the lower tear.
         for i in 0...horizontalSteps {
             let progress = CGFloat(i) / CGFloat(horizontalSteps)
             let x = inset + (rect.width - inset * 2) * progress
@@ -649,7 +651,6 @@ private struct DeckledPaperShape: Shape {
             path.addLine(to: CGPoint(x: x, y: y))
         }
 
-        // Bottom: irregular torn fibers with a few deeper, non-repeating bites.
         for i in stride(from: horizontalSteps, through: 0, by: -1) {
             let progress = CGFloat(i) / CGFloat(horizontalSteps)
             let x = inset + (rect.width - inset * 2) * progress
