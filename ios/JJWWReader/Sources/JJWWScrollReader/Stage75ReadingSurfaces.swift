@@ -154,8 +154,19 @@ private struct PeriodicalPaperBlockSurface: View {
             .foregroundStyle(Color.black.opacity(max(0.60, recipe.ink.density)))
         }
         .clipShape(DeckledPaperShape(seed: seed))
-        .overlay(DeckledPaperShape(seed: seed).stroke(Color.black.opacity(0.13), lineWidth: 0.65))
-        .shadow(color: .black.opacity(0.38), radius: 9, y: 6)
+        .background {
+            PeriodicalBackingPaperStack(
+                seed: seed,
+                blockIndex: blockIndex,
+                layerCount: backingLayerCount
+            )
+        }
+        .overlay(
+            DeckledPaperShape(seed: seed)
+                .stroke(Color(red: 0.20, green: 0.16, blue: 0.10).opacity(0.22), lineWidth: 0.85)
+        )
+        .shadow(color: .black.opacity(0.22), radius: 2.2, y: 2.4)
+        .shadow(color: .black.opacity(0.34), radius: 9.5, y: 6.5)
         .padding(.horizontal, sheetHorizontalInset)
         .offset(x: sheetDrift)
         .rotationEffect(.degrees(sheetRotation))
@@ -272,19 +283,87 @@ private struct PeriodicalPaperBlockSurface: View {
         }
     }
 
+    private var backingLayerCount: Int {
+        let values = [1, 2, 1, 2]
+        return values[blockIndex % values.count]
+    }
+
     private var sheetHorizontalInset: CGFloat {
-        let values: [CGFloat] = [7, 13, 9, 16]
+        let values: [CGFloat] = [6, 15, 10, 18]
         return values[blockIndex % values.count]
     }
 
     private var sheetDrift: CGFloat {
-        let values: [CGFloat] = [-5, 7, -6, 4]
+        let values: [CGFloat] = [-4, 6, -5, 4]
         return values[blockIndex % values.count]
     }
 
     private var sheetRotation: Double {
-        let values = [-0.14, 0.18, -0.10, 0.12]
+        let values = [-0.13, 0.17, -0.09, 0.11]
         return values[blockIndex % values.count]
+    }
+}
+
+private struct PeriodicalBackingPaperStack: View {
+    let seed: UInt64
+    let blockIndex: Int
+    let layerCount: Int
+
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack {
+                ForEach(Array((0..<layerCount).reversed()), id: \.self) { layer in
+                    let layerSeed = seed ^ UInt64(0x75A0 + blockIndex * 31 + layer * 17)
+                    DeckledPaperShape(seed: layerSeed)
+                        .fill(backingColor(layer))
+                        .frame(
+                            width: max(0, geometry.size.width - CGFloat(layer * 3 + 2)),
+                            height: max(0, geometry.size.height - CGFloat(layer * 2 + 1))
+                        )
+                        .overlay(
+                            DeckledPaperShape(seed: layerSeed)
+                                .stroke(Color.black.opacity(layer == 0 ? 0.14 : 0.10), lineWidth: 0.7)
+                        )
+                        .rotationEffect(.degrees(backingRotation(layer)))
+                        .offset(x: backingX(layer), y: backingY(layer))
+                        .shadow(
+                            color: .black.opacity(layer == 0 ? 0.18 : 0.12),
+                            radius: layer == 0 ? 4.5 : 5.5,
+                            y: layer == 0 ? 4.5 : 6
+                        )
+                }
+            }
+            .frame(width: geometry.size.width, height: geometry.size.height)
+        }
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
+    }
+
+    private func backingColor(_ layer: Int) -> Color {
+        if layer == 0 {
+            return Color(red: 0.88, green: 0.84, blue: 0.73)
+        }
+        return Color(red: 0.82, green: 0.78, blue: 0.66)
+    }
+
+    private func backingX(_ layer: Int) -> CGFloat {
+        let primary: [CGFloat] = [3.5, -3.0, 4.0, -2.5]
+        let secondary: [CGFloat] = [-4.5, 5.0, -3.5, 4.5]
+        return layer == 0
+            ? primary[blockIndex % primary.count]
+            : secondary[blockIndex % secondary.count]
+    }
+
+    private func backingY(_ layer: Int) -> CGFloat {
+        layer == 0 ? 8 : 14
+    }
+
+    private func backingRotation(_ layer: Int) -> Double {
+        let primary = [0.26, -0.20, 0.22, -0.24]
+        let secondary = [-0.31, 0.29, -0.25, 0.27]
+        return layer == 0
+            ? primary[blockIndex % primary.count]
+            : secondary[blockIndex % secondary.count]
     }
 }
 
@@ -497,23 +576,68 @@ private struct DeckledPaperShape: Shape {
 
     func path(in rect: CGRect) -> Path {
         var path = Path()
-        let steps = max(18, Int(rect.width / 18))
-        path.move(to: CGPoint(x: 0, y: 5))
+        let horizontalSteps = max(26, Int(rect.width / 12))
+        let verticalSteps = max(20, Int(rect.height / 22))
+        let inset: CGFloat = 4.5
 
-        for i in 0...steps {
-            let x = rect.width * CGFloat(i) / CGFloat(steps)
-            let phase = Double(i) * 1.71 + Double(seed % 31) * 0.11
-            let y = 4.5 + CGFloat(sin(phase) * 2.0 + sin(phase * 0.47) * 1.2)
+        func noise(_ index: Int, salt: UInt64, primary: Double, secondary: Double) -> CGFloat {
+            let phase = Double((seed ^ salt) % 997) * 0.017
+            let x = Double(index)
+            return CGFloat(
+                sin(x * 1.37 + phase) * primary
+                + sin(x * 0.53 + phase * 1.71) * secondary
+            )
+        }
+
+        func periodicBite(_ index: Int, modulus: Int, depth: CGFloat, salt: UInt64) -> CGFloat {
+            let offset = Int((seed ^ salt) % UInt64(modulus))
+            return (index + offset).isMultiple(of: modulus) ? depth : 0
+        }
+
+        let startY = inset + noise(0, salt: 0x11, primary: 1.35, secondary: 0.75)
+        path.move(to: CGPoint(x: inset, y: startY))
+
+        // Quiet top edge: hand-cut, but not theatrically torn.
+        for i in 0...horizontalSteps {
+            let progress = CGFloat(i) / CGFloat(horizontalSteps)
+            let x = inset + (rect.width - inset * 2) * progress
+            let rawY = inset + noise(i, salt: 0x21, primary: 1.45, secondary: 0.85)
+            let y = min(rect.maxY - inset, max(1.3, rawY))
             path.addLine(to: CGPoint(x: x, y: y))
         }
 
-        path.addLine(to: CGPoint(x: rect.width, y: rect.height - 5))
-        for i in stride(from: steps, through: 0, by: -1) {
-            let x = rect.width * CGFloat(i) / CGFloat(steps)
-            let phase = Double(i) * 1.43 + Double(seed % 47) * 0.09
-            let y = rect.height - 4.5 + CGFloat(sin(phase) * 2.3 + sin(phase * 0.61) * 1.0)
+        // Side edges retain visible fiber variation while staying readable.
+        for i in 1...verticalSteps {
+            let progress = CGFloat(i) / CGFloat(verticalSteps)
+            let y = inset + (rect.height - inset * 2) * progress
+            let bite = periodicBite(i, modulus: 17, depth: 1.4, salt: 0x31)
+            let rawX = rect.maxX - inset + noise(i, salt: 0x32, primary: 1.25, secondary: 0.70) - bite
+            let x = min(rect.maxX - 1.2, max(rect.midX, rawX))
             path.addLine(to: CGPoint(x: x, y: y))
         }
+
+        // Bottom edge carries the strongest tears and occasional deeper bites.
+        for i in stride(from: horizontalSteps, through: 0, by: -1) {
+            let progress = CGFloat(i) / CGFloat(horizontalSteps)
+            let x = inset + (rect.width - inset * 2) * progress
+            let bite = periodicBite(i, modulus: 11, depth: 4.2, salt: 0x41)
+                + periodicBite(i, modulus: 19, depth: 2.6, salt: 0x42)
+            let rawY = rect.maxY - inset
+                + noise(i, salt: 0x43, primary: 2.65, secondary: 1.55)
+                - bite
+            let y = min(rect.maxY - 1.1, max(rect.midY, rawY))
+            path.addLine(to: CGPoint(x: x, y: y))
+        }
+
+        for i in stride(from: verticalSteps, through: 1, by: -1) {
+            let progress = CGFloat(i) / CGFloat(verticalSteps)
+            let y = inset + (rect.height - inset * 2) * progress
+            let bite = periodicBite(i, modulus: 13, depth: 1.6, salt: 0x51)
+            let rawX = inset + noise(i, salt: 0x52, primary: 1.35, secondary: 0.75) + bite
+            let x = max(1.2, min(rect.midX, rawX))
+            path.addLine(to: CGPoint(x: x, y: y))
+        }
+
         path.closeSubpath()
         return path
     }
