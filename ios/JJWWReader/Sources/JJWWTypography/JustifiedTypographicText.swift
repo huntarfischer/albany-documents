@@ -118,7 +118,7 @@ private struct UIKitJustifiedText: UIViewRepresentable {
             string: text,
             attributes: [
                 .font: platformFont,
-                .foregroundColor: UIColor.label.withAlphaComponent(0.84),
+                .foregroundColor: UIColor.label.withAlphaComponent(0.90),
                 .kern: CGFloat(token.tracking + trackingDelta),
                 .paragraphStyle: paragraph
             ]
@@ -127,6 +127,16 @@ private struct UIKitJustifiedText: UIViewRepresentable {
 
     private var platformFont: UIFont {
         let size = basePointSize(for: token.textStyle) * CGFloat(max(0.75, pointScale))
+
+        if token.design == .baskerville {
+            return UIFont(name: "Baskerville", size: size)
+                ?? UIFont.systemFont(ofSize: size, weight: .regular)
+        }
+        if token.design == .bodoni {
+            return UIFont(name: "Bodoni 72", size: size)
+                ?? UIFont.systemFont(ofSize: size, weight: .bold)
+        }
+
         let weight: UIFont.Weight
         switch token.weight {
         case .regular: weight = .regular
@@ -142,6 +152,7 @@ private struct UIKitJustifiedText: UIViewRepresentable {
         case .rounded: design = .rounded
         case .monospaced: design = .monospaced
         case .system: design = .default
+        case .baskerville, .bodoni: design = .serif
         }
         guard let descriptor = base.fontDescriptor.withDesign(design) else { return base }
         return UIFont(descriptor: descriptor, size: size)
@@ -211,7 +222,7 @@ private enum AppKitJustifiedRasterizer {
             string: text,
             attributes: [
                 .font: appKitPlatformFont(token: token, pointScale: pointScale),
-                .foregroundColor: NSColor.labelColor.withAlphaComponent(0.84),
+                .foregroundColor: NSColor.labelColor.withAlphaComponent(0.90),
                 .kern: CGFloat(token.tracking + trackingDelta),
                 .paragraphStyle: paragraph
             ]
@@ -293,7 +304,7 @@ private struct AppKitJustifiedText: NSViewRepresentable {
             string: text,
             attributes: [
                 .font: appKitPlatformFont(token: token, pointScale: pointScale),
-                .foregroundColor: NSColor.labelColor.withAlphaComponent(0.84),
+                .foregroundColor: NSColor.labelColor.withAlphaComponent(0.90),
                 .kern: CGFloat(token.tracking + trackingDelta),
                 .paragraphStyle: paragraph
             ]
@@ -304,6 +315,18 @@ private struct AppKitJustifiedText: NSViewRepresentable {
 @MainActor
 private func appKitPlatformFont(token: TypographyToken, pointScale: Double) -> NSFont {
     let size = basePointSize(for: token.textStyle) * CGFloat(max(0.75, pointScale))
+
+    if token.design == .baskerville {
+        return NSFont(name: "Baskerville", size: size)
+            ?? NSFont(name: "Times New Roman", size: size)
+            ?? NSFont.systemFont(ofSize: size)
+    }
+    if token.design == .bodoni {
+        return NSFont(name: "Bodoni 72", size: size)
+            ?? NSFont(name: "Times New Roman Bold", size: size)
+            ?? NSFont.boldSystemFont(ofSize: size)
+    }
+
     if token.design == .serif {
         let name: String
         switch token.weight {
