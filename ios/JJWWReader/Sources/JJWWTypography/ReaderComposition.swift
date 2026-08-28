@@ -90,19 +90,19 @@ public enum ReaderCompositionCatalog {
         headerScale: 1.28,
         headerTrackingDelta: 0.45,
         headerLineSpacingMultiplier: 1.08,
-        headerTopSpace: 12,
-        headerBottomSpace: 24,
+        headerTopSpace: 8,
+        headerBottomSpace: 18,
         runningHeaderPointSize: 9.5,
         ruleThickness: 0.8,
         ruleLengthFraction: 0.88,
-        ruleGap: 10,
+        ruleGap: 7,
         printWear: PrintWearProfile(
             id: "wear.argus1827.v0.1",
-            headerWear: 0.20,
-            bodyWear: 0.045,
-            strokeStarvation: 0.22,
-            edgeErosion: 0.18,
-            darkDeposit: 0.10,
+            headerWear: 0.14,
+            bodyWear: 0.040,
+            strokeStarvation: 0.10,
+            edgeErosion: 0.08,
+            darkDeposit: 0,
             seedSalt: 811
         )
     )
