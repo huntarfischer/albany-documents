@@ -26,11 +26,15 @@ public final class ReaderWorkshopSession: ObservableObject {
         self.materialStore = materialStore
 
         let initial = edition.orderedReadingUnits.first(where: { $0.kind != .cover }) ?? edition.orderedReadingUnits[0]
-        selectedUnitID = initial.id
-        draftMaterial = materialStore.profile(id: initial.materialProfile.id) ?? materialStore.profiles[0]
-        draftTypography = TypographyCatalog.profile(id: initial.typographyProfile.id) ?? TypographyCatalog.editorial
-        draftComposition = ReaderCompositionCatalog.profile(for: initial)
-        selectedRole = draftTypography.tokens.first?.role ?? .body
+        let initialMaterial = materialStore.profile(id: initial.materialProfile.id) ?? materialStore.profiles[0]
+        let initialTypography = TypographyCatalog.profile(id: initial.typographyProfile.id) ?? TypographyCatalog.editorial
+        let initialComposition = ReaderCompositionCatalog.profile(for: initial)
+
+        self.selectedUnitID = initial.id
+        self.draftMaterial = initialMaterial
+        self.draftTypography = initialTypography
+        self.draftComposition = initialComposition
+        self.selectedRole = initialTypography.tokens.first?.role ?? .body
     }
 
     public var selectedUnit: ReadingUnit {
