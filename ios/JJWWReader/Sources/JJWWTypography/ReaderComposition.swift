@@ -78,6 +78,42 @@ public struct ReaderCompositionProfile: Codable, Equatable, Identifiable, Sendab
     }
 }
 
+/// Debug-time composition overrides used by the Stage 7.75 Reader Workshop.
+/// Scroll and Pages already resolve their shared composition through this catalog,
+/// so an override immediately exercises the production rendering path in both.
+public final class ReaderCompositionTuningRegistry: @unchecked Sendable {
+    public static let shared = ReaderCompositionTuningRegistry()
+
+    private let lock = NSLock()
+    private var overrides: [String: ReaderCompositionProfile] = [:]
+
+    private init() {}
+
+    public func profile(id: String) -> ReaderCompositionProfile? {
+        lock.lock()
+        defer { lock.unlock() }
+        return overrides[id]
+    }
+
+    public func set(_ profile: ReaderCompositionProfile) {
+        lock.lock()
+        overrides[profile.id] = profile
+        lock.unlock()
+    }
+
+    public func remove(id: String) {
+        lock.lock()
+        overrides.removeValue(forKey: id)
+        lock.unlock()
+    }
+
+    public func removeAll() {
+        lock.lock()
+        overrides.removeAll()
+        lock.unlock()
+    }
+}
+
 public enum ReaderCompositionCatalog {
     public static let argus = ReaderCompositionProfile(
         id: "composition.argus1827.v0.1",
@@ -103,7 +139,19 @@ public enum ReaderCompositionCatalog {
             strokeStarvation: 0.10,
             edgeErosion: 0.08,
             darkDeposit: 0,
-            seedSalt: 811
+            seedSalt: 811,
+            wearScale: 0.48,
+            starvationCap: 0.10,
+            erosionCap: 0.08,
+            inkOpacity: 0.94,
+            usesMultiplyBlend: true,
+            datePointScale: 0.68,
+            sourceHeaderPointScale: 1.0,
+            sectionTitlePointScale: 0.88,
+            dateTrackingAdjustment: -0.25,
+            sourceHeaderTrackingAdjustment: -0.20,
+            sectionTitleTrackingAdjustment: -0.45,
+            sourceHeaderLineSpacingOverride: -1.5
         )
     )
 
@@ -227,11 +275,15 @@ public enum ReaderCompositionCatalog {
         farewell
     ]
 
-    public static func profile(id: String) -> ReaderCompositionProfile? {
+    public static func bundledProfile(id: String) -> ReaderCompositionProfile? {
         all.first { $0.id == id }
     }
 
-    public static func profile(for unit: ReadingUnit) -> ReaderCompositionProfile {
+    public static func profile(id: String) -> ReaderCompositionProfile? {
+        ReaderCompositionTuningRegistry.shared.profile(id: id) ?? bundledProfile(id: id)
+    }
+
+    public static func bundledProfile(for unit: ReadingUnit) -> ReaderCompositionProfile {
         switch unit.materialProfile.id {
         case MaterialProfile.argus1827.id: return argus
         case MaterialProfile.dailyAdvertiser1827.id: return dailyAdvertiser
@@ -240,5 +292,10 @@ public enum ReaderCompositionCatalog {
         case MaterialProfile.farewell1827.id: return farewell
         default: return trial
         }
+    }
+
+    public static func profile(for unit: ReadingUnit) -> ReaderCompositionProfile {
+        let base = bundledProfile(for: unit)
+        return ReaderCompositionTuningRegistry.shared.profile(id: base.id) ?? base
     }
 }
