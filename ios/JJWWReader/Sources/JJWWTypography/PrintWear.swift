@@ -117,18 +117,14 @@ public struct PrintWearText: View {
 
     private var resolvedFont: Font {
         let size = basePointSize(for: token.textStyle) * max(0.75, pointScale)
-        switch token.design {
-        case .baskerville:
-            return .custom("Baskerville", size: size).weight(token.weight.swiftUIWeight)
-        case .bodoni:
-            return .custom("Bodoni 72", size: size).weight(token.weight.swiftUIWeight)
-        default:
-            return .system(
-                size: size,
-                weight: token.weight.swiftUIWeight,
-                design: token.design.swiftUIDesign
-            )
+        if let family = token.fontFamily {
+            return .custom(family, size: size).weight(token.weight.swiftUIWeight)
         }
+        return .system(
+            size: size,
+            weight: token.weight.swiftUIWeight,
+            design: token.design.swiftUIDesign
+        )
     }
 
     private func basePointSize(for style: TypographyDynamicTextStyle) -> CGFloat {
