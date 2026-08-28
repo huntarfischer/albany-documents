@@ -68,21 +68,29 @@ public struct PrintWearText: View {
     }
 
     public var body: some View {
-        let rendered = token.uppercase ? text.uppercased() : text
-        let intensity = min(0.46, max(0, profile.intensity(for: token.role)))
+        let canonicalRendered = token.uppercase ? text.uppercased() : text
+        let rendered = displayText(for: canonicalRendered)
+        let wearScale = isArgusPrint ? 0.48 : 1.0
+        let intensity = min(0.46, max(0, profile.intensity(for: token.role) * wearScale))
+        let starvation = isArgusPrint ? min(profile.strokeStarvation, 0.10) : profile.strokeStarvation
+        let erosion = isArgusPrint ? min(profile.edgeErosion, 0.08) : profile.edgeErosion
 
         ZStack {
             baseText(rendered)
                 .mask(
                     PrintWearMask(
                         intensity: intensity,
-                        starvation: profile.strokeStarvation,
-                        erosion: profile.edgeErosion,
+                        starvation: starvation,
+                        erosion: erosion,
                         seed: seed ^ profile.seedSalt
                     )
                 )
 
-            if profile.darkDeposit > 0.001 {
+            // Stage 7.5b: the Argus should read as a crisp letterpress impression.
+            // The old offset deposit made its fine Bodoni/Baskerville edges look
+            // digitally blurred at phone scale, so Argus wear is now subtractive
+            // only. Other source profiles retain their authored deposit behavior.
+            if profile.darkDeposit > 0.001, !isArgusPrint {
                 baseText(rendered)
                     .opacity(min(0.16, profile.darkDeposit * 0.62))
                     .offset(x: 0.24, y: 0.16)
@@ -101,22 +109,22 @@ public struct PrintWearText: View {
             JustifiedTypographicText(
                 rendered,
                 token: token,
-                pointScale: pointScale,
-                trackingDelta: trackingDelta,
+                pointScale: effectivePointScale,
+                trackingDelta: effectiveTrackingDelta,
                 lineSpacingMultiplier: lineSpacingMultiplier,
                 snapshotLayoutWidth: snapshotLayoutWidth
             )
         } else {
             Text(rendered)
                 .font(resolvedFont)
-                .tracking(token.tracking + trackingDelta)
-                .lineSpacing(token.lineSpacing * lineSpacingMultiplier)
+                .tracking(token.tracking + effectiveTrackingDelta)
+                .lineSpacing(effectiveLineSpacing)
                 .multilineTextAlignment(token.centered ? .center : .leading)
         }
     }
 
     private var resolvedFont: Font {
-        let size = basePointSize(for: token.textStyle) * max(0.75, pointScale)
+        let size = basePointSize(for: token.textStyle) * max(0.75, effectivePointScale)
         if let family = token.fontFamily {
             return .custom(family, size: size).weight(token.weight.swiftUIWeight)
         }
@@ -125,6 +133,60 @@ public struct PrintWearText: View {
             weight: token.weight.swiftUIWeight,
             design: token.design.swiftUIDesign
         )
+    }
+
+    /// The 7.5b finish keeps the semantic type tokens intact while correcting
+    /// the visual hierarchy of the Argus opening at phone scale.
+    private var effectivePointScale: Double {
+        guard isArgusPrint else { return pointScale }
+        switch token.role {
+        case .dateHeading:
+            return pointScale * 0.86
+        case .sourceHeader:
+            return pointScale
+        case .sectionTitle:
+            return pointScale * 0.88
+        default:
+            return pointScale
+        }
+    }
+
+    /// Stage 7.5a's shared header tracking delta was useful for generic serif
+    /// headings but opened the Bodoni masthead back up. Argus gets role-specific
+    /// tracking so the masthead remains narrow and the other headings stay calm.
+    private var effectiveTrackingDelta: Double {
+        guard isArgusPrint else { return trackingDelta }
+        switch token.role {
+        case .dateHeading, .sectionTitle:
+            return 0
+        case .sourceHeader:
+            return -0.20
+        default:
+            return trackingDelta
+        }
+    }
+
+    private var effectiveLineSpacing: CGFloat {
+        if isArgusPrint, token.role == .sourceHeader {
+            return -1.0
+        }
+        return token.lineSpacing * lineSpacingMultiplier
+    }
+
+    /// This is presentation-only lineation. The canonical source string remains
+    /// untouched and is still used for accessibility and provenance.
+    private func displayText(for rendered: String) -> String {
+        guard isArgusPrint,
+              token.role == .sourceHeader,
+              rendered == "THE ALBANY ARGUS & CITY GAZETTE"
+        else {
+            return rendered
+        }
+        return "THE ALBANY ARGUS\n& CITY GAZETTE"
+    }
+
+    private var isArgusPrint: Bool {
+        profile.id.hasPrefix("wear.argus1827")
     }
 
     private func basePointSize(for style: TypographyDynamicTextStyle) -> CGFloat {
