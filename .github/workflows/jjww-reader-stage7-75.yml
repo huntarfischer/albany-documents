@@ -1,0 +1,36 @@
+name: JJWW Reader Stage 7.75 Simulator Host
+
+on:
+  push:
+    branches:
+      - feature/jjww-reader-stage7-75
+  workflow_dispatch:
+
+jobs:
+  stage7_75:
+    runs-on: macos-14
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Swift package tests
+        working-directory: ios/JJWWReader
+        run: swift test
+
+      - name: Build JJWW iOS host for Simulator
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project ios/JJWWApp/JJWWApp.xcodeproj \
+            -scheme JJWWApp \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO \
+            build | xcpretty
+
+      - name: Release package build
+        working-directory: ios/JJWWReader
+        run: swift build -c release --product jjww-stage7-5-snapshot
