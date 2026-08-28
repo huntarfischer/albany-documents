@@ -168,7 +168,7 @@ public enum TypographyCatalog {
         displayName: "Newspaper 1827",
         tokens: [
             token(.dateHeading, .subheadline, .serif, .bold, tracking: 0.95, uppercase: true, centered: true, fontFamily: "Baskerville"),
-            token(.sourceHeader, .title, .serif, .black, tracking: -0.35, uppercase: true, centered: true, fontFamily: "Bodoni 72"),
+            token(.sourceHeader, .title2, .serif, .black, tracking: -0.50, uppercase: true, centered: true, fontFamily: "Bodoni 72"),
             token(.sectionTitle, .headline, .serif, .bold, tracking: 0.20, uppercase: true, centered: true, fontFamily: "Baskerville"),
             token(
                 .body,
