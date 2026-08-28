@@ -170,6 +170,43 @@ public struct MaterialProfileDefinition: Codable, Equatable, Sendable, Identifia
     }
 }
 
+/// Debug-time overrides used by the Stage 7.75 Reader Workshop. The production
+/// store remains the authority when no override is installed. Keeping the hook
+/// here lets the real MaterialSurfaceView consume a draft profile without a
+/// second preview renderer or a forked design system.
+public final class MaterialTuningRegistry: @unchecked Sendable {
+    public static let shared = MaterialTuningRegistry()
+
+    private let lock = NSLock()
+    private var overrides: [String: MaterialProfileDefinition] = [:]
+
+    private init() {}
+
+    public func profile(id: String) -> MaterialProfileDefinition? {
+        lock.lock()
+        defer { lock.unlock() }
+        return overrides[id]
+    }
+
+    public func set(_ profile: MaterialProfileDefinition) {
+        lock.lock()
+        overrides[profile.id] = profile
+        lock.unlock()
+    }
+
+    public func remove(id: String) {
+        lock.lock()
+        overrides.removeValue(forKey: id)
+        lock.unlock()
+    }
+
+    public func removeAll() {
+        lock.lock()
+        overrides.removeAll()
+        lock.unlock()
+    }
+}
+
 public struct MaterialProfileStore: Sendable {
     public let profiles: [MaterialProfileDefinition]
 
@@ -178,6 +215,10 @@ public struct MaterialProfileStore: Sendable {
     }
 
     public func profile(id: String) -> MaterialProfileDefinition? {
+        MaterialTuningRegistry.shared.profile(id: id) ?? bundledProfile(id: id)
+    }
+
+    public func bundledProfile(id: String) -> MaterialProfileDefinition? {
         profiles.first { $0.id == id }
     }
 
