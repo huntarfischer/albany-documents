@@ -9,8 +9,8 @@ import AppKit
 /// The actual orange book cloth supplied from the current JJWW cover.
 ///
 /// Stage 7.5a treats this as the continuous reading table underneath the papers.
-/// The bundled 128 px crop is tiled at near-native scale so the weave remains
-/// visibly cloth rather than collapsing into a flat orange fill.
+/// The supplied crop is tiled at a reduced physical scale so its weave remains
+/// legible without becoming a graphic pattern at phone size.
 public struct JJWWCoverClothTexture: View {
     public let seed: UInt64
 
@@ -23,10 +23,16 @@ public struct JJWWCoverClothTexture: View {
             ZStack {
                 fallback
                 texture
+                    .frame(
+                        width: geometry.size.width / 0.62 + 180,
+                        height: geometry.size.height / 0.62 + 180
+                    )
+                    .scaleEffect(0.62)
                     .offset(x: xDrift, y: yDrift)
-                    .contrast(1.06)
-                    .saturation(1.03)
-                Color.black.opacity(0.018)
+                    .contrast(1.03)
+                    .saturation(0.96)
+                    .brightness(-0.025)
+                Color.black.opacity(0.055)
             }
             .frame(width: geometry.size.width, height: geometry.size.height)
             .clipped()
@@ -44,7 +50,7 @@ public struct JJWWCoverClothTexture: View {
             if let image = UIImage(contentsOfFile: url.path) {
                 Image(uiImage: image)
                     .resizable(resizingMode: .tile)
-                    .interpolation(.medium)
+                    .interpolation(.high)
             } else {
                 fallback
             }
@@ -52,7 +58,7 @@ public struct JJWWCoverClothTexture: View {
             if let image = NSImage(contentsOf: url) {
                 Image(nsImage: image)
                     .resizable(resizingMode: .tile)
-                    .interpolation(.medium)
+                    .interpolation(.high)
             } else {
                 fallback
             }
