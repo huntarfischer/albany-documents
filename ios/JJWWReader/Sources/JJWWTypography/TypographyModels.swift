@@ -45,12 +45,10 @@ public enum TypographyDesign: String, Codable, Sendable {
     case rounded
     case monospaced
     case system
-    case baskerville
-    case bodoni
 
     var swiftUIDesign: Font.Design {
         switch self {
-        case .serif, .baskerville, .bodoni: return .serif
+        case .serif: return .serif
         case .rounded: return .rounded
         case .monospaced: return .monospaced
         case .system: return .default
@@ -92,6 +90,7 @@ public struct TypographyToken: Codable, Equatable, Sendable {
     public let uppercase: Bool
     public let paragraphAlignment: TypographyParagraphAlignment
     public let hyphenationFactor: Double
+    public let fontFamily: String?
 
     public init(
         role: TypographyRole,
@@ -103,7 +102,8 @@ public struct TypographyToken: Codable, Equatable, Sendable {
         uppercase: Bool = false,
         centered: Bool = false,
         paragraphAlignment: TypographyParagraphAlignment? = nil,
-        hyphenationFactor: Double = 0
+        hyphenationFactor: Double = 0,
+        fontFamily: String? = nil
     ) {
         self.role = role
         self.textStyle = textStyle
@@ -114,30 +114,22 @@ public struct TypographyToken: Codable, Equatable, Sendable {
         self.uppercase = uppercase
         self.paragraphAlignment = paragraphAlignment ?? (centered ? .centered : .leading)
         self.hyphenationFactor = min(1, max(0, hyphenationFactor))
+        self.fontFamily = fontFamily
     }
 
     public var centered: Bool { paragraphAlignment == .centered }
     public var justified: Bool { paragraphAlignment == .justified }
 
     public var font: Font {
-        switch design {
-        case .baskerville:
+        if let fontFamily {
             return .custom(
-                "Baskerville",
+                fontFamily,
                 size: typographyBasePointSize(for: textStyle),
                 relativeTo: textStyle.swiftUIStyle
             )
             .weight(weight.swiftUIWeight)
-        case .bodoni:
-            return .custom(
-                "Bodoni 72",
-                size: typographyBasePointSize(for: textStyle),
-                relativeTo: textStyle.swiftUIStyle
-            )
-            .weight(weight.swiftUIWeight)
-        default:
-            return .system(textStyle.swiftUIStyle, design: design.swiftUIDesign, weight: weight.swiftUIWeight)
         }
+        return .system(textStyle.swiftUIStyle, design: design.swiftUIDesign, weight: weight.swiftUIWeight)
     }
 }
 
@@ -175,17 +167,18 @@ public enum TypographyCatalog {
         id: TypographyProfile.newspaper1827.id,
         displayName: "Newspaper 1827",
         tokens: [
-            token(.dateHeading, .subheadline, .baskerville, .bold, tracking: 0.95, uppercase: true, centered: true),
-            token(.sourceHeader, .title, .bodoni, .black, tracking: -0.35, uppercase: true, centered: true),
-            token(.sectionTitle, .headline, .baskerville, .bold, tracking: 0.20, uppercase: true, centered: true),
+            token(.dateHeading, .subheadline, .serif, .bold, tracking: 0.95, uppercase: true, centered: true, fontFamily: "Baskerville"),
+            token(.sourceHeader, .title, .serif, .black, tracking: -0.35, uppercase: true, centered: true, fontFamily: "Bodoni 72"),
+            token(.sectionTitle, .headline, .serif, .bold, tracking: 0.20, uppercase: true, centered: true, fontFamily: "Baskerville"),
             token(
                 .body,
                 .body,
-                .baskerville,
+                .serif,
                 .regular,
                 lineSpacing: 1,
                 paragraphAlignment: .justified,
-                hyphenationFactor: 0.74
+                hyphenationFactor: 0.74,
+                fontFamily: "Baskerville"
             )
         ]
     )
@@ -251,7 +244,8 @@ public enum TypographyCatalog {
         uppercase: Bool = false,
         centered: Bool = false,
         paragraphAlignment: TypographyParagraphAlignment? = nil,
-        hyphenationFactor: Double = 0
+        hyphenationFactor: Double = 0,
+        fontFamily: String? = nil
     ) -> TypographyToken {
         TypographyToken(
             role: role,
@@ -263,7 +257,8 @@ public enum TypographyCatalog {
             uppercase: uppercase,
             centered: centered,
             paragraphAlignment: paragraphAlignment,
-            hyphenationFactor: hyphenationFactor
+            hyphenationFactor: hyphenationFactor,
+            fontFamily: fontFamily
         )
     }
 }
