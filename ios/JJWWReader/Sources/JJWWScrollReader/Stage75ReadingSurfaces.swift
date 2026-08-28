@@ -40,6 +40,7 @@ public struct PeriodicalStackReadingUnitSurface: View {
         if let material = materialStore.profile(id: unit.materialProfile.id),
            let typography = TypographyCatalog.profile(id: unit.typographyProfile.id) {
             let composition = ReaderCompositionCatalog.profile(for: unit)
+            let staging = PeriodicalStagingCatalog.profile(for: unit)
             let selected = selectedBlocks
 
             VStack(spacing: 0) {
@@ -52,6 +53,7 @@ public struct PeriodicalStackReadingUnitSurface: View {
                         material: material,
                         typography: typography,
                         composition: composition,
+                        staging: staging,
                         materialSetting: materialSetting,
                         textScale: textScale,
                         entryContext: entryContext,
@@ -72,13 +74,14 @@ public struct PeriodicalStackReadingUnitSurface: View {
                                 salt: "article.interval.\(unit.id).\(absoluteIndex)"
                             )
                         )
-                        .padding(.top, -CGFloat(interval.overlapDepth))
-                        .padding(.bottom, -CGFloat(interval.overlapDepth * 0.58))
+                        .frame(height: max(1, interval.height * staging.intervalHeightScale))
+                        .padding(.top, -CGFloat(interval.overlapDepth * staging.intervalHeightScale))
+                        .padding(.bottom, -CGFloat(interval.overlapDepth * 0.58 * staging.intervalHeightScale))
                         .zIndex(1)
                     }
                 }
             }
-            .padding(.vertical, 12)
+            .padding(.vertical, CGFloat(staging.stackVerticalPadding))
             .background(JJWWCoverClothTexture(seed: 0x4A4A5757))
             .dynamicTypeSize(textScale.dynamicTypeSize)
             .accessibilityElement(children: .contain)
@@ -109,6 +112,7 @@ private struct PeriodicalPaperBlockSurface: View {
     let material: MaterialProfileDefinition
     let typography: TypographyProfileDefinition
     let composition: ReaderCompositionProfile
+    let staging: PeriodicalStagingProfile
     let materialSetting: ReaderMaterialSetting
     let textScale: ReaderTextScale
     let entryContext: InkAwakeningEntryContext
@@ -153,20 +157,29 @@ private struct PeriodicalPaperBlockSurface: View {
             .padding(.bottom, 50)
             .foregroundStyle(Color.black.opacity(max(0.60, recipe.ink.density)))
         }
-        .clipShape(DeckledPaperShape(seed: seed))
+        .clipShape(DeckledPaperShape(seed: seed, scale: staging.deckleScale))
         .background {
             PeriodicalBackingPaperStack(
                 seed: seed,
                 blockIndex: blockIndex,
-                layerCount: backingLayerCount
+                layerCount: backingLayerCount,
+                staging: staging
             )
         }
         .overlay(
-            DeckledPaperShape(seed: seed)
+            DeckledPaperShape(seed: seed, scale: staging.deckleScale)
                 .stroke(Color(red: 0.20, green: 0.16, blue: 0.10).opacity(0.22), lineWidth: 0.85)
         )
-        .shadow(color: .black.opacity(0.23), radius: 2.0, y: 2.2)
-        .shadow(color: .black.opacity(0.33), radius: 9.5, y: 6.5)
+        .shadow(
+            color: .black.opacity(staging.contactShadowOpacity),
+            radius: staging.contactShadowRadius,
+            y: staging.contactShadowY
+        )
+        .shadow(
+            color: .black.opacity(staging.ambientShadowOpacity),
+            radius: staging.ambientShadowRadius,
+            y: staging.ambientShadowY
+        )
         .padding(.horizontal, sheetHorizontalInset)
         .offset(x: sheetDrift)
         .rotationEffect(.degrees(sheetRotation))
@@ -285,22 +298,22 @@ private struct PeriodicalPaperBlockSurface: View {
 
     private var backingLayerCount: Int {
         let values = [1, 2, 1, 2]
-        return values[blockIndex % values.count]
+        return min(values[blockIndex % values.count], max(0, staging.backingLayerLimit))
     }
 
     private var sheetHorizontalInset: CGFloat {
         let values: [CGFloat] = [6, 15, 10, 18]
-        return values[blockIndex % values.count]
+        return values[blockIndex % values.count] * CGFloat(staging.sheetInsetScale)
     }
 
     private var sheetDrift: CGFloat {
         let values: [CGFloat] = [-4, 6, -5, 4]
-        return values[blockIndex % values.count]
+        return values[blockIndex % values.count] * CGFloat(staging.sheetDriftScale)
     }
 
     private var sheetRotation: Double {
         let values = [-0.13, 0.17, -0.09, 0.11]
-        return values[blockIndex % values.count]
+        return values[blockIndex % values.count] * staging.sheetRotationScale
     }
 }
 
@@ -308,24 +321,28 @@ private struct PeriodicalBackingPaperStack: View {
     let seed: UInt64
     let blockIndex: Int
     let layerCount: Int
+    let staging: PeriodicalStagingProfile
 
     var body: some View {
         GeometryReader { geometry in
             ZStack {
                 ForEach(Array((0..<layerCount).reversed()), id: \.self) { layer in
                     let layerSeed = seed ^ UInt64(0x75A0 + blockIndex * 31 + layer * 17)
-                    DeckledPaperShape(seed: layerSeed)
+                    DeckledPaperShape(seed: layerSeed, scale: staging.deckleScale)
                         .fill(backingColor(layer))
                         .frame(
                             width: max(0, geometry.size.width - CGFloat(layer * 3 + 2)),
                             height: max(0, geometry.size.height - CGFloat(layer * 2 + 1))
                         )
                         .overlay(
-                            DeckledPaperShape(seed: layerSeed)
+                            DeckledPaperShape(seed: layerSeed, scale: staging.deckleScale)
                                 .stroke(Color.black.opacity(layer == 0 ? 0.13 : 0.09), lineWidth: 0.7)
                         )
-                        .rotationEffect(.degrees(backingRotation(layer)))
-                        .offset(x: backingX(layer), y: backingY(layer))
+                        .rotationEffect(.degrees(backingRotation(layer) * staging.backingDriftScale))
+                        .offset(
+                            x: backingX(layer) * CGFloat(staging.backingDriftScale),
+                            y: backingY(layer) * CGFloat(staging.backingDriftScale)
+                        )
                         .shadow(
                             color: .black.opacity(layer == 0 ? 0.17 : 0.11),
                             radius: layer == 0 ? 4.0 : 5.0,
@@ -579,12 +596,14 @@ public struct FarewellReadingUnitSurface: View {
 
 private struct DeckledPaperShape: Shape {
     let seed: UInt64
+    let scale: Double
 
     func path(in rect: CGRect) -> Path {
         var path = Path()
         let horizontalSteps = max(30, Int(rect.width / 10))
         let verticalSteps = max(22, Int(rect.height / 20))
         let inset: CGFloat = 4.6
+        let roughness = CGFloat(max(0, scale))
 
         func hash01(_ index: Int, salt: UInt64) -> CGFloat {
             var value = seed &+ salt &+ (UInt64(index) &* 0x9E3779B97F4A7C15)
@@ -597,13 +616,13 @@ private struct DeckledPaperShape: Shape {
         }
 
         func signed(_ index: Int, salt: UInt64) -> CGFloat {
-            hash01(index, salt: salt) * 2 - 1
+            (hash01(index, salt: salt) * 2 - 1) * roughness
         }
 
         func tear(_ index: Int, salt: UInt64, threshold: CGFloat, maximum: CGFloat) -> CGFloat {
             let value = hash01(index, salt: salt)
             guard value > threshold else { return 0 }
-            return 1.2 + ((value - threshold) / (1 - threshold)) * maximum
+            return (1.2 + ((value - threshold) / (1 - threshold)) * maximum) * roughness
         }
 
         path.move(to: CGPoint(x: inset, y: inset + signed(0, salt: 0x10) * 1.3))
@@ -615,7 +634,7 @@ private struct DeckledPaperShape: Shape {
             let bite = tear(i, salt: 0x20, threshold: 0.94, maximum: 1.6)
             let rawY = inset
                 + signed(i, salt: 0x21) * 1.45
-                + CGFloat(sin(Double(i) * 0.67 + Double(seed % 23))) * 0.45
+                + CGFloat(sin(Double(i) * 0.67 + Double(seed % 23))) * 0.45 * roughness
                 + bite
             let y = min(rect.maxY - inset, max(1.2, rawY))
             path.addLine(to: CGPoint(x: x, y: y))
@@ -638,7 +657,7 @@ private struct DeckledPaperShape: Shape {
             let smallTear = tear(i, salt: 0x41, threshold: 0.91, maximum: 2.2)
             let rawY = rect.maxY - inset
                 + signed(i, salt: 0x42) * 2.25
-                + CGFloat(sin(Double(i) * 0.39 + Double(seed % 29))) * 0.8
+                + CGFloat(sin(Double(i) * 0.39 + Double(seed % 29))) * 0.8 * roughness
                 - deepTear
                 - smallTear
             let y = min(rect.maxY - 1.0, max(rect.midY, rawY))
