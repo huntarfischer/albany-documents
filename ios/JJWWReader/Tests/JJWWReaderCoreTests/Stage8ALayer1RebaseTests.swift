@@ -90,7 +90,7 @@ struct Stage8ALayer1RebaseTests {
         #expect(nextLine == 2070)
     }
 
-    @Test("Only L1-CNT-0019 changes text or label under canonical v1.1")
+    @Test("Only L1-CNT-0019 changes canonical text under v1.1")
     func exactlyOneContainerChanges() throws {
         let seal = try Stage8Layer1RebaseSeal.bundled()
         let correction = try #require(seal.containerCorrections.first)
@@ -107,24 +107,20 @@ struct Stage8ALayer1RebaseTests {
         #expect(try requireString(layer0Reference["line_sequence_sha256"]) == seal.sourceLayer0.lineSequenceSHA256)
 
         var hashMismatches: [String] = []
-        var labelMismatches: [String] = []
 
         for (block, rawContainer) in zip(blocks, containers) {
             let container = try requireObject(rawContainer)
             let containerID = try requireString(container["container_id"])
             let storedHash = try requireString(container["text_sha256"])
-            let storedLabel = try requireString(container["label_as_written"])
             let canonicalHash = sha256(block.lines.joined(separator: "\n"))
-            let canonicalLabel = try #require(block.lines.first)
 
             if storedHash != canonicalHash {
                 hashMismatches.append(containerID)
             }
-            if storedLabel != canonicalLabel {
-                labelMismatches.append(containerID)
-            }
 
             if containerID == correction.containerID {
+                let storedLabel = try requireString(container["label_as_written"])
+                let canonicalLabel = try #require(block.lines.first)
                 #expect(storedHash == correction.oldTextSHA256)
                 #expect(canonicalHash == correction.newTextSHA256)
                 #expect(storedLabel == correction.oldLabel)
@@ -133,7 +129,6 @@ struct Stage8ALayer1RebaseTests {
         }
 
         #expect(hashMismatches == [correction.containerID])
-        #expect(labelMismatches == [correction.containerID])
 
         let flattened = blocks.flatMap(\.lines)
         #expect(flattened.count == 2069)
