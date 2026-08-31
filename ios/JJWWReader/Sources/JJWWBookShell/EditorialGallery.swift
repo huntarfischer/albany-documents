@@ -108,8 +108,8 @@ public enum EditorialGalleryError: Error, Equatable {
 /// Stage 7 image library.
 ///
 /// The Gallery directory is intentionally forgiving: any supported image dropped
-/// into it appears in the developer gallery automatically. The manifest adds the
-/// scholarly/editorial metadata needed to place an image into the authored flow.
+/// anywhere inside it appears in the developer gallery automatically. The manifest
+/// adds the scholarly/editorial metadata needed to place an image into the authored flow.
 public struct EditorialGalleryStore: Sendable {
     public static let expectedManifestVersion = "0.1"
 
@@ -138,27 +138,53 @@ public struct EditorialGalleryStore: Sendable {
 
         let galleryURL = Bundle.module.resourceURL?.appendingPathComponent("Gallery", isDirectory: true)
         let listedFiles = discoverImageFiles(at: galleryURL)
-        let listedByName = Dictionary(uniqueKeysWithValues: listedFiles.map { ($0.lastPathComponent, $0) })
+        let listedByRelativePath: [String: URL]
+        let listedByName: [String: URL]
+
+        if let galleryURL {
+            listedByRelativePath = Dictionary(
+                uniqueKeysWithValues: listedFiles.map {
+                    (relativeGalleryPath(for: $0, relativeTo: galleryURL), $0)
+                }
+            )
+        } else {
+            listedByRelativePath = [:]
+        }
+
+        listedByName = listedFiles.reduce(into: [:]) { result, url in
+            if result[url.lastPathComponent] == nil {
+                result[url.lastPathComponent] = url
+            }
+        }
 
         var resolved = manifest.assets.map { descriptor in
             ResolvedEditorialAsset(
                 descriptor: descriptor,
-                resourceURL: listedByName[descriptor.filename],
+                resourceURL: listedByRelativePath[descriptor.filename] ?? listedByName[descriptor.filename],
                 discoveredAutomatically: false
             )
         }
 
         let manifestFilenames = Set(manifest.assets.map(\.filename))
-        for url in listedFiles where !manifestFilenames.contains(url.lastPathComponent) {
+        for url in listedFiles {
+            let relativePath = galleryURL.map {
+                relativeGalleryPath(for: url, relativeTo: $0)
+            } ?? url.lastPathComponent
+
+            guard !manifestFilenames.contains(relativePath),
+                  !manifestFilenames.contains(url.lastPathComponent) else {
+                continue
+            }
+
             let descriptor = EditorialAssetDescriptor(
-                id: "unfiled.\(slug(url.deletingPathExtension().lastPathComponent))",
-                filename: url.lastPathComponent,
+                id: "unfiled.\(slug(relativePath))",
+                filename: relativePath,
                 role: .researchImage,
                 title: humanizedFilename(url.deletingPathExtension().lastPathComponent),
                 altText: "",
                 insertionStyle: .inline,
                 placement: nil,
-                notes: "Auto-discovered. Add this filename to editorial-gallery-manifest-v0.1.json to caption or place it."
+                notes: "Auto-discovered research image. Add this Gallery-relative filename to editorial-gallery-manifest-v0.1.json to caption or place it."
             )
             resolved.append(
                 ResolvedEditorialAsset(
@@ -206,18 +232,39 @@ public struct EditorialGalleryStore: Sendable {
         assets.filter { !$0.isAvailable && !$0.discoveredAutomatically }
     }
 
-    private static func discoverImageFiles(at directoryURL: URL?) -> [URL] {
+    static func discoverImageFiles(at directoryURL: URL?) -> [URL] {
         guard let directoryURL,
-              let urls = try? FileManager.default.contentsOfDirectory(
+              let enumerator = FileManager.default.enumerator(
                 at: directoryURL,
                 includingPropertiesForKeys: [.isRegularFileKey],
-                options: [.skipsHiddenFiles]
+                options: [.skipsHiddenFiles, .skipsPackageDescendants]
               ) else {
             return []
         }
 
         let extensions = Set(["png", "jpg", "jpeg", "heic", "tif", "tiff"])
-        return urls.filter { extensions.contains($0.pathExtension.lowercased()) }
+        var urls: [URL] = []
+
+        for case let url as URL in enumerator {
+            guard extensions.contains(url.pathExtension.lowercased()),
+                  (try? url.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile) == true else {
+                continue
+            }
+            urls.append(url)
+        }
+
+        return urls.sorted { $0.path < $1.path }
+    }
+
+    private static func relativeGalleryPath(for url: URL, relativeTo directoryURL: URL) -> String {
+        let rootPath = directoryURL.standardizedFileURL.path
+        let filePath = url.standardizedFileURL.path
+        let prefix = rootPath.hasSuffix("/") ? rootPath : rootPath + "/"
+
+        guard filePath.hasPrefix(prefix) else {
+            return url.lastPathComponent
+        }
+        return String(filePath.dropFirst(prefix.count))
     }
 
     private static func slug(_ string: String) -> String {
