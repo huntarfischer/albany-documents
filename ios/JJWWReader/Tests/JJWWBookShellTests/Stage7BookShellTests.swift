@@ -86,6 +86,24 @@ struct Stage7BookShellTests {
         #expect(gallery.asset(id: "jjww-albany-delayed-title-plate")?.descriptor.role == .delayedTitlePlate)
     }
 
+    @Test("Gallery recursively discovers research images in nested folders")
+    func galleryResearchDiscoveryIsRecursive() throws {
+        let root = FileManager.default.temporaryDirectory
+            .appendingPathComponent("jjww-gallery-\(UUID().uuidString)", isDirectory: true)
+        let nested = root
+            .appendingPathComponent("Research", isDirectory: true)
+            .appendingPathComponent("Maps", isDirectory: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+
+        try FileManager.default.createDirectory(at: nested, withIntermediateDirectories: true)
+        try Data([0]).write(to: nested.appendingPathComponent("albany-1827.JPG"))
+        try Data([0]).write(to: nested.appendingPathComponent("notes.txt"))
+
+        let discovered = EditorialGalleryStore.discoverImageFiles(at: root)
+
+        #expect(discovered.map(\.lastPathComponent) == ["albany-1827.JPG"])
+    }
+
     @Test("Delayed Albany title plate has no invented canonical placement")
     func delayedTitlePlacementIsNotGuessed() throws {
         let gallery = try EditorialGalleryStore.bundled()
