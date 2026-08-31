@@ -36,14 +36,18 @@ public struct JJWWBookView: View {
                 coordinator: session.coordinator
             )
 
-            BookProgressOverlay(
-                reader: session.coordinator.scrollSession,
-                model: session.progressSpine
-            )
-            .frame(width: 12)
-            .padding(.top, 58)
-            .padding(.bottom, 12)
-            .padding(.trailing, 5)
+            if session.coordinator.scrollSession.displayMode == .scroll {
+                BookProgressOverlay(
+                    reader: session.coordinator.scrollSession,
+                    model: session.progressSpine
+                )
+                .frame(width: 12)
+                .padding(.top, 58)
+                .padding(.bottom, 12)
+                .padding(.leading, 5)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                .allowsHitTesting(false)
+            }
 
             if session.chromeVisible {
                 BookShellChrome(
@@ -260,7 +264,7 @@ private struct BookShellChrome: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 textScaleMenu
-                modeMenu
+                modeToggle
                 overflowMenu
             }
             .buttonStyle(.plain)
@@ -320,20 +324,8 @@ private struct BookShellChrome: View {
         .accessibilityValue(reader.textScale.rawValue.capitalized)
     }
 
-    private var modeMenu: some View {
-        Menu {
-            ForEach(ReaderDisplayMode.allCases, id: \.self) { mode in
-                Button {
-                    setDisplayMode(mode)
-                } label: {
-                    if mode == reader.displayMode {
-                        Label(mode.rawValue.capitalized, systemImage: "checkmark")
-                    } else {
-                        Text(mode.rawValue.capitalized)
-                    }
-                }
-            }
-        } label: {
+    private var modeToggle: some View {
+        Button(action: toggleDisplayMode) {
             Text(reader.displayMode.rawValue.uppercased())
                 .font(.system(size: 8, weight: .black, design: .monospaced))
                 .padding(.horizontal, 7)
@@ -342,6 +334,11 @@ private struct BookShellChrome: View {
         }
         .accessibilityLabel("Reading mode")
         .accessibilityValue(reader.displayMode.rawValue.capitalized)
+        .accessibilityHint(
+            reader.displayMode == .scroll
+                ? "Switch to Pages"
+                : "Switch to Scroll"
+        )
     }
 
     private var overflowMenu: some View {
@@ -374,16 +371,12 @@ private struct BookShellChrome: View {
         .accessibilityLabel("More reading controls")
     }
 
-    private func setDisplayMode(_ mode: ReaderDisplayMode) {
-        switch mode {
+    private func toggleDisplayMode() {
+        switch reader.displayMode {
         case .scroll:
-            if reader.displayMode == .pages {
-                coordinator.enterScroll()
-            }
+            coordinator.enterPages()
         case .pages:
-            if reader.displayMode != .pages {
-                coordinator.enterPages()
-            }
+            coordinator.enterScroll()
         }
     }
 }
