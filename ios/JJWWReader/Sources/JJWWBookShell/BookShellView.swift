@@ -246,13 +246,15 @@ private struct BookReaderHost: View {
                 materialStore: materialStore,
                 session: reader,
                 pagesEnabled: true,
-                onRequestPages: { coordinator.enterPages() }
+                onRequestPages: { coordinator.enterPages() },
+                showsChrome: false
             )
         case .pages:
             PagesReaderView(
                 edition: edition,
                 materialStore: materialStore,
-                coordinator: coordinator
+                coordinator: coordinator,
+                showsChrome: false
             )
         }
     }
@@ -281,53 +283,34 @@ private struct BookShellChrome: View {
     let onHide: () -> Void
 
     var body: some View {
-        VStack(spacing: 0) {
-            HStack(spacing: 10) {
-                Button(action: onCover) {
-                    Text("JJWW")
-                        .font(.system(size: 10, weight: .black, design: .serif))
-                        .tracking(0.6)
-                }
-                .accessibilityLabel("Return to cover")
-
-                Rectangle()
-                    .fill(JJWWEditorialPalette.orange)
-                    .frame(width: 2, height: 19)
-
-                Text(currentLabel)
-                    .font(.system(size: 10, weight: .semibold, design: .serif))
-                    .lineLimit(1)
-                    .truncationMode(.tail)
-                    .foregroundStyle(JJWWEditorialPalette.cream.opacity(0.78))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                textScaleMenu
-                modeToggle
-                overflowMenu
+        HStack(spacing: 10) {
+            Button(action: onCover) {
+                Text("JJWW")
+                    .font(.system(size: 10, weight: .black, design: .serif))
+                    .tracking(0.6)
             }
-            .buttonStyle(.plain)
-            .foregroundStyle(JJWWEditorialPalette.cream)
-            .padding(.horizontal, 12)
-            .frame(height: 52)
-            .background(JJWWEditorialPalette.ink.opacity(0.97))
+            .accessibilityLabel("Return to cover")
 
-            GeometryReader { geometry in
-                ZStack(alignment: .leading) {
-                    Rectangle()
-                        .fill(JJWWEditorialPalette.cream.opacity(0.16))
-                    Rectangle()
-                        .fill(JJWWEditorialPalette.orange)
-                        .frame(
-                            width: max(
-                                1,
-                                geometry.size.width * CGFloat(min(1, max(0, reader.progress)))
-                            )
-                        )
-                }
-            }
-            .frame(height: 3)
-            .accessibilityHidden(true)
+            Rectangle()
+                .fill(JJWWEditorialPalette.orange)
+                .frame(width: 2, height: 19)
+
+            Text(currentLabel)
+                .font(.system(size: 10, weight: .semibold, design: .serif))
+                .lineLimit(1)
+                .truncationMode(.tail)
+                .foregroundStyle(JJWWEditorialPalette.cream.opacity(0.78))
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            textScaleMenu
+            modeToggle
+            overflowMenu
         }
+        .buttonStyle(.plain)
+        .foregroundStyle(JJWWEditorialPalette.cream)
+        .padding(.horizontal, 12)
+        .frame(height: 52)
+        .background(JJWWEditorialPalette.ink.opacity(0.97))
         .shadow(color: .black.opacity(0.22), radius: 5, y: 2)
     }
 
