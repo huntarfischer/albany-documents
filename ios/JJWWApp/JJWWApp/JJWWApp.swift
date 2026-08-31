@@ -88,6 +88,8 @@ private struct JJWWAppRootView: View {
                             edition: model.edition,
                             materialStore: model.materialStore
                         )
+                        .presentationDetents([.large])
+                        .presentationDragIndicator(.visible)
                     }
                     #endif
                 }
