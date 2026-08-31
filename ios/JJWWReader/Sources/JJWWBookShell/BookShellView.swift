@@ -30,24 +30,22 @@ public struct JJWWBookView: View {
 
     private var boundReader: some View {
         ZStack(alignment: .topTrailing) {
-            SynchronizedReaderView(
+            BookReaderHost(
                 edition: session.edition,
                 materialStore: session.materialStore,
                 coordinator: session.coordinator
             )
 
-            if session.coordinator.scrollSession.displayMode == .scroll {
-                BookProgressOverlay(
-                    reader: session.coordinator.scrollSession,
-                    model: session.progressSpine
-                )
-                .frame(width: 12)
-                .padding(.top, 58)
-                .padding(.bottom, 12)
-                .padding(.leading, 5)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                .allowsHitTesting(false)
-            }
+            BookProgressOverlay(
+                reader: session.coordinator.scrollSession,
+                model: session.progressSpine
+            )
+            .frame(width: 12)
+            .padding(.top, 58)
+            .padding(.bottom, 12)
+            .padding(.leading, 5)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .allowsHitTesting(false)
 
             if session.chromeVisible {
                 BookShellChrome(
@@ -223,15 +221,55 @@ private struct CoverActionButtonStyle: ButtonStyle {
     }
 }
 
+private struct BookReaderHost: View {
+    let edition: Edition
+    let materialStore: MaterialProfileStore
+    @ObservedObject var coordinator: ReaderLocationCoordinator
+    @ObservedObject private var reader: ScrollReaderSession
+
+    init(
+        edition: Edition,
+        materialStore: MaterialProfileStore,
+        coordinator: ReaderLocationCoordinator
+    ) {
+        self.edition = edition
+        self.materialStore = materialStore
+        self.coordinator = coordinator
+        _reader = ObservedObject(wrappedValue: coordinator.scrollSession)
+    }
+
+    var body: some View {
+        switch reader.displayMode {
+        case .scroll:
+            ScrollReaderView(
+                edition: edition,
+                materialStore: materialStore,
+                session: reader,
+                pagesEnabled: true,
+                onRequestPages: { coordinator.enterPages() }
+            )
+        case .pages:
+            PagesReaderView(
+                edition: edition,
+                materialStore: materialStore,
+                coordinator: coordinator
+            )
+        }
+    }
+}
+
 private struct BookProgressOverlay: View {
     @ObservedObject var reader: ScrollReaderSession
     let model: ProgressSpineModel
 
+    @ViewBuilder
     var body: some View {
-        ClothProgressSpine(
-            model: model,
-            progress: model.progress(for: reader.location)
-        )
+        if reader.displayMode == .scroll {
+            ClothProgressSpine(
+                model: model,
+                progress: model.progress(for: reader.location)
+            )
+        }
     }
 }
 
