@@ -1,0 +1,30 @@
+{
+  "formatVersion": "1.0-stage8-layer1-rebase",
+  "sourceLayer0": {
+    "version": "1.0",
+    "lineCount": 2069,
+    "lineSequenceSHA256": "735edd6b4b60fdf1d019ac9baa0644ed21ce71bdf48018ef42634e38eef9fba7"
+  },
+  "targetLayer0": {
+    "version": "1.1",
+    "lineCount": 2069,
+    "lineSequenceSHA256": "106274914ba9c0cc1afd4418d6e8a8dbfa62a5f2d04c9089d87aa0a406147a8e"
+  },
+  "geometryUnchanged": true,
+  "expectedContainerCount": 82,
+  "expectedStructuralUnitCount": 468,
+  "expectedSourceCount": 67,
+  "expectedSourceOccurrenceCount": 82,
+  "expectedSourceContextCount": 44,
+  "containerCorrections": [
+    {
+      "containerID": "L1-CNT-0019",
+      "lineStart": 119,
+      "lineEnd": 127,
+      "oldLabel": "Monday June 16, 1827",
+      "newLabel": "Monday June 18, 1827",
+      "oldTextSHA256": "bce0874bce8cfea1c20a179b12d19f29f9e13747b0e56ea5293cc540e93a7b50",
+      "newTextSHA256": "08c39bd030c8d335caf372d86399a1a3bda4488ff1b98eec782e9075bdf0909f"
+    }
+  ]
+}
