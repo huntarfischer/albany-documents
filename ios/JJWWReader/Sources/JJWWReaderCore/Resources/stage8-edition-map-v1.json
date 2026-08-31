@@ -1,0 +1,86 @@
+{
+  "formatVersion": "1.0-stage8-edition-map",
+  "canonicalLayer0Version": "1.1",
+  "canonicalLineSequenceSHA256": "106274914ba9c0cc1afd4418d6e8a8dbfa62a5f2d04c9089d87aa0a406147a8e",
+  "editionID": "jjww-v1-production-edition",
+  "editionTitle": "Jesse James and the Widow Whipple",
+  "editionVersion": "stage8-v1",
+  "defaults": {
+    "idPrefix": "unit-",
+    "presentationFamily": "unclassified",
+    "typographyProfileID": "jjwwEditorial",
+    "materialProfileID": "jjwwEditorial"
+  },
+  "groups": [
+    {
+      "id": "argus-may-8-9-1827",
+      "containerIDs": ["L1-CNT-0002", "L1-CNT-0003", "L1-CNT-0004"],
+      "presentationFamily": "periodical",
+      "presentationVariant": "argus1827",
+      "typographyProfileID": "newspaper1827",
+      "materialProfileID": "argus1827",
+      "sourcePresentation": {
+        "workID": "L1-WORK-0024",
+        "passageIDs": ["L1-PASS-0001", "L1-PASS-0002", "L1-PASS-0003"],
+        "displayTitle": "The Albany Argus & City Gazette",
+        "sourceKind": "periodical"
+      }
+    },
+    {
+      "id": "daily-advertiser-june-18-1827",
+      "containerIDs": ["L1-CNT-0019"],
+      "presentationFamily": "periodical",
+      "presentationVariant": "dailyAdvertiser1827",
+      "typographyProfileID": "newspaper1827",
+      "materialProfileID": "dailyAdvertiser1827",
+      "sourcePresentation": {
+        "workID": "L1-WORK-0025",
+        "passageIDs": ["L1-PASS-0017"],
+        "displayTitle": "The Albany Daily Advertiser",
+        "sourceKind": "periodical"
+      }
+    },
+    {
+      "id": "confession-of-jesse-james-strang",
+      "containerIDs": ["L1-CNT-0024"],
+      "presentationFamily": "pamphlet",
+      "presentationVariant": "confessionPamphlet1827",
+      "typographyProfileID": "confessionPamphlet1827",
+      "materialProfileID": "confessionPamphlet1827",
+      "sourcePresentation": {
+        "workID": "L1-WORK-0001",
+        "passageIDs": ["L1-PASS-0022"],
+        "displayTitle": "The Confession Of Jesse James Strang",
+        "sourceKind": "confessionPamphlet"
+      }
+    },
+    {
+      "id": "trial-of-jesse-james-strang",
+      "containerIDs": ["L1-CNT-0025", "L1-CNT-0026", "L1-CNT-0027", "L1-CNT-0028", "L1-CNT-0029", "L1-CNT-0030"],
+      "presentationFamily": "courtLegal",
+      "presentationVariant": "trialPamphlet1827",
+      "typographyProfileID": "trialRecord1827",
+      "materialProfileID": "trialRecord1827",
+      "sourcePresentation": {
+        "workID": "L1-WORK-0022",
+        "passageIDs": ["L1-PASS-0023"],
+        "displayTitle": "THE TRIAL OF JESSE JAMES STRAND, 1827",
+        "sourceKind": "trialPamphlet"
+      }
+    },
+    {
+      "id": "farewell-address",
+      "containerIDs": ["L1-CNT-0075"],
+      "presentationFamily": "displayArtifact",
+      "presentationVariant": "farewellBroadside",
+      "typographyProfileID": "farewell1827",
+      "materialProfileID": "farewell1827",
+      "sourcePresentation": {
+        "workID": "L1-WORK-0010",
+        "passageIDs": ["L1-PASS-0054"],
+        "displayTitle": "Farewell Address",
+        "sourceKind": "literaryArtifact"
+      }
+    }
+  ]
+}
