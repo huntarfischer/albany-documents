@@ -19,7 +19,6 @@ public final class BookShellSession: ObservableObject {
     public let progressSpine: ProgressSpineModel
 
     @Published public private(set) var phase: BookShellPhase
-    @Published public var galleryPresented: Bool
     @Published public var chromeVisible: Bool
 
     public init(
@@ -34,7 +33,6 @@ public final class BookShellSession: ObservableObject {
         self.gallery = gallery
         self.progressSpine = ProgressSpineModel(edition: edition)
         self.phase = initialPhase
-        self.galleryPresented = false
         self.chromeVisible = true
 
         let scrollSession = ScrollReaderSession(
@@ -82,7 +80,6 @@ public final class BookShellSession: ObservableObject {
 
     public func returnToCover() {
         phase = .cover
-        galleryPresented = false
     }
 
     public func setDisplayMode(_ mode: ReaderDisplayMode) {

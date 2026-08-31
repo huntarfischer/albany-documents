@@ -79,14 +79,15 @@ private struct JJWWAppRootView: View {
                             .overlay(Circle().stroke(.white.opacity(0.18), lineWidth: 0.5))
                     }
                     .buttonStyle(.plain)
-                    .accessibilityLabel("Open Reader Workshop")
+                    .accessibilityLabel("Open Reader Lab")
                     .padding(.trailing, 18)
                     .padding(.bottom, 24)
                     .sheet(isPresented: $workshopPresented) {
                         ReaderLabView(
                             profiles: model.materialStore.profiles,
                             edition: model.edition,
-                            materialStore: model.materialStore
+                            materialStore: model.materialStore,
+                            gallery: model.session.gallery
                         )
                         .presentationDetents([.large])
                         .presentationDragIndicator(.visible)

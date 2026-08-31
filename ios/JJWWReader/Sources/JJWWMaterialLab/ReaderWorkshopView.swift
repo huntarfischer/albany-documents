@@ -136,7 +136,7 @@ public struct ReaderWorkshopView: View {
         case preview = "Preview"
         case material = "Material"
         case type = "Type"
-        case composition = "Composition"
+        case composition = "Comp."
         case export = "Export"
     }
 

@@ -266,38 +266,61 @@ public struct EditorialGalleryView: View {
 
     public var body: some View {
         ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 150), spacing: 14)], spacing: 14) {
-                ForEach(store.assets) { asset in
-                    VStack(alignment: .leading, spacing: 7) {
-                        EditorialAssetImage(asset: asset, contentMode: .fill)
-                            .frame(height: 170)
-                            .clipped()
+            VStack(alignment: .leading, spacing: 14) {
+                HStack(alignment: .firstTextBaseline) {
+                    Text("EDITORIAL GALLERY")
+                        .font(.system(size: 18, weight: .black, design: .serif))
+                        .tracking(0.5)
+                        .foregroundStyle(JJWWEditorialPalette.cream)
 
-                        Text(asset.descriptor.title)
-                            .font(.system(size: 14, weight: .bold, design: .serif))
-                            .lineLimit(2)
+                    Spacer()
 
-                        HStack(spacing: 6) {
-                            Text(asset.descriptor.role.rawValue.uppercased())
-                            Spacer(minLength: 4)
-                            Text(statusText(asset))
-                        }
+                    Text("\(store.assets.count) ASSETS")
                         .font(.system(size: 8, weight: .black, design: .monospaced))
-                        .foregroundStyle(JJWWEditorialPalette.ink.opacity(0.58))
+                        .foregroundStyle(JJWWEditorialPalette.cream.opacity(0.58))
+                }
+
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 150), spacing: 14)], spacing: 14) {
+                    ForEach(store.assets) { asset in
+                        VStack(alignment: .leading, spacing: 7) {
+                            EditorialAssetImage(asset: asset, contentMode: .fill)
+                                .frame(height: 170)
+                                .clipped()
+
+                            Text(asset.descriptor.title)
+                                .font(.system(size: 14, weight: .bold, design: .serif))
+                                .lineLimit(2)
+
+                            HStack(spacing: 6) {
+                                Text(asset.descriptor.role.rawValue.uppercased())
+                                Spacer(minLength: 4)
+                                Text(Self.statusText(asset))
+                            }
+                            .font(.system(size: 8, weight: .black, design: .monospaced))
+                            .foregroundStyle(JJWWEditorialPalette.ink.opacity(0.58))
+                        }
+                        .padding(8)
+                        .background(JJWWEditorialPalette.cream.opacity(0.94))
+                        .overlay(Rectangle().stroke(Color.black.opacity(0.10), lineWidth: 0.5))
                     }
-                    .padding(8)
-                    .background(JJWWEditorialPalette.cream.opacity(0.94))
-                    .overlay(Rectangle().stroke(Color.black.opacity(0.10), lineWidth: 0.5))
                 }
             }
             .padding(16)
         }
-        .background(JJWWEditorialPalette.ink)
-        .navigationTitle("Editorial Gallery")
+        .background(JJWWEditorialPalette.ink.ignoresSafeArea())
+        .accessibilityLabel("Editorial Gallery")
     }
 
-    private func statusText(_ asset: ResolvedEditorialAsset) -> String {
+    static func statusText(_ asset: ResolvedEditorialAsset) -> String {
         if !asset.isAvailable { return "MISSING" }
+
+        switch asset.descriptor.role {
+        case .cover, .publisherMark:
+            return "SHELL"
+        default:
+            break
+        }
+
         if let placement = asset.descriptor.placement {
             return "L\(placement.canonicalLine) \(placement.edge.rawValue.uppercased())"
         }

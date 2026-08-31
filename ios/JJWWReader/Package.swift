@@ -65,7 +65,7 @@ let package = Package(
         ),
         .target(
             name: "JJWWMaterialLab",
-            dependencies: ["JJWWReaderCore", "JJWWMaterials", "JJWWTypography", "JJWWScrollReader", "JJWWPagination"]
+            dependencies: ["JJWWReaderCore", "JJWWMaterials", "JJWWTypography", "JJWWScrollReader", "JJWWPagination", "JJWWBookShell"]
         ),
         .executableTarget(
             name: "JJWWStage0Print",

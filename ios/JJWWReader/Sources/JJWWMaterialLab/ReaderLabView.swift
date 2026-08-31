@@ -2,6 +2,7 @@ import SwiftUI
 import JJWWReaderCore
 import JJWWMaterials
 import JJWWPagination
+import JJWWBookShell
 
 #if DEBUG
 public struct ReaderLabView: View {
@@ -10,15 +11,18 @@ public struct ReaderLabView: View {
     private let profiles: [MaterialProfileDefinition]
     private let edition: Edition?
     private let materialStore: MaterialProfileStore?
+    private let gallery: EditorialGalleryStore?
 
     public init(
         profiles: [MaterialProfileDefinition],
         edition: Edition? = nil,
-        materialStore: MaterialProfileStore? = nil
+        materialStore: MaterialProfileStore? = nil,
+        gallery: EditorialGalleryStore? = nil
     ) {
         self.profiles = profiles
         self.edition = edition
         self.materialStore = materialStore
+        self.gallery = gallery
     }
 
     public var body: some View {
@@ -39,6 +43,11 @@ public struct ReaderLabView: View {
 
             PageCompositionLabView()
                 .tabItem { Label("Pages", systemImage: "doc.text.image") }
+
+            if let gallery {
+                EditorialGalleryView(store: gallery)
+                    .tabItem { Label("Gallery", systemImage: "photo.on.rectangle.angled") }
+            }
         }
         .safeAreaInset(edge: .top, spacing: 0) {
             HStack(spacing: 12) {

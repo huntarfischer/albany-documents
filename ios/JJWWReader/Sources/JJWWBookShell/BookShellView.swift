@@ -26,16 +26,6 @@ public struct JJWWBookView: View {
                 boundReader
             }
         }
-        .sheet(isPresented: $session.galleryPresented) {
-            NavigationStack {
-                EditorialGalleryView(store: session.gallery)
-                    .toolbar {
-                        ToolbarItem(placement: .confirmationAction) {
-                            Button("Done") { session.galleryPresented = false }
-                        }
-                    }
-            }
-        }
     }
 
     private var boundReader: some View {
@@ -61,7 +51,6 @@ public struct JJWWBookView: View {
                     reader: session.coordinator.scrollSession,
                     coordinator: session.coordinator,
                     onCover: { session.returnToCover() },
-                    onGallery: { session.galleryPresented = true },
                     onHide: { session.toggleChrome() }
                 )
                 .transition(.move(edge: .top).combined(with: .opacity))
@@ -145,8 +134,8 @@ public struct BookCoverThresholdView: View {
                     .accessibilityElement(children: .contain)
 
                     publisherMark
-                        .frame(height: 28)
-                        .opacity(0.84)
+                        .frame(height: 36)
+                        .opacity(0.96)
 
                     Spacer(minLength: 14)
                 }
@@ -247,12 +236,11 @@ private struct BookShellChrome: View {
     @ObservedObject var reader: ScrollReaderSession
     @ObservedObject var coordinator: ReaderLocationCoordinator
     let onCover: () -> Void
-    let onGallery: () -> Void
     let onHide: () -> Void
 
     var body: some View {
         VStack(spacing: 0) {
-            HStack(spacing: 11) {
+            HStack(spacing: 10) {
                 Button(action: onCover) {
                     Text("JJWW")
                         .font(.system(size: 10, weight: .black, design: .serif))
@@ -267,55 +255,13 @@ private struct BookShellChrome: View {
                 Text(currentLabel)
                     .font(.system(size: 10, weight: .semibold, design: .serif))
                     .lineLimit(1)
+                    .truncationMode(.tail)
                     .foregroundStyle(JJWWEditorialPalette.cream.opacity(0.78))
+                    .frame(maxWidth: .infinity, alignment: .leading)
 
-                Spacer(minLength: 6)
-
-                Menu {
-                    ForEach(ReaderTextScale.allCases, id: \.self) { scale in
-                        Button(scale.rawValue.capitalized) {
-                            if reader.displayMode == .pages {
-                                try? coordinator.repaginate(textScale: scale)
-                            } else {
-                                reader.changingTextScale(to: scale)
-                            }
-                        }
-                    }
-                } label: {
-                    Text("Aa")
-                        .font(.system(size: 15, weight: .bold, design: .serif))
-                }
-                .accessibilityLabel("Text size")
-
-                Menu {
-                    ForEach(ReaderMaterialSetting.allCases, id: \.self) { setting in
-                        Button(setting.rawValue.capitalized) {
-                            reader.changingMaterial(to: setting)
-                        }
-                    }
-                } label: {
-                    Text(reader.materialSetting.rawValue.uppercased())
-                        .font(.system(size: 8, weight: .black, design: .monospaced))
-                }
-                .accessibilityLabel("Material appearance")
-                .accessibilityValue(reader.materialSetting.rawValue.capitalized)
-
-                modeButton(.scroll)
-                modeButton(.pages)
-
-                #if DEBUG
-                Button(action: onGallery) {
-                    Image(systemName: "photo.on.rectangle.angled")
-                        .font(.system(size: 12, weight: .bold))
-                }
-                .accessibilityLabel("Editorial Gallery")
-                #endif
-
-                Button(action: onHide) {
-                    Image(systemName: "chevron.up")
-                        .font(.system(size: 10, weight: .black))
-                }
-                .accessibilityLabel("Hide reading controls")
+                textScaleMenu
+                modeMenu
+                overflowMenu
             }
             .buttonStyle(.plain)
             .foregroundStyle(JJWWEditorialPalette.cream)
@@ -323,14 +269,21 @@ private struct BookShellChrome: View {
             .frame(height: 52)
             .background(JJWWEditorialPalette.ink.opacity(0.97))
 
-            HStack(spacing: 0) {
-                Rectangle()
-                    .fill(JJWWEditorialPalette.orange)
-                    .frame(width: max(1, progressWidth), height: 3)
-                Rectangle()
-                    .fill(JJWWEditorialPalette.cream.opacity(0.16))
-                    .frame(height: 3)
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    Rectangle()
+                        .fill(JJWWEditorialPalette.cream.opacity(0.16))
+                    Rectangle()
+                        .fill(JJWWEditorialPalette.orange)
+                        .frame(
+                            width: max(
+                                1,
+                                geometry.size.width * CGFloat(min(1, max(0, reader.progress)))
+                            )
+                        )
+                }
             }
+            .frame(height: 3)
             .accessibilityHidden(true)
         }
         .shadow(color: .black.opacity(0.22), radius: 5, y: 2)
@@ -341,28 +294,96 @@ private struct BookShellChrome: View {
         return unit.sourcePresentation?.displayTitle ?? unit.id
     }
 
-    private var progressWidth: CGFloat {
-        CGFloat(min(1, max(0, reader.progress))) * 390
-    }
-
-    @ViewBuilder
-    private func modeButton(_ mode: ReaderDisplayMode) -> some View {
-        let selected = reader.displayMode == mode
-        Button {
-            switch mode {
-            case .scroll:
-                if reader.displayMode == .pages { coordinator.enterScroll() }
-            case .pages:
-                if reader.displayMode != .pages { coordinator.enterPages() }
+    private var textScaleMenu: some View {
+        Menu {
+            ForEach(ReaderTextScale.allCases, id: \.self) { scale in
+                Button {
+                    if reader.displayMode == .pages {
+                        try? coordinator.repaginate(textScale: scale)
+                    } else {
+                        reader.changingTextScale(to: scale)
+                    }
+                } label: {
+                    if scale == reader.textScale {
+                        Label(scale.rawValue.capitalized, systemImage: "checkmark")
+                    } else {
+                        Text(scale.rawValue.capitalized)
+                    }
+                }
             }
         } label: {
-            Text(mode.rawValue.uppercased())
-                .font(.system(size: 8, weight: .black, design: .monospaced))
-                .padding(.horizontal, 6)
-                .padding(.vertical, 4)
-                .background(selected ? JJWWEditorialPalette.orange : Color.clear)
-                .overlay(Rectangle().stroke(selected ? Color.clear : JJWWEditorialPalette.cream.opacity(0.34), lineWidth: 0.5))
+            Text("Aa")
+                .font(.system(size: 15, weight: .bold, design: .serif))
+                .frame(minWidth: 28)
         }
-        .accessibilityValue(selected ? "Selected" : "Not selected")
+        .accessibilityLabel("Text size")
+        .accessibilityValue(reader.textScale.rawValue.capitalized)
+    }
+
+    private var modeMenu: some View {
+        Menu {
+            ForEach(ReaderDisplayMode.allCases, id: \.self) { mode in
+                Button {
+                    setDisplayMode(mode)
+                } label: {
+                    if mode == reader.displayMode {
+                        Label(mode.rawValue.capitalized, systemImage: "checkmark")
+                    } else {
+                        Text(mode.rawValue.capitalized)
+                    }
+                }
+            }
+        } label: {
+            Text(reader.displayMode.rawValue.uppercased())
+                .font(.system(size: 8, weight: .black, design: .monospaced))
+                .padding(.horizontal, 7)
+                .padding(.vertical, 5)
+                .background(JJWWEditorialPalette.orange)
+        }
+        .accessibilityLabel("Reading mode")
+        .accessibilityValue(reader.displayMode.rawValue.capitalized)
+    }
+
+    private var overflowMenu: some View {
+        Menu {
+            Section("Material") {
+                ForEach(ReaderMaterialSetting.allCases, id: \.self) { setting in
+                    Button {
+                        reader.changingMaterial(to: setting)
+                    } label: {
+                        if setting == reader.materialSetting {
+                            Label(setting.rawValue.capitalized, systemImage: "checkmark")
+                        } else {
+                            Text(setting.rawValue.capitalized)
+                        }
+                    }
+                }
+            }
+
+            Divider()
+
+            Button(action: onHide) {
+                Label("Hide Controls", systemImage: "chevron.up")
+            }
+        } label: {
+            Image(systemName: "ellipsis")
+                .font(.system(size: 14, weight: .bold))
+                .frame(width: 28, height: 28)
+                .contentShape(Rectangle())
+        }
+        .accessibilityLabel("More reading controls")
+    }
+
+    private func setDisplayMode(_ mode: ReaderDisplayMode) {
+        switch mode {
+        case .scroll:
+            if reader.displayMode == .pages {
+                coordinator.enterScroll()
+            }
+        case .pages:
+            if reader.displayMode != .pages {
+                coordinator.enterPages()
+            }
+        }
     }
 }
