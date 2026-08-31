@@ -5,6 +5,8 @@ import JJWWPagination
 
 #if DEBUG
 public struct ReaderLabView: View {
+    @Environment(\.dismiss) private var dismiss
+
     private let profiles: [MaterialProfileDefinition]
     private let edition: Edition?
     private let materialStore: MaterialProfileStore?
@@ -37,6 +39,28 @@ public struct ReaderLabView: View {
 
             PageCompositionLabView()
                 .tabItem { Label("Pages", systemImage: "doc.text.image") }
+        }
+        .safeAreaInset(edge: .top, spacing: 0) {
+            HStack(spacing: 12) {
+                Text("READER LAB")
+                    .font(.caption.bold())
+                    .tracking(0.7)
+                    .foregroundStyle(.secondary)
+
+                Spacer()
+
+                Button {
+                    dismiss()
+                } label: {
+                    Label("Back to Reader", systemImage: "xmark")
+                        .font(.subheadline.weight(.semibold))
+                }
+                .buttonStyle(.bordered)
+                .accessibilityLabel("Close Reader Lab and return to the reader")
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 8)
+            .background(.bar)
         }
     }
 }
