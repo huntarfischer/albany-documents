@@ -43,17 +43,20 @@ public struct PagesReaderView: View {
     public let edition: Edition
     public let materialStore: MaterialProfileStore
     @ObservedObject public var coordinator: ReaderLocationCoordinator
+    private let showsChrome: Bool
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public init(
         edition: Edition,
         materialStore: MaterialProfileStore,
-        coordinator: ReaderLocationCoordinator
+        coordinator: ReaderLocationCoordinator,
+        showsChrome: Bool = true
     ) {
         self.edition = edition
         self.materialStore = materialStore
         self.coordinator = coordinator
+        self.showsChrome = showsChrome
     }
 
     public var body: some View {
@@ -72,7 +75,9 @@ public struct PagesReaderView: View {
             .id(PageTurnPolicy.transition(reduceMotion: reduceMotion))
             .ignoresSafeArea()
 
-            PagesChrome(coordinator: coordinator)
+            if showsChrome {
+                PagesChrome(coordinator: coordinator)
+            }
         }
         .background(Color(red: 0.07, green: 0.064, blue: 0.052))
     }
