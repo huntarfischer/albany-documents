@@ -10,18 +10,21 @@ public struct ScrollReaderView: View {
     @StateObject private var session: ScrollReaderSession
     private let pagesEnabled: Bool
     private let onRequestPages: (() -> Void)?
+    private let showsChrome: Bool
 
     public init(
         edition: Edition,
         materialStore: MaterialProfileStore,
         persistence: ReaderLocationPersistence = UserDefaultsReaderLocationPersistence(),
         pagesEnabled: Bool = false,
-        onRequestPages: (() -> Void)? = nil
+        onRequestPages: (() -> Void)? = nil,
+        showsChrome: Bool = true
     ) {
         self.edition = edition
         self.materialStore = materialStore
         self.pagesEnabled = pagesEnabled
         self.onRequestPages = onRequestPages
+        self.showsChrome = showsChrome
         _session = StateObject(
             wrappedValue: ScrollReaderSession(
                 edition: edition,
@@ -35,12 +38,14 @@ public struct ScrollReaderView: View {
         materialStore: MaterialProfileStore,
         session: ScrollReaderSession,
         pagesEnabled: Bool = false,
-        onRequestPages: (() -> Void)? = nil
+        onRequestPages: (() -> Void)? = nil,
+        showsChrome: Bool = true
     ) {
         self.edition = edition
         self.materialStore = materialStore
         self.pagesEnabled = pagesEnabled
         self.onRequestPages = onRequestPages
+        self.showsChrome = showsChrome
         _session = StateObject(wrappedValue: session)
     }
 
@@ -107,11 +112,13 @@ public struct ScrollReaderView: View {
                     }
                 }
 
-                ReaderChrome(
-                    session: session,
-                    pagesEnabled: pagesEnabled,
-                    onRequestPages: onRequestPages
-                )
+                if showsChrome {
+                    ReaderChrome(
+                        session: session,
+                        pagesEnabled: pagesEnabled,
+                        onRequestPages: onRequestPages
+                    )
+                }
             }
         }
     }
