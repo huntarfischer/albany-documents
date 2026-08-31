@@ -107,14 +107,15 @@ struct Stage8CEditionMapTests {
         })
     }
 
-    @Test("The map stores ownership references rather than a second copy of canonical prose")
+    @Test("The map stores ownership references and expansion rules rather than a second copy of canonical prose")
     func mapDoesNotCopyCanonicalProse() throws {
         let manifestURL = repositoryRoot.appendingPathComponent(
             "ios/JJWWReader/Sources/JJWWReaderCore/Resources/stage8-edition-map-v1.json"
         )
         let manifest = try String(contentsOf: manifestURL, encoding: .utf8)
 
-        #expect(manifest.contains("L1-CNT-0001"))
+        #expect(manifest.contains("\"idPrefix\": \"unit-\""))
+        #expect(manifest.contains("L1-CNT-0002"))
         #expect(manifest.contains("L1-CNT-0075"))
         #expect(!manifest.contains("Monday June 18, 1827"))
         #expect(!manifest.contains("Farewell, dear friends"))
