@@ -240,6 +240,7 @@ public final class ScrollReaderSession: ObservableObject {
     @Published public private(set) var navigationRevision: Int = 0
 
     private let persistence: ReaderLocationPersistence
+    private var pendingScrollNavigationUnitID: String?
 
     public init(
         edition: Edition,
@@ -263,6 +264,11 @@ public final class ScrollReaderSession: ObservableObject {
     }
 
     public func focus(unit: ReadingUnit, canonicalLine: Int? = nil) {
+        if let pendingUnitID = pendingScrollNavigationUnitID {
+            guard unit.id == pendingUnitID else { return }
+            pendingScrollNavigationUnitID = nil
+        }
+
         guard let block = unit.blocks.first(where: { block in
             guard let canonicalLine else { return true }
             return block.canonicalAnchor.contains(line: canonicalLine)
@@ -286,6 +292,7 @@ public final class ScrollReaderSession: ObservableObject {
     }
 
     public func requestPagesMode() {
+        pendingScrollNavigationUnitID = nil
         displayMode = .pages
     }
 
@@ -315,6 +322,10 @@ public final class ScrollReaderSession: ObservableObject {
     }
 
     private func setLocation(_ next: ReaderLocation, requestScrollNavigation: Bool) {
+        if requestScrollNavigation, displayMode == .pages {
+            pendingScrollNavigationUnitID = next.readingUnitID
+        }
+
         let changed = next != location
         if changed {
             location = next
