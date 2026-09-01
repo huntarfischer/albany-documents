@@ -17,6 +17,7 @@ public enum Stage8ProductionEditionError: Error, Equatable, CustomStringConverti
 public enum Stage8ProductionEdition {
     public static func load(canonicalURL: URL) throws -> Edition {
         let ownership = try Stage8CanonicalOwnership.load(canonicalURL: canonicalURL)
+        let semantics = try Stage8Layer1Semantics.load(ownership: ownership)
         let map = try Stage8EditionMap.load(canonicalURL: canonicalURL)
 
         let units = try map.entries.map { entry in
@@ -32,7 +33,8 @@ public enum Stage8ProductionEdition {
             }
 
             let blocks = containers.enumerated().map { offset, container in
-                DocumentBlock(
+                let blockSemantics = semantics.semantics(for: container.canonicalAnchor)
+                return DocumentBlock(
                     id: "block-\(container.id.lowercased())",
                     kind: container.id == "L1-CNT-0001" ? .frontMatter : .sourceText,
                     canonicalAnchor: container.canonicalAnchor,
@@ -41,7 +43,8 @@ public enum Stage8ProductionEdition {
                         containerOffset: offset,
                         containerCount: containers.count
                     ),
-                    lines: container.lines
+                    lines: container.lines,
+                    semantics: blockSemantics.isEmpty ? nil : blockSemantics
                 )
             }
 

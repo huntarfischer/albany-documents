@@ -43,21 +43,63 @@ public struct ReaderLinePresentation: Equatable, Sendable, Identifiable {
     public let canonicalLine: CanonicalLine
     public let role: TypographyRole
     public let usesInkAwakening: Bool
+    public let semanticSpanIDs: [String]
+    public let semanticTypes: [String]
+    public let sourceOccurrenceIDs: [String]
+    public let sourceContextIDs: [String]
 
     public init(
         id: String,
         canonicalLine: CanonicalLine,
         role: TypographyRole,
-        usesInkAwakening: Bool
+        usesInkAwakening: Bool,
+        semanticSpanIDs: [String] = [],
+        semanticTypes: [String] = [],
+        sourceOccurrenceIDs: [String] = [],
+        sourceContextIDs: [String] = []
     ) {
         self.id = id
         self.canonicalLine = canonicalLine
         self.role = role
         self.usesInkAwakening = usesInkAwakening
+        self.semanticSpanIDs = semanticSpanIDs
+        self.semanticTypes = semanticTypes
+        self.sourceOccurrenceIDs = sourceOccurrenceIDs
+        self.sourceContextIDs = sourceContextIDs
     }
 }
 
 public enum ReaderLineRoleResolver {
+    private static let documentOpeningTypes: Set<String> = [
+        "front_matter_title_block",
+        "section_item",
+        "confession_document",
+        "trial_source_section",
+        "historical_work_section",
+        "official_examination_document",
+        "newspaper_item",
+        "periodical_item",
+        "broadside_document",
+        "poem_document",
+        "letter_document",
+        "advertisement_document",
+        "will_document",
+        "genealogical_section",
+        "legal_notice_document",
+        "testimony_document",
+        "farewell_document",
+        "appendix_section",
+        "appendix_people_index",
+        "appendix_timeline",
+        "bibliography_section",
+        "acknowledgments_section",
+        "copyright_section",
+        "back_matter_title",
+        "request_document",
+        "registration_document",
+        "museum_card"
+    ]
+
     public static func presentations(
         for block: DocumentBlock,
         in unit: ReadingUnit
@@ -66,31 +108,84 @@ public enum ReaderLineRoleResolver {
             .filter { !$0.element.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
             .map(\.offset)
         let openingIndices = Set(nonEmptyIndices.prefix(3))
+        let hasLayer1Semantics = block.semantics != nil
 
         return block.lines.enumerated().map { index, line in
-            let role = role(for: line.text, index: index, openingIndices: openingIndices, unit: unit)
+            let spans = block.semanticSpans.filter { $0.canonicalAnchor.contains(line: line.number) }
+            let occurrences = block.sourceOccurrences.filter { $0.applies(to: line.number) }
+            let contexts = block.sourceContexts.filter { $0.canonicalAnchor.contains(line: line.number) }
+            let resolvedRole = role(
+                for: line,
+                index: index,
+                openingIndices: openingIndices,
+                unit: unit,
+                spans: spans,
+                occurrences: occurrences,
+                contexts: contexts,
+                hasLayer1Semantics: hasLayer1Semantics
+            )
             let usesInk = openingIndices.contains(index) && (
-                role == .dateHeading || role == .sourceHeader || role == .sectionTitle
+                resolvedRole == .dateHeading ||
+                resolvedRole == .sourceHeader ||
+                resolvedRole == .sectionTitle
             )
             return ReaderLinePresentation(
                 id: "\(block.id).line.\(line.number)",
                 canonicalLine: line,
-                role: role,
-                usesInkAwakening: usesInk
+                role: resolvedRole,
+                usesInkAwakening: usesInk,
+                semanticSpanIDs: spans.map(\.id),
+                semanticTypes: Array(Set(spans.map(\.type))).sorted(),
+                sourceOccurrenceIDs: occurrences.map(\.id),
+                sourceContextIDs: contexts.map(\.id)
             )
         }
     }
 
     private static func role(
-        for text: String,
+        for line: CanonicalLine,
         index: Int,
         openingIndices: Set<Int>,
-        unit: ReadingUnit
+        unit: ReadingUnit,
+        spans: [DocumentSemanticSpan],
+        occurrences: [DocumentSourceOccurrence],
+        contexts: [DocumentSourceContext],
+        hasLayer1Semantics: Bool
     ) -> TypographyRole {
-        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmed = line.text.trimmingCharacters(in: .whitespacesAndNewlines)
         if trimmed.isEmpty { return .body }
 
         if unit.kind == .cover { return .editorialCutPaper }
+
+        if hasLayer1Semantics {
+            if isSemanticDate(line: line, spans: spans) {
+                return .dateHeading
+            }
+            if isDirectSourceAttribution(line: line, occurrences: occurrences) {
+                return .sourceHeader
+            }
+            if openingIndices.contains(index), isSemanticOpening(line: line, spans: spans) {
+                return .sectionTitle
+            }
+            if isSemanticProceduralLabel(line: line, spans: spans) {
+                if looksLikeCourtLabel(trimmed) { return .courtLabel }
+                return .counselLabel
+            }
+            if isSemanticWitnessLabel(line: line, spans: spans) {
+                return .witnessLabel
+            }
+
+            let sourceTypes = Set(
+                occurrences.map(\.source.sourceType) + contexts.map(\.source.sourceType)
+            )
+            if sourceTypes.contains("confession_pamphlet") {
+                return .firstPersonBody
+            }
+            if unit.sourcePresentation?.sourceKind == .literaryArtifact {
+                return .verse
+            }
+            return .body
+        }
 
         if openingIndices.contains(index) {
             if looksLikeDate(trimmed) { return .dateHeading }
@@ -110,6 +205,59 @@ public enum ReaderLineRoleResolver {
             return .verse
         default:
             return .body
+        }
+    }
+
+    private static func isSemanticDate(
+        line: CanonicalLine,
+        spans: [DocumentSemanticSpan]
+    ) -> Bool {
+        spans.contains {
+            $0.type == "dated_item" && $0.canonicalAnchor.startLine == line.number
+        }
+    }
+
+    private static func isDirectSourceAttribution(
+        line: CanonicalLine,
+        occurrences: [DocumentSourceOccurrence]
+    ) -> Bool {
+        occurrences.contains {
+            $0.role == "direct_attribution" && $0.attributionAnchor.contains(line: line.number)
+        }
+    }
+
+    private static func isSemanticOpening(
+        line: CanonicalLine,
+        spans: [DocumentSemanticSpan]
+    ) -> Bool {
+        spans.contains { span in
+            span.canonicalAnchor.startLine == line.number && (
+                documentOpeningTypes.contains(span.type) || span.type == "uppercase_display_line"
+            )
+        }
+    }
+
+    private static func isSemanticProceduralLabel(
+        line: CanonicalLine,
+        spans: [DocumentSemanticSpan]
+    ) -> Bool {
+        spans.contains {
+            $0.type == "procedural_or_speaker_label" &&
+            $0.canonicalAnchor.startLine == line.number &&
+            $0.canonicalAnchor.endLine == line.number &&
+            line.text.count < 160
+        }
+    }
+
+    private static func isSemanticWitnessLabel(
+        line: CanonicalLine,
+        spans: [DocumentSemanticSpan]
+    ) -> Bool {
+        guard line.text.count < 160 else { return false }
+        let lower = line.text.lowercased()
+        let labelLike = lower.contains("sworn") || lower.contains("called") || lower.contains("recalled")
+        return labelLike && spans.contains {
+            $0.type == "witness_testimony_segment" && $0.canonicalAnchor.startLine == line.number
         }
     }
 

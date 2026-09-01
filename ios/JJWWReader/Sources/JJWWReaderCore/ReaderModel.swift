@@ -100,25 +100,157 @@ public struct DocumentBlock: Codable, Equatable, Sendable, Identifiable {
     public let canonicalAnchor: ReadingAnchor
     public let sourcePassageID: String?
     public let lines: [CanonicalLine]
+    public let semantics: DocumentSemantics?
 
     public init(
         id: String,
         kind: DocumentBlockKind,
         canonicalAnchor: ReadingAnchor,
         sourcePassageID: String?,
-        lines: [CanonicalLine]
+        lines: [CanonicalLine],
+        semantics: DocumentSemantics? = nil
     ) {
         self.id = id
         self.kind = kind
         self.canonicalAnchor = canonicalAnchor
         self.sourcePassageID = sourcePassageID
         self.lines = lines
+        self.semantics = semantics
+    }
+
+    public var semanticSpans: [DocumentSemanticSpan] {
+        semantics?.structuralSpans ?? []
+    }
+
+    public var sourceOccurrences: [DocumentSourceOccurrence] {
+        semantics?.sourceOccurrences ?? []
+    }
+
+    public var sourceContexts: [DocumentSourceContext] {
+        semantics?.sourceContexts ?? []
     }
 }
 
 public enum DocumentBlockKind: String, Codable, Equatable, Sendable {
     case frontMatter
     case sourceText
+}
+
+public struct DocumentSemantics: Codable, Equatable, Sendable {
+    public let structuralSpans: [DocumentSemanticSpan]
+    public let sourceOccurrences: [DocumentSourceOccurrence]
+    public let sourceContexts: [DocumentSourceContext]
+
+    public init(
+        structuralSpans: [DocumentSemanticSpan] = [],
+        sourceOccurrences: [DocumentSourceOccurrence] = [],
+        sourceContexts: [DocumentSourceContext] = []
+    ) {
+        self.structuralSpans = structuralSpans
+        self.sourceOccurrences = sourceOccurrences
+        self.sourceContexts = sourceContexts
+    }
+
+    public var isEmpty: Bool {
+        structuralSpans.isEmpty && sourceOccurrences.isEmpty && sourceContexts.isEmpty
+    }
+}
+
+public struct DocumentSemanticSpan: Codable, Equatable, Sendable, Identifiable {
+    public let id: String
+    public let type: String
+    public let labelAsWritten: String
+    public let canonicalAnchor: ReadingAnchor
+    public let parentContainerID: String
+    public let parentUnitID: String?
+    public let boundaryBasis: String
+    public let sourceContextIDs: [String]
+
+    public init(
+        id: String,
+        type: String,
+        labelAsWritten: String,
+        canonicalAnchor: ReadingAnchor,
+        parentContainerID: String,
+        parentUnitID: String?,
+        boundaryBasis: String,
+        sourceContextIDs: [String]
+    ) {
+        self.id = id
+        self.type = type
+        self.labelAsWritten = labelAsWritten
+        self.canonicalAnchor = canonicalAnchor
+        self.parentContainerID = parentContainerID
+        self.parentUnitID = parentUnitID
+        self.boundaryBasis = boundaryBasis
+        self.sourceContextIDs = sourceContextIDs
+    }
+}
+
+public struct DocumentSourceIdentity: Codable, Equatable, Sendable, Identifiable {
+    public let id: String
+    public let titleAsWritten: String
+    public let sourceType: String
+
+    public init(id: String, titleAsWritten: String, sourceType: String) {
+        self.id = id
+        self.titleAsWritten = titleAsWritten
+        self.sourceType = sourceType
+    }
+}
+
+public struct DocumentSourceOccurrence: Codable, Equatable, Sendable, Identifiable {
+    public let id: String
+    public let source: DocumentSourceIdentity
+    public let role: String
+    public let attributionAnchor: ReadingAnchor
+    public let passageAnchor: ReadingAnchor?
+    public let containingContainerID: String
+
+    public init(
+        id: String,
+        source: DocumentSourceIdentity,
+        role: String,
+        attributionAnchor: ReadingAnchor,
+        passageAnchor: ReadingAnchor?,
+        containingContainerID: String
+    ) {
+        self.id = id
+        self.source = source
+        self.role = role
+        self.attributionAnchor = attributionAnchor
+        self.passageAnchor = passageAnchor
+        self.containingContainerID = containingContainerID
+    }
+
+    public func applies(to canonicalLine: Int) -> Bool {
+        attributionAnchor.contains(line: canonicalLine) || passageAnchor?.contains(line: canonicalLine) == true
+    }
+}
+
+public struct DocumentSourceContext: Codable, Equatable, Sendable, Identifiable {
+    public let id: String
+    public let source: DocumentSourceIdentity
+    public let canonicalAnchor: ReadingAnchor
+    public let relationship: String
+    public let basis: String
+    public let attributionOccurrenceID: String
+
+    public init(
+        id: String,
+        source: DocumentSourceIdentity,
+        canonicalAnchor: ReadingAnchor,
+        relationship: String,
+        basis: String,
+        attributionOccurrenceID: String
+    ) {
+        self.id = id
+        self.source = source
+        self.canonicalAnchor = canonicalAnchor
+        self.relationship = relationship
+        self.basis = basis
+        self.attributionOccurrenceID = attributionOccurrenceID
+    }
 }
 
 public struct CanonicalLine: Codable, Equatable, Sendable {
@@ -199,6 +331,11 @@ public struct ReadingAnchor: Codable, Equatable, Hashable, Sendable {
 
     public func contains(line: Int) -> Bool {
         startLine...endLine ~= line
+    }
+
+    public func intersects(_ other: ReadingAnchor) -> Bool {
+        canonicalLayer0Version == other.canonicalLayer0Version &&
+        startLine <= other.endLine && other.startLine <= endLine
     }
 }
 
