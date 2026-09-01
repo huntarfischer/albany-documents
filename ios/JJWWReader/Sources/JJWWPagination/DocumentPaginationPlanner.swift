@@ -149,7 +149,14 @@ enum DocumentPaginationPlanner {
             zone.startLocation < proposedEnd &&
             proposedEnd < zone.minimumEndLocation
         }
-        if let retreat = violatingZones.max(by: {
+        let effectiveViolations = violatingZones.filter { zone in
+            !keepZones.contains { enclosing in
+                enclosing.startLocation == pageStart &&
+                enclosing.startLocation < zone.startLocation &&
+                enclosing.minimumEndLocation >= zone.minimumEndLocation
+            }
+        }
+        if let retreat = effectiveViolations.max(by: {
             $0.startLocation < $1.startLocation
         })?.startLocation {
             return retreat
@@ -220,8 +227,19 @@ enum DocumentPaginationPlanner {
         if atom.role == .dateHeading { return true }
         if atom.role == .sourceHeader {
             guard index > 0 else { return true }
-            let previous = atoms[index - 1]
-            return previous.groupID != atom.groupID || previous.role == .dateHeading
+            let previous = atoms[..<index]
+                .reversed()
+                .first { $0.groupID == atom.groupID && !$0.isEmpty }
+            guard let previous else { return true }
+            if isOpeningHeader(previous.role) { return false }
+            if previous.evidence.documentIdentity.id != atom.evidence.documentIdentity.id {
+                return true
+            }
+            if let previousSource = previous.evidence.documentIdentity.sourceID,
+               let source = atom.evidence.documentIdentity.sourceID,
+               previousSource != source {
+                return true
+            }
         }
         return false
     }
