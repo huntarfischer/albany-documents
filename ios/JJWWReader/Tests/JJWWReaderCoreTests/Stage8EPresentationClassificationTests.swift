@@ -26,7 +26,7 @@ struct Stage8EPresentationClassificationTests {
 
         #expect(map.entries.count == 75)
         #expect(map.unclassifiedEntries.isEmpty)
-        #expect(map.entries.allSatisfy(\.isClassified))
+        #expect(map.entries.allSatisfy { $0.isClassified })
     }
 
     @Test("The eight production families cover the complete Edition with stable counts")
