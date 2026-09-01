@@ -96,15 +96,14 @@ struct Stage8CEditionMapTests {
         #expect(farewell.materialProfile == .farewell1827)
     }
 
-    @Test("8C leaves only the not-yet-classified production units for 8E")
-    func classificationDebtIsExplicit() throws {
+    @Test("8E classification does not alter the complete 8C map geometry")
+    func classificationPreservesMapGeometry() throws {
         let map = try Stage8EditionMap.load(canonicalURL: canonicalURL)
 
-        #expect(map.unclassifiedEntries.count == 70)
-        #expect(map.entries.filter(\.isClassified).count == 5)
-        #expect(map.unclassifiedEntries.allSatisfy {
-            $0.typographyProfile == .jjwwEditorial && $0.materialProfile == .jjwwEditorial
-        })
+        #expect(map.entries.count == 75)
+        #expect(map.containerIDs.count == 82)
+        #expect(map.entries.first?.canonicalAnchor.startLine == 1)
+        #expect(map.entries.last?.canonicalAnchor.endLine == 2069)
     }
 
     @Test("The map stores ownership references and expansion rules rather than a second copy of canonical prose")

@@ -74,13 +74,8 @@ public struct Stage8EditionMapBook: Codable, Equatable, Sendable {
         self.entries = entries
     }
 
-    public var containerIDs: [String] {
-        entries.flatMap(\.containerIDs)
-    }
-
-    public var unclassifiedEntries: [Stage8EditionMapEntry] {
-        entries.filter { !$0.isClassified }
-    }
+    public var containerIDs: [String] { entries.flatMap(\.containerIDs) }
+    public var unclassifiedEntries: [Stage8EditionMapEntry] { entries.filter { !$0.isClassified } }
 
     public func entry(id: String) -> Stage8EditionMapEntry? {
         entries.first { $0.id == id }
@@ -98,6 +93,8 @@ public enum Stage8EditionMapError: Error, Equatable, CustomStringConvertible {
     case unknownContainer(String)
     case duplicateContainer(String)
     case noncontiguousGroup(String)
+    case classificationOverlapsGroup(String)
+    case duplicateClassification(String)
     case incompleteOwnershipMap
 
     public var description: String {
@@ -114,6 +111,10 @@ public enum Stage8EditionMapError: Error, Equatable, CustomStringConvertible {
             return "Stage 8 Edition map consumes ownership container \(id) more than once."
         case let .noncontiguousGroup(id):
             return "Stage 8 Edition map group \(id) does not contain adjacent ownership containers in canonical order."
+        case let .classificationOverlapsGroup(id):
+            return "Stage 8 classification for \(id) overlaps an authored multi-container group."
+        case let .duplicateClassification(id):
+            return "Stage 8 Edition map classifies ownership container \(id) more than once."
         case .incompleteOwnershipMap:
             return "Stage 8 Edition map does not consume the complete ownership spine exactly once."
         }
@@ -159,6 +160,22 @@ public enum Stage8EditionMap {
             }
         }
 
+        var classificationByContainerID: [String: Stage8EditionMapClassificationRule] = [:]
+        for rule in manifest.classifications {
+            for containerID in rule.containerIDs {
+                guard ownershipIndex[containerID] != nil else {
+                    throw Stage8EditionMapError.unknownContainer(containerID)
+                }
+                guard groupByContainerID[containerID] == nil else {
+                    throw Stage8EditionMapError.classificationOverlapsGroup(containerID)
+                }
+                guard classificationByContainerID[containerID] == nil else {
+                    throw Stage8EditionMapError.duplicateClassification(containerID)
+                }
+                classificationByContainerID[containerID] = rule
+            }
+        }
+
         var entries: [Stage8EditionMapEntry] = []
         var index = 0
 
@@ -199,16 +216,21 @@ public enum Stage8EditionMap {
                 )
                 index += group.containerIDs.count
             } else {
+                let classification = classificationByContainerID[container.id]
                 entries.append(
                     Stage8EditionMapEntry(
                         id: manifest.defaults.idPrefix + container.id.lowercased(),
                         sequence: entries.count,
                         containerIDs: [container.id],
                         canonicalAnchor: container.canonicalAnchor,
-                        presentationFamily: manifest.defaults.presentationFamily,
-                        presentationVariant: nil,
-                        typographyProfile: TypographyProfile(id: manifest.defaults.typographyProfileID),
-                        materialProfile: MaterialProfile(id: manifest.defaults.materialProfileID),
+                        presentationFamily: classification?.presentationFamily ?? manifest.defaults.presentationFamily,
+                        presentationVariant: classification?.presentationVariant,
+                        typographyProfile: TypographyProfile(
+                            id: classification?.typographyProfileID ?? manifest.defaults.typographyProfileID
+                        ),
+                        materialProfile: MaterialProfile(
+                            id: classification?.materialProfileID ?? manifest.defaults.materialProfileID
+                        ),
                         sourcePresentation: nil
                     )
                 )
@@ -237,10 +259,7 @@ public enum Stage8EditionMap {
         ) else {
             throw Stage8EditionMapError.manifestMissing
         }
-        return try JSONDecoder().decode(
-            Stage8EditionMapManifest.self,
-            from: Data(contentsOf: url)
-        )
+        return try JSONDecoder().decode(Stage8EditionMapManifest.self, from: Data(contentsOf: url))
     }
 }
 
@@ -253,11 +272,20 @@ private struct Stage8EditionMapManifest: Decodable {
     let editionVersion: String
     let defaults: Stage8EditionMapDefaults
     let groups: [Stage8EditionMapGroup]
+    let classifications: [Stage8EditionMapClassificationRule]
 }
 
 private struct Stage8EditionMapDefaults: Decodable {
     let idPrefix: String
     let presentationFamily: Stage8PresentationFamily
+    let typographyProfileID: String
+    let materialProfileID: String
+}
+
+private struct Stage8EditionMapClassificationRule: Decodable, Equatable {
+    let containerIDs: [String]
+    let presentationFamily: Stage8PresentationFamily
+    let presentationVariant: String?
     let typographyProfileID: String
     let materialProfileID: String
 }

@@ -1,5 +1,5 @@
 {
-  "formatVersion": "1.0-stage8-edition-map",
+  "formatVersion": "1.1-stage8-edition-map",
   "canonicalLayer0Version": "1.1",
   "canonicalLineSequenceSHA256": "106274914ba9c0cc1afd4418d6e8a8dbfa62a5f2d04c9089d87aa0a406147a8e",
   "editionID": "jjww-v1-production-edition",
@@ -7,7 +7,7 @@
   "editionVersion": "stage8-v1",
   "defaults": {
     "idPrefix": "unit-",
-    "presentationFamily": "unclassified",
+    "presentationFamily": "editorialInterior",
     "typographyProfileID": "jjwwEditorial",
     "materialProfileID": "jjwwEditorial"
   },
@@ -81,6 +81,57 @@
         "displayTitle": "Farewell Address",
         "sourceKind": "literaryArtifact"
       }
+    }
+  ],
+  "classifications": [
+    {
+      "containerIDs": ["L1-CNT-0005", "L1-CNT-0006", "L1-CNT-0007", "L1-CNT-0008", "L1-CNT-0009", "L1-CNT-0010", "L1-CNT-0011", "L1-CNT-0012", "L1-CNT-0014", "L1-CNT-0015", "L1-CNT-0016", "L1-CNT-0017", "L1-CNT-0018", "L1-CNT-0020", "L1-CNT-0021", "L1-CNT-0022", "L1-CNT-0044", "L1-CNT-0047", "L1-CNT-0049", "L1-CNT-0050", "L1-CNT-0051", "L1-CNT-0053", "L1-CNT-0064", "L1-CNT-0065", "L1-CNT-0067", "L1-CNT-0073"],
+      "presentationFamily": "periodical",
+      "presentationVariant": "periodicalSource",
+      "typographyProfileID": "newspaper1827",
+      "materialProfileID": "argus1827"
+    },
+    {
+      "containerIDs": ["L1-CNT-0045", "L1-CNT-0046", "L1-CNT-0048", "L1-CNT-0052"],
+      "presentationFamily": "pamphlet",
+      "presentationVariant": "pamphletSource",
+      "typographyProfileID": "confessionPamphlet1827",
+      "materialProfileID": "confessionPamphlet1827"
+    },
+    {
+      "containerIDs": ["L1-CNT-0032", "L1-CNT-0033", "L1-CNT-0034", "L1-CNT-0035", "L1-CNT-0036", "L1-CNT-0037", "L1-CNT-0038", "L1-CNT-0039", "L1-CNT-0040"],
+      "presentationFamily": "courtLegal",
+      "presentationVariant": "trialRecord",
+      "typographyProfileID": "trialRecord1827",
+      "materialProfileID": "trialRecord1827"
+    },
+    {
+      "containerIDs": ["L1-CNT-0023", "L1-CNT-0031", "L1-CNT-0042", "L1-CNT-0043", "L1-CNT-0055", "L1-CNT-0057", "L1-CNT-0058", "L1-CNT-0059", "L1-CNT-0060", "L1-CNT-0062", "L1-CNT-0068", "L1-CNT-0070", "L1-CNT-0074"],
+      "presentationFamily": "bookExcerpt",
+      "presentationVariant": "historicalBookExcerpt",
+      "typographyProfileID": "jjwwEditorial",
+      "materialProfileID": "trialRecord1827"
+    },
+    {
+      "containerIDs": ["L1-CNT-0041", "L1-CNT-0061", "L1-CNT-0069", "L1-CNT-0071", "L1-CNT-0072"],
+      "presentationFamily": "standaloneDocument",
+      "presentationVariant": "archivalDocument",
+      "typographyProfileID": "trialRecord1827",
+      "materialProfileID": "trialRecord1827"
+    },
+    {
+      "containerIDs": ["L1-CNT-0054", "L1-CNT-0056"],
+      "presentationFamily": "displayArtifact",
+      "presentationVariant": "displayDocument",
+      "typographyProfileID": "farewell1827",
+      "materialProfileID": "farewell1827"
+    },
+    {
+      "containerIDs": ["L1-CNT-0076", "L1-CNT-0077", "L1-CNT-0078", "L1-CNT-0079", "L1-CNT-0080", "L1-CNT-0081", "L1-CNT-0082"],
+      "presentationFamily": "referenceBackMatter",
+      "presentationVariant": "referenceBackMatter",
+      "typographyProfileID": "jjwwEditorial",
+      "materialProfileID": "trialRecord1827"
     }
   ]
 }
