@@ -23,7 +23,7 @@ public struct DocumentPaginationPolicy: Codable, Equatable, Hashable, Sendable {
     }
 
     public static let stage8C = DocumentPaginationPolicy(
-        version: "stage8c-document-breaks-v0.1",
+        version: "stage8c-document-breaks-v0.2",
         protectDocumentOpenings: true,
         protectSpeakerLabels: true,
         minimumOpeningBodyCharacters: 72,
@@ -70,8 +70,12 @@ enum DocumentBreakPlanner {
             let atom = atoms[index]
             guard !atom.isEmpty else { continue }
 
+            let beginsProtectedOpening = atom.startsDocument || (
+                isOpeningHeader(atom.role) &&
+                !precededByOpeningHeader(index: index, atoms: atoms)
+            )
             if policy.protectDocumentOpenings,
-               atom.startsDocument {
+               beginsProtectedOpening {
                 if let zone = openingZone(
                     startingAt: index,
                     atoms: atoms,
@@ -185,6 +189,16 @@ enum DocumentBreakPlanner {
             minimumEndLocation: body.startLocation + required,
             reason: .speakerLabel
         )
+    }
+
+    private static func precededByOpeningHeader(
+        index: Int,
+        atoms: [DocumentBreakAtom]
+    ) -> Bool {
+        guard index > 0 else { return false }
+        let previous = atoms[index - 1]
+        return previous.groupID == atoms[index].groupID &&
+            isOpeningHeader(previous.role)
     }
 
     private static func precededBySpeakerLabel(
