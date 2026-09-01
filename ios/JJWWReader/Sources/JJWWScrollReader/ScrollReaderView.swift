@@ -124,13 +124,29 @@ public struct ScrollReaderView: View {
     }
 
     private func scrollToSessionLocation(with proxy: ScrollViewProxy, animated: Bool) {
-        let lineID = "\(session.location.blockID).line.\(session.location.canonicalLine)"
+        let target = session.location
+        let lineID = "\(target.blockID).line.\(target.canonicalLine)"
+
         if animated {
             withAnimation(.easeOut(duration: 0.22)) {
-                proxy.scrollTo(lineID, anchor: .top)
+                proxy.scrollTo(target.readingUnitID, anchor: .top)
             }
         } else {
-            proxy.scrollTo(lineID, anchor: .top)
+            proxy.scrollTo(target.readingUnitID, anchor: .top)
+        }
+
+        DispatchQueue.main.async {
+            if animated {
+                withAnimation(.easeOut(duration: 0.22)) {
+                    proxy.scrollTo(lineID, anchor: .top)
+                }
+            } else {
+                proxy.scrollTo(lineID, anchor: .top)
+            }
+
+            if let unit = edition.readingUnit(id: target.readingUnitID) {
+                session.focus(unit: unit, canonicalLine: target.canonicalLine)
+            }
         }
     }
 
