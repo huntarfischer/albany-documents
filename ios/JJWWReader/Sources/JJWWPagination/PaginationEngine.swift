@@ -114,15 +114,21 @@ public final class PaginationEngine {
             units: units,
             textScale: configuration.textScale
         )
+        let atoms = source.lineRecords.map { record in
+            DocumentPaginationAtom(
+                groupID: "\(record.readingUnitID)|\(record.blockID)",
+                startLocation: record.textRange.location,
+                endLocation: NSMaxRange(record.textRange),
+                role: record.role,
+                evidence: record.evidence,
+                isEmpty: record.canonicalLine.text
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                    .isEmpty
+            )
+        }
+        let keepZones = DocumentPaginationPlanner.keepZones(atoms: atoms)
 
         #if canImport(UIKit) || canImport(AppKit)
-        let textStorage = NSTextStorage(
-            attributedString: source.attributedString
-        )
-        let layoutManager = NSLayoutManager()
-        layoutManager.usesFontLeading = true
-        textStorage.addLayoutManager(layoutManager)
-
         var pageCharacterRanges: [NSRange] = []
         var pageMargins: [PageMargins] = []
         var pageKinds: [PageCompositionKind] = []
@@ -141,18 +147,27 @@ public final class PaginationEngine {
                 opening: opening
             )
             let margins = composition.margins(for: kind)
-            let container = NSTextContainer(
-                size: configuration.geometry.contentSize(using: margins)
+            let proposedRange = try measuredPageRange(
+                in: source,
+                from: coveredCharacters,
+                size: configuration.geometry.contentSize(using: margins),
+                segmentID: segmentID
             )
-            container.lineFragmentPadding = 0
-            layoutManager.addTextContainer(container)
-            layoutManager.ensureLayout(for: container)
+            let proposedEnd = NSMaxRange(proposedRange)
+            let adjustedEnd = DocumentPaginationPlanner.adjustedBreakEnd(
+                pageStart: coveredCharacters,
+                proposedEnd: proposedEnd,
+                atoms: atoms,
+                keepZones: keepZones
+            )
+            let lawfulEnd = adjustedEnd > coveredCharacters
+                ? adjustedEnd
+                : proposedEnd
+            let characterRange = NSRange(
+                location: coveredCharacters,
+                length: lawfulEnd - coveredCharacters
+            )
 
-            let glyphRange = layoutManager.glyphRange(for: container)
-            let characterRange = layoutManager.characterRange(
-                forGlyphRange: glyphRange,
-                actualGlyphRange: nil
-            )
             guard characterRange.length > 0 else {
                 throw PaginationError.textKitProducedEmptyPage(segmentID)
             }
@@ -160,10 +175,7 @@ public final class PaginationEngine {
             pageCharacterRanges.append(characterRange)
             pageMargins.append(margins)
             pageKinds.append(kind)
-            coveredCharacters = max(
-                coveredCharacters,
-                NSMaxRange(characterRange)
-            )
+            coveredCharacters = lawfulEnd
         }
 
         var result: [PageSlice] = []
@@ -208,8 +220,7 @@ public final class PaginationEngine {
             )
             let startsAtUnitBeginning = units.contains { unit in
                 unit.id == firstFragment.readingUnitID &&
-                unit.canonicalAnchor.startLine ==
-                    firstFragment.canonicalLine &&
+                unit.canonicalAnchor.startLine == firstFragment.canonicalLine &&
                 firstFragment.utf16Start == 0
             }
 
@@ -256,12 +267,99 @@ public final class PaginationEngine {
         #endif
     }
 
+    #if canImport(UIKit) || canImport(AppKit)
+    private func measuredPageRange(
+        in source: AttributedSource,
+        from startLocation: Int,
+        size: CGSize,
+        segmentID: String
+    ) throws -> NSRange {
+        let remainingLength = source.attributedString.length - startLocation
+        guard remainingLength > 0 else {
+            throw PaginationError.textKitProducedEmptyPage(segmentID)
+        }
+
+        let remainingRange = NSRange(
+            location: startLocation,
+            length: remainingLength
+        )
+        let remainder = NSMutableAttributedString(
+            attributedString: source.attributedString.attributedSubstring(
+                from: remainingRange
+            )
+        )
+        suppressParagraphOpeningGeometryIfContinuing(
+            remainder,
+            source: source,
+            globalStart: startLocation
+        )
+
+        let textStorage = NSTextStorage(attributedString: remainder)
+        let layoutManager = NSLayoutManager()
+        layoutManager.usesFontLeading = true
+        let container = NSTextContainer(size: size)
+        container.lineFragmentPadding = 0
+        textStorage.addLayoutManager(layoutManager)
+        layoutManager.addTextContainer(container)
+        layoutManager.ensureLayout(for: container)
+
+        let glyphRange = layoutManager.glyphRange(for: container)
+        let localCharacterRange = layoutManager.characterRange(
+            forGlyphRange: glyphRange,
+            actualGlyphRange: nil
+        )
+        guard localCharacterRange.length > 0 else {
+            throw PaginationError.textKitProducedEmptyPage(segmentID)
+        }
+
+        return NSRange(
+            location: startLocation,
+            length: localCharacterRange.length
+        )
+    }
+
+    private func suppressParagraphOpeningGeometryIfContinuing(
+        _ attributedString: NSMutableAttributedString,
+        source: AttributedSource,
+        globalStart: Int
+    ) {
+        guard let record = source.lineRecords.first(where: {
+            globalStart > $0.textRange.location &&
+            globalStart < NSMaxRange($0.textRange)
+        }),
+        attributedString.length > 0 else {
+            return
+        }
+
+        let remainingInRecord = NSMaxRange(record.textRange) - globalStart
+        let localLength = min(remainingInRecord, attributedString.length)
+        guard localLength > 0,
+              let paragraph = attributedString.attribute(
+                .paragraphStyle,
+                at: 0,
+                effectiveRange: nil
+              ) as? NSParagraphStyle,
+              let mutable = paragraph.mutableCopy() as? NSMutableParagraphStyle else {
+            return
+        }
+
+        mutable.paragraphSpacingBefore = 0
+        mutable.firstLineHeadIndent = 0
+        attributedString.addAttribute(
+            .paragraphStyle,
+            value: mutable,
+            range: NSRange(location: 0, length: localLength)
+        )
+    }
+    #endif
+
     private struct LineRecord {
         let readingUnitID: String
         let blockID: String
         let canonicalLine: CanonicalLine
         let layoutText: String
         let role: TypographyRole
+        let evidence: DocumentBoundaryEvidence
         let textRange: NSRange
         let separatorLocation: Int?
         let separatorKind: PageTextSeparator
@@ -366,6 +464,10 @@ public final class PaginationEngine {
                     canonicalLine: presentation.canonicalLine,
                     layoutText: layoutText,
                     role: presentation.role,
+                    evidence: DocumentPaginationLaw.evidence(
+                        for: presentation.canonicalLine.number,
+                        in: block
+                    ),
                     textRange: textRange,
                     separatorLocation: separatorLocation,
                     separatorKind: separatorKind,

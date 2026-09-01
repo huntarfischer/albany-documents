@@ -151,8 +151,8 @@ struct Stage8CAct1DocumentLawTests {
         #expect(DocumentPaginationLaw.disposition(between: body, and: next) == .preferred)
     }
 
-    @Test("Act I defines law only and does not alter PaginationEngine behavior")
-    func paginationEngineDoesNotConsumeActILawYet() throws {
+    @Test("Act II consumes Act I through the planner without duplicating documentary taxonomy")
+    func paginationEngineConsumesLawThroughPlanner() throws {
         let testsDirectory = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
         let packageRoot = testsDirectory
             .deletingLastPathComponent()
@@ -162,8 +162,9 @@ struct Stage8CAct1DocumentLawTests {
         )
         let source = try String(contentsOf: engineURL, encoding: .utf8)
 
-        #expect(!source.contains("DocumentPaginationLaw"))
-        #expect(!source.contains("DocumentBreakDisposition"))
+        #expect(source.contains("DocumentPaginationPlanner"))
+        #expect(source.contains("DocumentPaginationLaw.evidence"))
+        #expect(!source.contains("documentOpeningTypes"))
     }
 
     @MainActor
