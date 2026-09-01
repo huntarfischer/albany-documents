@@ -274,10 +274,10 @@ public enum DocumentPaginationLaw {
             from: occurrences
         )?.source.id ?? preferredContext(from: contexts)?.source.id
 
-        if let span = spans
+        let documentSpans = spans
             .filter { documentObjectTypes.contains($0.type) }
             .sorted(by: moreSpecificSpan)
-            .first {
+        if let span = documentSpans.first {
             return DocumentIdentity(
                 id: "span:\(span.id)",
                 basis: .structuralSpan,
