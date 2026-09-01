@@ -29,7 +29,7 @@ private final class JJWWAppModel: ObservableObject {
             throw JJWWAppBootstrapError.canonicalFixtureMissing
         }
 
-        let edition = try Stage0Fixture.load(canonicalURL: canonicalURL)
+        let edition = try Stage8ProductionEdition.load(canonicalURL: canonicalURL)
         let materialStore = try MaterialProfileStore.bundled()
         let gallery = try EditorialGalleryStore.bundled()
 
