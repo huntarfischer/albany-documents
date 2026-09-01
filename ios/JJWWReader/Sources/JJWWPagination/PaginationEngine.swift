@@ -6,10 +6,8 @@ import JJWWScrollReader
 
 #if canImport(UIKit)
 import UIKit
-private typealias PlatformFont = UIFont
 #elseif canImport(AppKit)
 import AppKit
-private typealias PlatformFont = NSFont
 #endif
 
 public enum PaginationError: Error, Equatable {
@@ -48,7 +46,10 @@ public final class PaginationEngine {
         let units = edition.orderedReadingUnits.filter {
             configuration.includeCoverUnit || $0.kind != .cover
         }
-        let segments = makeSegments(units: units, rules: configuration.presentationRules)
+        let segments = makeSegments(
+            units: units,
+            rules: configuration.presentationRules
+        )
 
         var pages: [PageSlice] = []
         var globalPageIndex = 0
@@ -65,7 +66,11 @@ public final class PaginationEngine {
             globalPageIndex += segmentPages.count
         }
 
-        let result = PaginationResult(configuration: configuration, cacheKey: key, pages: pages)
+        let result = PaginationResult(
+            configuration: configuration,
+            cacheKey: key,
+            pages: pages
+        )
         cache.store(result)
         return result
     }
@@ -98,20 +103,22 @@ public final class PaginationEngine {
         configuration: PaginationConfiguration
     ) throws -> [PageSlice] {
         guard let firstUnit = units.first else { return [] }
-        guard let typographyProfile = TypographyCatalog.profile(id: firstUnit.typographyProfile.id) else {
-            throw PaginationError.missingTypographyProfile(firstUnit.typographyProfile.id)
+        guard TypographyCatalog.profile(id: firstUnit.typographyProfile.id) != nil else {
+            throw PaginationError.missingTypographyProfile(
+                firstUnit.typographyProfile.id
+            )
         }
 
         let composition = PageCompositionCatalog.profile(for: firstUnit)
-        let source = buildAttributedSource(
+        let source = try buildAttributedSource(
             units: units,
-            typographyProfile: typographyProfile,
-            composition: composition,
             textScale: configuration.textScale
         )
 
         #if canImport(UIKit) || canImport(AppKit)
-        let textStorage = NSTextStorage(attributedString: source.attributedString)
+        let textStorage = NSTextStorage(
+            attributedString: source.attributedString
+        )
         let layoutManager = NSLayoutManager()
         layoutManager.usesFontLeading = true
         textStorage.addLayoutManager(layoutManager)
@@ -129,9 +136,14 @@ public final class PaginationEngine {
             }
 
             let opening = pageCharacterRanges.isEmpty
-            let kind = PageCompositionCatalog.kind(for: firstUnit, opening: opening)
+            let kind = PageCompositionCatalog.kind(
+                for: firstUnit,
+                opening: opening
+            )
             let margins = composition.margins(for: kind)
-            let container = NSTextContainer(size: configuration.geometry.contentSize(using: margins))
+            let container = NSTextContainer(
+                size: configuration.geometry.contentSize(using: margins)
+            )
             container.lineFragmentPadding = 0
             layoutManager.addTextContainer(container)
             layoutManager.ensureLayout(for: container)
@@ -148,38 +160,56 @@ public final class PaginationEngine {
             pageCharacterRanges.append(characterRange)
             pageMargins.append(margins)
             pageKinds.append(kind)
-            coveredCharacters = max(coveredCharacters, NSMaxRange(characterRange))
+            coveredCharacters = max(
+                coveredCharacters,
+                NSMaxRange(characterRange)
+            )
         }
 
         var result: [PageSlice] = []
         for (localPageIndex, characterRange) in pageCharacterRanges.enumerated() {
-            let fragments = fragments(for: characterRange, records: source.lineRecords)
+            let fragments = fragments(
+                for: characterRange,
+                records: source.lineRecords
+            )
             guard let firstFragment = fragments.first,
                   let lastFragment = fragments.last else {
                 continue
             }
 
-            let readingUnitIDs = fragments.reduce(into: [String]()) { ids, fragment in
+            let readingUnitIDs = fragments.reduce(into: [String]()) {
+                ids,
+                fragment in
                 if !ids.contains(fragment.readingUnitID) {
                     ids.append(fragment.readingUnitID)
                 }
             }
             let pageIndex = globalPageIndex + localPageIndex
-            let firstUnitForPage = units.first(where: { $0.id == firstFragment.readingUnitID }) ?? firstUnit
+            let firstUnitForPage = units.first(
+                where: { $0.id == firstFragment.readingUnitID }
+            ) ?? firstUnit
+            let lastUnitForPage = units.first(
+                where: { $0.id == lastFragment.readingUnitID }
+            ) ?? firstUnit
+
             let startAnchor = ReadingAnchor(
-                canonicalLayer0Version: firstUnitForPage.canonicalAnchor.canonicalLayer0Version,
+                canonicalLayer0Version: firstUnitForPage
+                    .canonicalAnchor
+                    .canonicalLayer0Version,
                 startLine: firstFragment.canonicalLine,
                 endLine: firstFragment.canonicalLine
             )
-            let lastUnitForPage = units.first(where: { $0.id == lastFragment.readingUnitID }) ?? firstUnit
             let endAnchor = ReadingAnchor(
-                canonicalLayer0Version: lastUnitForPage.canonicalAnchor.canonicalLayer0Version,
+                canonicalLayer0Version: lastUnitForPage
+                    .canonicalAnchor
+                    .canonicalLayer0Version,
                 startLine: lastFragment.canonicalLine,
                 endLine: lastFragment.canonicalLine
             )
             let startsAtUnitBeginning = units.contains { unit in
                 unit.id == firstFragment.readingUnitID &&
-                unit.canonicalAnchor.startLine == firstFragment.canonicalLine &&
+                unit.canonicalAnchor.startLine ==
+                    firstFragment.canonicalLine &&
                 firstFragment.utf16Start == 0
             }
 
@@ -213,10 +243,13 @@ public final class PaginationEngine {
                     beginsSectionTransition: startsAtUnitBeginning,
                     compositionKind: pageKinds[localPageIndex],
                     compositionProfileID: composition.id,
-                    resolvedMargins: pageMargins[localPageIndex]
+                    resolvedMargins: pageMargins[localPageIndex],
+                    textScale: configuration.textScale,
+                    pageWidth: configuration.geometry.width
                 )
             )
         }
+
         return result
         #else
         throw PaginationError.unsupportedPlatform
@@ -227,10 +260,14 @@ public final class PaginationEngine {
         let readingUnitID: String
         let blockID: String
         let canonicalLine: CanonicalLine
+        let layoutText: String
         let role: TypographyRole
         let textRange: NSRange
         let separatorLocation: Int?
         let separatorKind: PageTextSeparator
+        let isOpeningHeader: Bool
+        let isFirstOpeningHeader: Bool
+        let isLastOpeningHeader: Bool
     }
 
     private struct AttributedSource {
@@ -240,18 +277,21 @@ public final class PaginationEngine {
 
     private func buildAttributedSource(
         units: [ReadingUnit],
-        typographyProfile: TypographyProfileDefinition,
-        composition: PageCompositionProfile,
         textScale: ReaderTextScale
-    ) -> AttributedSource {
+    ) throws -> AttributedSource {
         let output = NSMutableAttributedString(string: "")
         var records: [LineRecord] = []
 
-        let presentations: [(ReadingUnit, DocumentBlock, ReaderLinePresentation)] = units.flatMap { unit in
-            unit.blocks.flatMap { block in
-                ReaderLineRoleResolver.presentations(for: block, in: unit).map { (unit, block, $0) }
+        let presentations:
+            [(ReadingUnit, DocumentBlock, ReaderLinePresentation)] =
+            units.flatMap { unit in
+                unit.blocks.flatMap { block in
+                    ReaderLineRoleResolver
+                        .presentations(for: block, in: unit)
+                        .map { (unit, block, $0) }
+                }
             }
-        }
+
         let openingIndices = presentations.enumerated()
             .filter { $0.element.2.usesInkAwakening }
             .map(\.offset)
@@ -260,28 +300,63 @@ public final class PaginationEngine {
 
         for (index, item) in presentations.enumerated() {
             let (unit, block, presentation) = item
-            let token = typographyProfileFor(unit: unit, fallback: typographyProfile).token(presentation.role)
-            let attributes = attributes(
-                for: token,
+            guard let resolved = PageTypographyResolver.resolve(
+                text: presentation.canonicalLine.text,
+                canonicalLine: presentation.canonicalLine.number,
+                role: presentation.role,
+                unit: unit,
                 textScale: textScale,
-                composition: composition,
                 isOpeningHeader: presentation.usesInkAwakening,
                 isFirstOpeningHeader: index == firstOpeningIndex,
-                isLastOpeningHeader: index == lastOpeningIndex,
-                isFirstBodyAfterOpening: lastOpeningIndex.map { index == $0 + 1 } ?? false
+                isLastOpeningHeader: index == lastOpeningIndex
+            ) else {
+                throw PaginationError.missingTypographyProfile(
+                    unit.typographyProfile.id
+                )
+            }
+
+            let canonicalText = presentation.canonicalLine.text
+            let layoutText = layoutTextPreservingCanonicalOffsets(
+                canonical: canonicalText,
+                proposedDisplay: resolved.displayText
             )
             let start = output.length
-            let text = presentation.canonicalLine.text
-            output.append(NSAttributedString(string: text, attributes: attributes))
-            let textRange = NSRange(location: start, length: (text as NSString).length)
+
+            #if canImport(UIKit) || canImport(AppKit)
+            output.append(
+                NSAttributedString(
+                    string: layoutText,
+                    attributes: resolved.attributedStringAttributes
+                )
+            )
+            #else
+            output.append(NSAttributedString(string: layoutText))
+            #endif
+
+            let textRange = NSRange(
+                location: start,
+                length: (canonicalText as NSString).length
+            )
 
             var separatorLocation: Int?
             var separatorKind: PageTextSeparator = .none
             if index < presentations.count - 1 {
                 separatorLocation = output.length
                 let next = presentations[index + 1]
-                separatorKind = next.0.id == unit.id ? .lineBreak : .readingUnitBreak
-                output.append(NSAttributedString(string: "\n", attributes: attributes))
+                separatorKind = next.0.id == unit.id
+                    ? .lineBreak
+                    : .readingUnitBreak
+
+                #if canImport(UIKit) || canImport(AppKit)
+                output.append(
+                    NSAttributedString(
+                        string: "\n",
+                        attributes: resolved.attributedStringAttributes
+                    )
+                )
+                #else
+                output.append(NSAttributedString(string: "\n"))
+                #endif
             }
 
             records.append(
@@ -289,47 +364,69 @@ public final class PaginationEngine {
                     readingUnitID: unit.id,
                     blockID: block.id,
                     canonicalLine: presentation.canonicalLine,
+                    layoutText: layoutText,
                     role: presentation.role,
                     textRange: textRange,
                     separatorLocation: separatorLocation,
-                    separatorKind: separatorKind
+                    separatorKind: separatorKind,
+                    isOpeningHeader: presentation.usesInkAwakening,
+                    isFirstOpeningHeader: index == firstOpeningIndex,
+                    isLastOpeningHeader: index == lastOpeningIndex
                 )
             )
         }
 
-        return AttributedSource(attributedString: output, lineRecords: records)
+        return AttributedSource(
+            attributedString: output,
+            lineRecords: records
+        )
     }
 
-    private func typographyProfileFor(
-        unit: ReadingUnit,
-        fallback: TypographyProfileDefinition
-    ) -> TypographyProfileDefinition {
-        TypographyCatalog.profile(id: unit.typographyProfile.id) ?? fallback
-    }
-
-    private func fragments(for pageRange: NSRange, records: [LineRecord]) -> [PageTextFragment] {
+    private func fragments(
+        for pageRange: NSRange,
+        records: [LineRecord]
+    ) -> [PageTextFragment] {
         var result: [PageTextFragment] = []
 
         for record in records {
-            let intersection = NSIntersectionRange(pageRange, record.textRange)
+            let intersection = NSIntersectionRange(
+                pageRange,
+                record.textRange
+            )
             let includesSeparator: Bool
             if let separatorLocation = record.separatorLocation {
-                includesSeparator = separatorLocation >= pageRange.location && separatorLocation < NSMaxRange(pageRange)
+                includesSeparator =
+                    separatorLocation >= pageRange.location &&
+                    separatorLocation < NSMaxRange(pageRange)
             } else {
                 includesSeparator = false
             }
 
-            guard intersection.length > 0 || includesSeparator else { continue }
+            guard intersection.length > 0 || includesSeparator else {
+                continue
+            }
 
-            let localStart = max(0, intersection.location - record.textRange.location)
+            let localStart = max(
+                0,
+                intersection.location - record.textRange.location
+            )
             let localEnd = localStart + intersection.length
-            let text: String
+            let canonicalText: String
+            let displayText: String?
+
             if intersection.length > 0 {
-                text = (record.canonicalLine.text as NSString).substring(
-                    with: NSRange(location: localStart, length: intersection.length)
+                let range = NSRange(
+                    location: localStart,
+                    length: intersection.length
                 )
+                canonicalText = (record.canonicalLine.text as NSString)
+                    .substring(with: range)
+                let display = (record.layoutText as NSString)
+                    .substring(with: range)
+                displayText = display == canonicalText ? nil : display
             } else {
-                text = ""
+                canonicalText = ""
+                displayText = nil
             }
 
             result.append(
@@ -340,155 +437,30 @@ public final class PaginationEngine {
                     canonicalLine: record.canonicalLine.number,
                     utf16Start: localStart,
                     utf16EndExclusive: localEnd,
-                    text: text,
+                    text: canonicalText,
+                    displayText: displayText,
                     role: record.role,
-                    trailingSeparator: includesSeparator ? record.separatorKind : .none
+                    trailingSeparator: includesSeparator
+                        ? record.separatorKind
+                        : .none,
+                    isOpeningHeader: record.isOpeningHeader,
+                    isFirstOpeningHeader: record.isFirstOpeningHeader,
+                    isLastOpeningHeader: record.isLastOpeningHeader
                 )
             )
         }
+
         return result
     }
 
-    private func attributes(
-        for token: TypographyToken,
-        textScale: ReaderTextScale,
-        composition: PageCompositionProfile,
-        isOpeningHeader: Bool,
-        isFirstOpeningHeader: Bool,
-        isLastOpeningHeader: Bool,
-        isFirstBodyAfterOpening: Bool
-    ) -> [NSAttributedString.Key: Any] {
-        #if canImport(UIKit) || canImport(AppKit)
-        let scale = pointScale(for: textScale)
-        let headerScale = isOpeningHeader ? CGFloat(composition.headerScale) : 1
-        let paragraph = NSMutableParagraphStyle()
-        switch token.paragraphAlignment {
-        case .leading:
-            paragraph.alignment = .left
-        case .centered:
-            paragraph.alignment = .center
-        case .justified:
-            paragraph.alignment = .justified
+    private func layoutTextPreservingCanonicalOffsets(
+        canonical: String,
+        proposedDisplay: String
+    ) -> String {
+        guard (canonical as NSString).length ==
+                (proposedDisplay as NSString).length else {
+            return canonical
         }
-        paragraph.hyphenationFactor = Float(token.hyphenationFactor)
-        let leadingMultiplier = isOpeningHeader
-            ? CGFloat(composition.headerLineSpacingMultiplier)
-            : CGFloat(composition.bodyLeadingMultiplier)
-        paragraph.lineSpacing = CGFloat(token.lineSpacing) * scale * leadingMultiplier
-        paragraph.paragraphSpacing = paragraphSpacing(for: token.role) * scale
-        if isOpeningHeader {
-            paragraph.paragraphSpacing += CGFloat(isLastOpeningHeader ? composition.headerBottomSpace : 2.5) * scale
-        } else if bodyRole(token.role) {
-            paragraph.paragraphSpacing += CGFloat(composition.paragraphGap) * scale
-            paragraph.firstLineHeadIndent = CGFloat(composition.paragraphIndent) * scale
-        }
-        if isFirstOpeningHeader {
-            paragraph.paragraphSpacingBefore = CGFloat(composition.headerTopSpace) * scale
-        } else if isFirstBodyAfterOpening {
-            paragraph.paragraphSpacingBefore = CGFloat(composition.ruleGap) * scale
-        }
-
-        return [
-            .font: platformFont(for: token, scale: scale * headerScale),
-            .kern: CGFloat(token.tracking + (isOpeningHeader ? composition.headerTrackingDelta : 0)),
-            .paragraphStyle: paragraph
-        ]
-        #else
-        return [:]
-        #endif
+        return proposedDisplay
     }
-
-    private func bodyRole(_ role: TypographyRole) -> Bool {
-        switch role {
-        case .body, .firstPersonBody:
-            return true
-        default:
-            return false
-        }
-    }
-
-    private func pointScale(for textScale: ReaderTextScale) -> CGFloat {
-        switch textScale {
-        case .standard: return 1.0
-        case .large: return 1.18
-        case .accessibility: return 1.55
-        }
-    }
-
-    private func basePointSize(for style: TypographyDynamicTextStyle) -> CGFloat {
-        switch style {
-        case .largeTitle: return 34
-        case .title: return 28
-        case .title2: return 22
-        case .title3: return 20
-        case .headline: return 17
-        case .body: return 17
-        case .callout: return 16
-        case .subheadline: return 15
-        case .footnote: return 13
-        }
-    }
-
-    private func paragraphSpacing(for role: TypographyRole) -> CGFloat {
-        switch role {
-        case .dateHeading: return 7
-        case .sourceHeader: return 8
-        case .sectionTitle: return 12
-        case .witnessLabel, .courtLabel: return 5
-        case .counselLabel: return 3
-        case .verse: return 4
-        default: return 2
-        }
-    }
-
-    #if canImport(UIKit)
-    private func platformFont(for token: TypographyToken, scale: CGFloat) -> PlatformFont {
-        let size = basePointSize(for: token.textStyle) * scale
-        let weight: UIFont.Weight
-        switch token.weight {
-        case .regular: weight = .regular
-        case .medium: weight = .medium
-        case .semibold: weight = .semibold
-        case .bold: weight = .bold
-        case .black: weight = .black
-        }
-        let base = UIFont.systemFont(ofSize: size, weight: weight)
-        let design: UIFontDescriptor.SystemDesign
-        switch token.design {
-        case .serif: design = .serif
-        case .rounded: design = .rounded
-        case .monospaced: design = .monospaced
-        case .system: design = .default
-        }
-        if let descriptor = base.fontDescriptor.withDesign(design) {
-            return UIFont(descriptor: descriptor, size: size)
-        }
-        return base
-    }
-    #elseif canImport(AppKit)
-    private func platformFont(for token: TypographyToken, scale: CGFloat) -> PlatformFont {
-        let size = basePointSize(for: token.textStyle) * scale
-        switch token.design {
-        case .serif:
-            let name: String
-            switch token.weight {
-            case .bold, .black, .semibold: name = "Times New Roman Bold"
-            default: name = "Times New Roman"
-            }
-            return NSFont(name: name, size: size) ?? NSFont.systemFont(ofSize: size)
-        case .monospaced:
-            return NSFont.monospacedSystemFont(ofSize: size, weight: .regular)
-        case .rounded, .system:
-            let weight: NSFont.Weight
-            switch token.weight {
-            case .regular: weight = .regular
-            case .medium: weight = .medium
-            case .semibold: weight = .semibold
-            case .bold: weight = .bold
-            case .black: weight = .black
-            }
-            return NSFont.systemFont(ofSize: size, weight: weight)
-        }
-    }
-    #endif
 }

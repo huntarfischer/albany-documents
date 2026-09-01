@@ -98,9 +98,9 @@ public struct PaginationConfiguration: Codable, Equatable, Sendable {
     public init(
         geometry: PageGeometry = .phonePortrait,
         textScale: ReaderTextScale = .standard,
-        typographyProfileVersion: String = "typography-stage3-v0.1",
+        typographyProfileVersion: String = "typography-stage8b-parity-v0.1",
         marginProfileVersion: String = "page-margins-stage5-v0.1",
-        pageCompositionProfileVersion: String = "page-composition-stage5.5-v0.1",
+        pageCompositionProfileVersion: String = "page-composition-stage8b-parity-v0.1",
         presentationRules: PaginationPresentationRules = .prototype,
         includeCoverUnit: Bool = false
     ) {
@@ -181,8 +181,12 @@ public struct PageTextFragment: Codable, Equatable, Sendable, Identifiable {
     public let utf16Start: Int
     public let utf16EndExclusive: Int
     public let text: String
+    public let displayText: String?
     public let role: TypographyRole
     public let trailingSeparator: PageTextSeparator
+    public let isOpeningHeader: Bool
+    public let isFirstOpeningHeader: Bool
+    public let isLastOpeningHeader: Bool
 
     public init(
         id: String,
@@ -192,8 +196,12 @@ public struct PageTextFragment: Codable, Equatable, Sendable, Identifiable {
         utf16Start: Int,
         utf16EndExclusive: Int,
         text: String,
+        displayText: String? = nil,
         role: TypographyRole,
-        trailingSeparator: PageTextSeparator
+        trailingSeparator: PageTextSeparator,
+        isOpeningHeader: Bool = false,
+        isFirstOpeningHeader: Bool = false,
+        isLastOpeningHeader: Bool = false
     ) {
         self.id = id
         self.readingUnitID = readingUnitID
@@ -202,12 +210,16 @@ public struct PageTextFragment: Codable, Equatable, Sendable, Identifiable {
         self.utf16Start = utf16Start
         self.utf16EndExclusive = utf16EndExclusive
         self.text = text
+        self.displayText = displayText
         self.role = role
         self.trailingSeparator = trailingSeparator
+        self.isOpeningHeader = isOpeningHeader
+        self.isFirstOpeningHeader = isFirstOpeningHeader
+        self.isLastOpeningHeader = isLastOpeningHeader
     }
 
     public var exactLayoutText: String {
-        text + (trailingSeparator == .none ? "" : "\n")
+(displayText ?? text) + (trailingSeparator == .none ? "" : "\n")
     }
 
     public var exactCanonicalUnitText: String {
@@ -232,6 +244,8 @@ public struct PageSlice: Codable, Equatable, Sendable, Identifiable {
     public let compositionKind: PageCompositionKind
     public let compositionProfileID: String
     public let resolvedMargins: PageMargins
+    public let textScale: ReaderTextScale
+    public let pageWidth: Double
 
     public init(
         id: String,
@@ -249,7 +263,9 @@ public struct PageSlice: Codable, Equatable, Sendable, Identifiable {
         beginsSectionTransition: Bool,
         compositionKind: PageCompositionKind,
         compositionProfileID: String,
-        resolvedMargins: PageMargins
+        resolvedMargins: PageMargins,
+        textScale: ReaderTextScale = .standard,
+        pageWidth: Double = PageGeometry.phonePortrait.width
     ) {
         self.id = id
         self.pageIndex = pageIndex
@@ -267,9 +283,15 @@ public struct PageSlice: Codable, Equatable, Sendable, Identifiable {
         self.compositionKind = compositionKind
         self.compositionProfileID = compositionProfileID
         self.resolvedMargins = resolvedMargins
+        self.textScale = textScale
+        self.pageWidth = pageWidth
     }
 
     public var pageNumber: Int { pageIndex + 1 }
+
+    public var contentWidth: Double {
+        max(1, pageWidth - resolvedMargins.leading - resolvedMargins.trailing)
+    }
 
     public var reconstructedLayoutText: String {
         fragments.map(\.exactLayoutText).joined()

@@ -9,7 +9,11 @@ public struct PageCompositionGateSheet: View {
     public let result: PaginationResult
     public let materialStore: MaterialProfileStore
 
-    public init(edition: Edition, result: PaginationResult, materialStore: MaterialProfileStore) {
+    public init(
+        edition: Edition,
+        result: PaginationResult,
+        materialStore: MaterialProfileStore
+    ) {
         self.edition = edition
         self.result = result
         self.materialStore = materialStore
@@ -66,12 +70,16 @@ public struct PageCompositionGateSheet: View {
             MaterialProfile.farewell1827.id
         ]
         return materialIDs.compactMap { materialID in
-            edition.orderedReadingUnits.first(where: { $0.materialProfile.id == materialID })?.id
+            edition.orderedReadingUnits.first(
+                where: { $0.materialProfile.id == materialID }
+            )?.id
         }
     }
 
     private var openingPages: [PageSlice] {
-        reviewUnitIDs.compactMap { result.pages(representing: $0).first }
+        reviewUnitIDs.compactMap {
+            result.pages(representing: $0).first
+        }
     }
 
     private var continuationPages: [PageSlice] {
@@ -96,10 +104,19 @@ public struct PageCompositionGateSheet: View {
                     .foregroundStyle(.white.opacity(0.62))
                     .frame(width: 390)
 
-                    ComposedPageLeafView(page: page, edition: edition, materialStore: materialStore)
-                        .frame(width: 390, height: 844)
-                        .clipped()
-                        .overlay(Rectangle().stroke(.white.opacity(0.18), lineWidth: 1))
+                    ComposedPageLeafView(
+                        page: page,
+                        edition: edition,
+                        materialStore: materialStore
+                    )
+                    .frame(width: 390, height: 844)
+                    .clipped()
+                    .overlay(
+                        Rectangle().stroke(
+                            .white.opacity(0.18),
+                            lineWidth: 1
+                        )
+                    )
                 }
             }
         }
@@ -107,7 +124,9 @@ public struct PageCompositionGateSheet: View {
 
     private func label(for page: PageSlice) -> String {
         guard let id = page.readingUnitIDs.first,
-              let unit = edition.readingUnit(id: id) else { return page.id }
+              let unit = edition.readingUnit(id: id) else {
+            return page.id
+        }
         return unit.sourcePresentation?.displayTitle ?? unit.id
     }
 }
@@ -133,16 +152,34 @@ public struct ComposedPageLeafView: View {
     }
 
     public var body: some View {
-        if let materialProfile = materialStore.profile(id: page.materialProfile.id),
-           let composition = PageCompositionCatalog.profile(id: page.compositionProfileID) {
-            let seed = MaterialSeed.derive(base: 1827, salt: "page.\(page.pageIndex).\(page.layoutSegmentID)")
-            let recipe = engine.resolve(profile: materialProfile, state: materialState, seed: seed)
+        if let materialProfile = materialStore.profile(
+            id: page.materialProfile.id
+        ),
+           let composition = PageCompositionCatalog.profile(
+            id: page.compositionProfileID
+           ) {
+            let seed = MaterialSeed.derive(
+                base: 1827,
+                salt: "page.\(page.pageIndex).\(page.layoutSegmentID)"
+            )
+            let recipe = engine.resolve(
+                profile: materialProfile,
+                state: materialState,
+                seed: seed
+            )
 
             MaterialSurfaceView(recipe: recipe) {
                 VStack(alignment: .leading, spacing: 0) {
                     ForEach(page.fragments) { fragment in
-                        fragmentView(fragment, composition: composition, seed: seed)
-                        if shouldDrawRule(after: fragment, composition: composition) {
+                        fragmentView(
+                            fragment,
+                            composition: composition,
+                            seed: seed
+                        )
+                        if shouldDrawRule(
+                            after: fragment,
+                            composition: composition
+                        ) {
                             pageRule(composition)
                         }
                     }
@@ -151,17 +188,28 @@ public struct ComposedPageLeafView: View {
                 .padding(.bottom, CGFloat(page.resolvedMargins.bottom))
                 .padding(.leading, CGFloat(page.resolvedMargins.leading))
                 .padding(.trailing, CGFloat(page.resolvedMargins.trailing))
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                .frame(
+                    maxWidth: .infinity,
+                    maxHeight: .infinity,
+                    alignment: .topLeading
+                )
                 .foregroundStyle(Color.black.opacity(0.84))
             }
             .overlay(alignment: .top) {
                 if page.compositionKind == .continuation {
-                    runningHeader(composition).padding(.top, 16)
+                    runningHeader(composition)
+                        .padding(.top, 16)
                 }
             }
             .overlay(alignment: .bottomTrailing) {
                 Text("\(page.pageNumber)")
-                    .font(.system(size: 10, weight: .medium, design: .serif))
+                    .font(
+                        .system(
+                            size: 10,
+                            weight: .medium,
+                            design: .serif
+                        )
+                    )
                     .foregroundStyle(Color.black.opacity(0.42))
                     .padding(.trailing, 18)
                     .padding(.bottom, 14)
@@ -172,35 +220,59 @@ public struct ComposedPageLeafView: View {
     }
 
     @ViewBuilder
-    private func fragmentView(_ fragment: PageTextFragment, composition: PageCompositionProfile, seed: UInt64) -> some View {
+    private func fragmentView(
+        _ fragment: PageTextFragment,
+        composition: PageCompositionProfile,
+        seed: UInt64
+    ) -> some View {
         if fragment.text.isEmpty {
-            if fragment.trailingSeparator != .none { Color.clear.frame(height: 8) }
-        } else if let unit = edition.readingUnit(id: fragment.readingUnitID),
-                  let typography = TypographyCatalog.profile(id: unit.typographyProfile.id) {
+            if fragment.trailingSeparator != .none {
+                Color.clear.frame(height: 8)
+            }
+        } else if let unit = edition.readingUnit(
+            id: fragment.readingUnitID
+        ),
+                  let resolved = PageTypographyResolver.resolve(
+                    text: fragment.text,
+                    canonicalLine: fragment.canonicalLine,
+                    role: fragment.role,
+                    unit: unit,
+                    textScale: page.textScale,
+                    isOpeningHeader: fragment.isOpeningHeader,
+                    isFirstOpeningHeader: fragment.isFirstOpeningHeader,
+                    isLastOpeningHeader: fragment.isLastOpeningHeader
+                  ) {
             if unit.id == FarewellArtifactLayout.unitID {
                 farewellFragment(
                     fragment,
-                    typography: typography,
+                    resolved: resolved,
                     composition: composition,
                     seed: seed
                 )
             } else {
-                let token = typography.token(fragment.role)
-                let openingHeader = page.beginsSectionTransition && isHeader(fragment.role)
-                let contentWidth = max(1, 390 - page.resolvedMargins.leading - page.resolvedMargins.trailing)
-                PrintWearText(
+                ResolvedPrintWearText(
                     fragment.text,
-                    token: token,
+                    resolved: resolved,
                     profile: composition.printWear,
                     seed: seed ^ UInt64(fragment.canonicalLine),
-                    pointScale: openingHeader ? composition.headerScale : 1,
-                    trackingDelta: openingHeader ? composition.headerTrackingDelta : 0,
-                    lineSpacingMultiplier: openingHeader ? composition.headerLineSpacingMultiplier : composition.bodyLeadingMultiplier,
-                    snapshotLayoutWidth: token.justified ? contentWidth : nil
+                    snapshotLayoutWidth: resolved.token.justified
+                        ? page.contentWidth
+                        : nil
                 )
-                .frame(maxWidth: .infinity, alignment: token.centered ? .center : .leading)
-                .padding(.top, openingHeader && isFirstOpeningHeader(fragment) ? CGFloat(composition.headerTopSpace) : 0)
-                .padding(.bottom, separatorSpacing(for: fragment.role, composition: composition))
+                .frame(
+                    maxWidth: .infinity,
+                    alignment: resolved.token.centered
+                        ? .center
+                        : .leading
+                )
+                .padding(
+                    .top,
+                    CGFloat(resolved.paragraphSpacingBefore)
+                )
+                .padding(
+                    .bottom,
+                    CGFloat(resolved.paragraphSpacingAfter)
+                )
             }
         } else {
             Text(fragment.text).font(.body)
@@ -210,116 +282,153 @@ public struct ComposedPageLeafView: View {
     @ViewBuilder
     private func farewellFragment(
         _ fragment: PageTextFragment,
-        typography: TypographyProfileDefinition,
+        resolved: ResolvedReaderTypography,
         composition: PageCompositionProfile,
         seed: UInt64
     ) -> some View {
         let line = fragment.canonicalLine
-        if FarewellArtifactLayout.headerRange.contains(line) {
-            let token: TypographyToken = {
-                if line == 1893 { return typography.token(.sourceHeader) }
-                if line == 1894 { return typography.token(.dateHeading) }
-                return typography.token(.sectionTitle)
-            }()
-            let scale: Double = {
-                if line == 1892 { return composition.headerScale }
-                if line == 1893 { return 0.98 }
-                return 0.90
-            }()
 
-            PrintWearText(
+        if FarewellArtifactLayout.headerRange.contains(line) {
+            ResolvedPrintWearText(
                 fragment.text,
-                token: token,
+                resolved: resolved,
                 profile: composition.printWear,
-                seed: seed ^ UInt64(line),
-                pointScale: scale,
-                trackingDelta: line == 1892 ? composition.headerTrackingDelta : 0,
-                lineSpacingMultiplier: composition.headerLineSpacingMultiplier
+                seed: seed ^ UInt64(line)
             )
             .frame(maxWidth: .infinity, alignment: .center)
-            .padding(.top, line == 1892 && page.beginsSectionTransition ? CGFloat(composition.headerTopSpace) : 0)
-            .padding(.bottom, line == 1892 ? 12 : (line == 1894 ? CGFloat(composition.headerBottomSpace) : 5))
-        } else if let side = FarewellArtifactLayout.columnSide(for: line) {
-            let token = typography.token(.verse)
-            let contentWidth = max(1, 390 - page.resolvedMargins.leading - page.resolvedMargins.trailing - 24)
+            .padding(
+                .top,
+                CGFloat(resolved.paragraphSpacingBefore)
+            )
+            .padding(
+                .bottom,
+                CGFloat(resolved.paragraphSpacingAfter)
+            )
+        } else if let side = FarewellArtifactLayout.columnSide(
+            for: line
+        ) {
+            let ornamentWidth = 24.0
+            let contentWidth = max(
+                1,
+                page.contentWidth - ornamentWidth
+            )
 
             HStack(alignment: .top, spacing: 10) {
                 if side == .leading {
-                    FarewellColumnOrnament(side: side, seed: seed ^ UInt64(line))
-                        .frame(minHeight: 24)
+                    FarewellColumnOrnament(
+                        side: side,
+                        seed: seed ^ UInt64(line)
+                    )
+                    .frame(minHeight: 24)
                 }
 
-                PrintWearText(
+                ResolvedPrintWearText(
                     fragment.text,
-                    token: token,
+                    resolved: resolved,
                     profile: composition.printWear,
                     seed: seed ^ UInt64(line),
-                    lineSpacingMultiplier: composition.bodyLeadingMultiplier,
                     snapshotLayoutWidth: contentWidth
                 )
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(
+                    maxWidth: .infinity,
+                    alignment: .leading
+                )
 
                 if side == .trailing {
-                    FarewellColumnOrnament(side: side, seed: seed ^ UInt64(line))
-                        .frame(minHeight: 24)
+                    FarewellColumnOrnament(
+                        side: side,
+                        seed: seed ^ UInt64(line)
+                    )
+                    .frame(minHeight: 24)
                 }
             }
-            .padding(.top, line == FarewellArtifactLayout.secondColumnStart ? 34 : 0)
-            .padding(.bottom, FarewellArtifactLayout.isStanzaEnd(line) ? 12 : 1.5)
+            .padding(
+                .top,
+                CGFloat(resolved.paragraphSpacingBefore)
+            )
+            .padding(
+                .bottom,
+                CGFloat(resolved.paragraphSpacingAfter)
+            )
         } else {
-            PrintWearText(
+            ResolvedPrintWearText(
                 fragment.text,
-                token: typography.token(fragment.role),
+                resolved: resolved,
                 profile: composition.printWear,
-                seed: seed ^ UInt64(line),
-                lineSpacingMultiplier: composition.bodyLeadingMultiplier
+                seed: seed ^ UInt64(line)
+            )
+            .padding(
+                .top,
+                CGFloat(resolved.paragraphSpacingBefore)
+            )
+            .padding(
+                .bottom,
+                CGFloat(resolved.paragraphSpacingAfter)
             )
         }
     }
 
-    private func isHeader(_ role: TypographyRole) -> Bool {
-        role == .dateHeading || role == .sourceHeader || role == .sectionTitle
+    private func shouldDrawRule(
+        after fragment: PageTextFragment,
+        composition: PageCompositionProfile
+    ) -> Bool {
+        fragment.isLastOpeningHeader &&
+        composition.ruleThickness > 0
     }
 
-    private func isFirstOpeningHeader(_ fragment: PageTextFragment) -> Bool {
-        page.fragments.first(where: { isHeader($0.role) && !$0.text.isEmpty })?.id == fragment.id
-    }
-
-    private func shouldDrawRule(after fragment: PageTextFragment, composition: PageCompositionProfile) -> Bool {
-        guard page.beginsSectionTransition, composition.ruleThickness > 0 else { return false }
-        return page.fragments.filter { isHeader($0.role) && !$0.text.isEmpty }.last?.id == fragment.id
-    }
-
-    private func pageRule(_ composition: PageCompositionProfile) -> some View {
-        HStack {
+    private func pageRule(
+        _ composition: PageCompositionProfile
+    ) -> some View {
+        let scale = PageTypographyResolver.pointScale(
+            for: page.textScale
+        )
+        return HStack {
             Spacer(minLength: 0)
             Rectangle()
                 .fill(Color.black.opacity(0.55))
-                .frame(width: max(24, (390 - composition.openingMargins.leading - composition.openingMargins.trailing) * composition.ruleLengthFraction), height: max(0.5, composition.ruleThickness))
+                .frame(
+                    width: max(
+                        24,
+                        page.contentWidth
+                            * composition.ruleLengthFraction
+                    ),
+                    height: max(
+                        0.5,
+                        composition.ruleThickness
+                    ) * scale
+                )
             Spacer(minLength: 0)
         }
-        .padding(.top, CGFloat(composition.ruleGap))
-        .padding(.bottom, CGFloat(composition.headerBottomSpace * 0.45))
+        .padding(
+            .top,
+            CGFloat(composition.ruleGap * scale)
+        )
+        .padding(
+            .bottom,
+            CGFloat(
+                composition.headerBottomSpace * 0.45 * scale
+            )
+        )
     }
 
-    private func separatorSpacing(for role: TypographyRole, composition: PageCompositionProfile) -> CGFloat {
-        switch role {
-        case .dateHeading, .sourceHeader: return 7
-        case .sectionTitle: return composition.ruleThickness > 0 ? 2 : CGFloat(composition.headerBottomSpace)
-        case .verse: return 3
-        case .body, .firstPersonBody: return CGFloat(composition.paragraphGap)
-        default: return 2
-        }
-    }
-
-    private func runningHeader(_ composition: PageCompositionProfile) -> some View {
+    private func runningHeader(
+        _ composition: PageCompositionProfile
+    ) -> some View {
         let title: String = {
             guard let id = page.readingUnitIDs.first,
-                  let unit = edition.readingUnit(id: id) else { return "" }
+                  let unit = edition.readingUnit(id: id) else {
+                return ""
+            }
             return unit.sourcePresentation?.displayTitle ?? ""
         }()
         return Text(title.uppercased())
-            .font(.system(size: composition.runningHeaderPointSize, weight: .semibold, design: .serif))
+            .font(
+                .system(
+                    size: composition.runningHeaderPointSize,
+                    weight: .semibold,
+                    design: .serif
+                )
+            )
             .tracking(0.8)
             .foregroundStyle(Color.black.opacity(0.44))
             .lineLimit(1)
