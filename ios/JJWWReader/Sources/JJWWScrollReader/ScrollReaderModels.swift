@@ -269,6 +269,10 @@ public final class ScrollReaderSession: ObservableObject {
             pendingScrollNavigationUnitID = nil
         }
 
+        if canonicalLine == nil, location.readingUnitID == unit.id {
+            return
+        }
+
         guard let block = unit.blocks.first(where: { block in
             guard let canonicalLine else { return true }
             return block.canonicalAnchor.contains(line: canonicalLine)
