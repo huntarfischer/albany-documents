@@ -119,10 +119,12 @@ struct Stage8FIndependentCanonicalAuditTests {
     @Test("8F audit reaches canonical truth without using ownership or Edition-map loaders on the raw side")
     func auditBoundaryIsIndependent() throws {
         let testSource = try String(contentsOf: URL(fileURLWithPath: #filePath), encoding: .utf8)
+        let ownershipLoaderSymbol = "Stage8Canonical" + "Ownership.load"
+        let editionMapLoaderSymbol = "Stage8Edition" + "Map.load"
 
         #expect(testSource.contains("JSONSerialization.jsonObject"))
-        #expect(!testSource.contains("Stage8CanonicalOwnership.load"))
-        #expect(!testSource.contains("Stage8EditionMap.load"))
+        #expect(!testSource.contains(ownershipLoaderSymbol))
+        #expect(!testSource.contains(editionMapLoaderSymbol))
     }
 
     private func loadRawCanonical() throws -> (
