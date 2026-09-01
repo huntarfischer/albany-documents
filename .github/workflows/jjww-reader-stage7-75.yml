@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feature/jjww-reader-stage7-75
+      - ci/jjww-stage8c-act1
   workflow_dispatch:
 
 jobs:
