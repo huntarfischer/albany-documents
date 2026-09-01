@@ -118,10 +118,13 @@ struct Stage8CDocumentPaginationTests {
                         let startingSpans = block.semanticSpans.filter {
                             $0.canonicalAnchor.startLine == line
                         }
+                        let startSpanTypes = startingSpans.map(\.type)
+                        let startSpanEnds = startingSpans.map { $0.canonicalAnchor.endLine }
                         print(
                             "C3 SEMANTIC: line=\(line) role=\(presentation.role) " +
                             "types=\(presentation.semanticTypes) " +
-                            "startSpans=\(startingSpans.map { \"\($0.type):\($0.canonicalAnchor.startLine)-\($0.canonicalAnchor.endLine)\" }) " +
+                            "startSpanTypes=\(startSpanTypes) " +
+                            "startSpanEnds=\(startSpanEnds) " +
                             "sourceOccurrences=\(presentation.sourceOccurrenceIDs) " +
                             "text=\(String(presentation.canonicalLine.text.prefix(120)))"
                         )
