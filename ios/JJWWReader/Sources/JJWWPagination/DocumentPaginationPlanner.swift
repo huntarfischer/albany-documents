@@ -171,11 +171,28 @@ enum DocumentPaginationPlanner {
                 $0.disposition == .preferred &&
                 $0.location > pageStart &&
                 $0.location <= proposedEnd &&
-                $0.location >= minimumPreferredLocation
+                $0.location >= minimumPreferredLocation &&
+                !isInsideActiveParentKeepZone(
+                    $0.location,
+                    pageStart: pageStart,
+                    keepZones: keepZones
+                )
             }
             .sorted { $0.location < $1.location }
 
         return candidates.last?.location ?? proposedEnd
+    }
+
+    private static func isInsideActiveParentKeepZone(
+        _ location: Int,
+        pageStart: Int,
+        keepZones: [DocumentKeepZone]
+    ) -> Bool {
+        keepZones.contains { zone in
+            zone.startLocation >= pageStart &&
+            zone.startLocation < location &&
+            location < zone.minimumEndLocation
+        }
     }
 
     private static func disposition(

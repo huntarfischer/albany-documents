@@ -64,6 +64,14 @@ struct Stage8CAct2PlannerTests {
         #expect(
             DocumentPaginationPlanner.adjustedBreakEnd(
                 pageStart: 0,
+                proposedEnd: 55,
+                atoms: atoms,
+                keepZones: zones
+            ) == 55
+        )
+        #expect(
+            DocumentPaginationPlanner.adjustedBreakEnd(
+                pageStart: 0,
                 proposedEnd: 200,
                 atoms: atoms,
                 keepZones: zones
