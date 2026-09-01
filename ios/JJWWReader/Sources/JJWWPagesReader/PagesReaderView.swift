@@ -4,6 +4,27 @@ import JJWWMaterials
 import JJWWScrollReader
 import JJWWPagination
 
+struct NativePageTurnCommitState: Equatable, Sendable {
+    private(set) var pendingIndex: Int?
+
+    var isTransitioning: Bool {
+        pendingIndex != nil
+    }
+
+    mutating func begin(pendingIndex: Int?) {
+        self.pendingIndex = pendingIndex
+    }
+
+    mutating func finish(
+        completed: Bool,
+        visibleIndex: Int?
+    ) -> Int? {
+        defer { pendingIndex = nil }
+        guard completed else { return nil }
+        return pendingIndex ?? visibleIndex
+    }
+}
+
 public struct SynchronizedReaderView: View {
     public let edition: Edition
     public let materialStore: MaterialProfileStore
@@ -239,6 +260,7 @@ private struct NativePagesController: UIViewControllerRepresentable {
 
     func updateUIViewController(_ uiViewController: UIPageViewController, context: Context) {
         context.coordinator.parent = self
+        guard !context.coordinator.turnCommitState.isTransitioning else { return }
         guard pages.indices.contains(currentPageIndex) else { return }
         let visibleIndex = uiViewController.viewControllers?.first?.view.tag
         guard visibleIndex != currentPageIndex else { return }
@@ -250,6 +272,7 @@ private struct NativePagesController: UIViewControllerRepresentable {
     final class Coordinator: NSObject, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
         var parent: NativePagesController
         weak var controller: UIPageViewController?
+        var turnCommitState = NativePageTurnCommitState()
 
         init(parent: NativePagesController) {
             self.parent = parent
@@ -291,12 +314,26 @@ private struct NativePagesController: UIViewControllerRepresentable {
 
         func pageViewController(
             _ pageViewController: UIPageViewController,
+            willTransitionTo pendingViewControllers: [UIViewController]
+        ) {
+            turnCommitState.begin(
+                pendingIndex: pendingViewControllers.first?.view.tag
+            )
+        }
+
+        func pageViewController(
+            _ pageViewController: UIPageViewController,
             didFinishAnimating finished: Bool,
             previousViewControllers: [UIViewController],
             transitionCompleted completed: Bool
         ) {
-            guard completed,
-                  let index = pageViewController.viewControllers?.first?.view.tag else { return }
+            let visibleIndex = pageViewController.viewControllers?.first?.view.tag
+            guard let index = turnCommitState.finish(
+                completed: completed,
+                visibleIndex: visibleIndex
+            ) else {
+                return
+            }
             parent.currentPageIndex = index
         }
     }
