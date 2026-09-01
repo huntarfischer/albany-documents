@@ -123,7 +123,20 @@ struct Stage8CDocumentPaginationTests {
             let sameFlow = last.readingUnitID == first.readingUnitID &&
                 last.blockID == first.blockID
 
-            #expect(!(protected && sameFlow))
+            if protected && sameFlow {
+                let pageFirst = page.fragments.first(where: { !$0.text.isEmpty })
+                print(
+                    "C3 PAGE-EDGE: page=\(page.pageIndex) " +
+                    "pageStartLine=\(pageFirst?.canonicalLine ?? -1) " +
+                    "pageStartRole=\(String(describing: pageFirst?.role)) " +
+                    "lastLine=\(last.canonicalLine) lastRole=\(last.role) " +
+                    "nextLine=\(first.canonicalLine) nextRole=\(first.role) " +
+                    "unit=\(last.readingUnitID) block=\(last.blockID) " +
+                    "lastText=\(String(last.text.prefix(120))) " +
+                    "nextText=\(String(first.text.prefix(120)))"
+                )
+                #expect(false)
+            }
         }
     }
 
