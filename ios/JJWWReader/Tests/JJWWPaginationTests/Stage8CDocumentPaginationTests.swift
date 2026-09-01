@@ -2,6 +2,7 @@ import Foundation
 import Testing
 import JJWWReaderCore
 import JJWWTypography
+import JJWWScrollReader
 @testable import JJWWPagination
 
 @Suite("JJWW Stage 8C Document-Aware Pagination")
@@ -79,26 +80,10 @@ struct Stage8CDocumentPaginationTests {
         let edition = try Stage8ProductionEdition.load(canonicalURL: canonicalURL)
         let result = try PaginationEngine().paginate(edition: edition)
 
-        try expectOpening(
-            startLine: 24,
-            bodyLine: 27,
-            in: result
-        )
-        try expectOpening(
-            startLine: 37,
-            bodyLine: 40,
-            in: result
-        )
-        try expectOpening(
-            startLine: 41,
-            bodyLine: 43,
-            in: result
-        )
-        try expectOpening(
-            startLine: 44,
-            bodyLine: 46,
-            in: result
-        )
+        try expectOpening(startLine: 24, bodyLine: 27, in: result)
+        try expectOpening(startLine: 37, bodyLine: 40, in: result)
+        try expectOpening(startLine: 41, bodyLine: 43, in: result)
+        try expectOpening(startLine: 44, bodyLine: 46, in: result)
     }
 
     @Test("C3 protected labels are never the stranded final matter when their testimony continues")
@@ -125,6 +110,23 @@ struct Stage8CDocumentPaginationTests {
 
             if protected && sameFlow {
                 let pageFirst = page.fragments.first(where: { !$0.text.isEmpty })
+                if let unit = edition.readingUnit(id: last.readingUnitID),
+                   let block = unit.blocks.first(where: { $0.id == last.blockID }) {
+                    for presentation in ReaderLineRoleResolver.presentations(for: block, in: unit)
+                    where (1172...1176).contains(presentation.canonicalLine.number) {
+                        let line = presentation.canonicalLine.number
+                        let startingSpans = block.semanticSpans.filter {
+                            $0.canonicalAnchor.startLine == line
+                        }
+                        print(
+                            "C3 SEMANTIC: line=\(line) role=\(presentation.role) " +
+                            "types=\(presentation.semanticTypes) " +
+                            "startSpans=\(startingSpans.map { \"\($0.type):\($0.canonicalAnchor.startLine)-\($0.canonicalAnchor.endLine)\" }) " +
+                            "sourceOccurrences=\(presentation.sourceOccurrenceIDs) " +
+                            "text=\(String(presentation.canonicalLine.text.prefix(120)))"
+                        )
+                    }
+                }
                 print(
                     "C3 PAGE-EDGE: page=\(page.pageIndex) " +
                     "pageStartLine=\(pageFirst?.canonicalLine ?? -1) " +
@@ -135,7 +137,7 @@ struct Stage8CDocumentPaginationTests {
                     "lastText=\(String(last.text.prefix(120))) " +
                     "nextText=\(String(first.text.prefix(120)))"
                 )
-                #expect(false)
+                #expect(Bool(false))
             }
         }
     }
@@ -152,20 +154,14 @@ struct Stage8CDocumentPaginationTests {
         #expect(result.pages.allSatisfy { !$0.fragments.isEmpty })
 
         for unit in edition.orderedReadingUnits {
-            #expect(
-                result.reconstructedCanonicalText(for: unit.id) ==
-                unit.canonicalText
-            )
+            #expect(result.reconstructedCanonicalText(for: unit.id) == unit.canonicalText)
         }
 
         let grouped = Dictionary(grouping: result.pages, by: \.layoutSegmentID)
         for pages in grouped.values {
             let ordered = pages.sorted { $0.pageIndex < $1.pageIndex }
             for pair in zip(ordered, ordered.dropFirst()) {
-                #expect(
-                    pair.0.segmentTextRange.upperBound ==
-                    pair.1.segmentTextRange.location
-                )
+                #expect(pair.0.segmentTextRange.upperBound == pair.1.segmentTextRange.location)
             }
         }
     }
@@ -195,8 +191,7 @@ struct Stage8CDocumentPaginationTests {
         let page = try #require(
             result.pages.first { page in
                 page.fragments.contains {
-                    $0.canonicalLine == startLine &&
-                    $0.utf16Start == 0
+                    $0.canonicalLine == startLine && $0.utf16Start == 0
                 }
             }
         )
