@@ -114,15 +114,23 @@ public final class PaginationEngine {
             units: units,
             textScale: configuration.textScale
         )
+        let keepZones = DocumentBreakPlanner.keepZones(
+            atoms: source.lineRecords.map { record in
+                DocumentBreakAtom(
+                    groupID: "\(record.readingUnitID)|\(record.blockID)",
+                    startLocation: record.textRange.location,
+                    endLocation: NSMaxRange(record.textRange),
+                    role: record.role,
+                    startsDocument: record.startsDocument,
+                    isEmpty: record.canonicalLine.text
+                        .trimmingCharacters(in: .whitespacesAndNewlines)
+                        .isEmpty
+                )
+            },
+            policy: .stage8C
+        )
 
         #if canImport(UIKit) || canImport(AppKit)
-        let textStorage = NSTextStorage(
-            attributedString: source.attributedString
-        )
-        let layoutManager = NSLayoutManager()
-        layoutManager.usesFontLeading = true
-        textStorage.addLayoutManager(layoutManager)
-
         var pageCharacterRanges: [NSRange] = []
         var pageMargins: [PageMargins] = []
         var pageKinds: [PageCompositionKind] = []
@@ -141,18 +149,26 @@ public final class PaginationEngine {
                 opening: opening
             )
             let margins = composition.margins(for: kind)
-            let container = NSTextContainer(
-                size: configuration.geometry.contentSize(using: margins)
+            let proposedRange = try measuredPageRange(
+                in: source,
+                from: coveredCharacters,
+                size: configuration.geometry.contentSize(using: margins),
+                segmentID: segmentID
             )
-            container.lineFragmentPadding = 0
-            layoutManager.addTextContainer(container)
-            layoutManager.ensureLayout(for: container)
+            let proposedEnd = NSMaxRange(proposedRange)
+            let adjustedEnd = DocumentBreakPlanner.adjustedBreakEnd(
+                pageStart: coveredCharacters,
+                proposedEnd: proposedEnd,
+                keepZones: keepZones
+            )
+            let lawfulEnd = adjustedEnd > coveredCharacters
+                ? adjustedEnd
+                : proposedEnd
+            let characterRange = NSRange(
+                location: coveredCharacters,
+                length: lawfulEnd - coveredCharacters
+            )
 
-            let glyphRange = layoutManager.glyphRange(for: container)
-            let characterRange = layoutManager.characterRange(
-                forGlyphRange: glyphRange,
-                actualGlyphRange: nil
-            )
             guard characterRange.length > 0 else {
                 throw PaginationError.textKitProducedEmptyPage(segmentID)
             }
@@ -160,10 +176,7 @@ public final class PaginationEngine {
             pageCharacterRanges.append(characterRange)
             pageMargins.append(margins)
             pageKinds.append(kind)
-            coveredCharacters = max(
-                coveredCharacters,
-                NSMaxRange(characterRange)
-            )
+            coveredCharacters = lawfulEnd
         }
 
         var result: [PageSlice] = []
@@ -208,8 +221,14 @@ public final class PaginationEngine {
             )
             let startsAtUnitBeginning = units.contains { unit in
                 unit.id == firstFragment.readingUnitID &&
-                unit.canonicalAnchor.startLine ==
-                    firstFragment.canonicalLine &&
+                unit.canonicalAnchor.startLine == firstFragment.canonicalLine &&
+                firstFragment.utf16Start == 0
+            }
+            let startsAtDocumentBeginning = source.lineRecords.contains { record in
+                record.readingUnitID == firstFragment.readingUnitID &&
+                record.blockID == firstFragment.blockID &&
+                record.canonicalLine.number == firstFragment.canonicalLine &&
+                record.startsDocument &&
                 firstFragment.utf16Start == 0
             }
 
@@ -240,7 +259,7 @@ public final class PaginationEngine {
                     fragments: fragments,
                     materialProfile: firstUnitForPage.materialProfile,
                     side: pageIndex.isMultiple(of: 2) ? .recto : .verso,
-                    beginsSectionTransition: startsAtUnitBeginning,
+                    beginsSectionTransition: startsAtUnitBeginning || startsAtDocumentBeginning,
                     compositionKind: pageKinds[localPageIndex],
                     compositionProfileID: composition.id,
                     resolvedMargins: pageMargins[localPageIndex],
@@ -256,6 +275,99 @@ public final class PaginationEngine {
         #endif
     }
 
+    #if canImport(UIKit) || canImport(AppKit)
+    private func measuredPageRange(
+        in source: AttributedSource,
+        from startLocation: Int,
+        size: CGSize,
+        segmentID: String
+    ) throws -> NSRange {
+        let remainingLength = source.attributedString.length - startLocation
+        guard remainingLength > 0 else {
+            throw PaginationError.textKitProducedEmptyPage(segmentID)
+        }
+
+        let remainingRange = NSRange(
+            location: startLocation,
+            length: remainingLength
+        )
+        let remainder = NSMutableAttributedString(
+            attributedString: source.attributedString.attributedSubstring(
+                from: remainingRange
+            )
+        )
+        suppressParagraphOpeningGeometryIfContinuing(
+            remainder,
+            source: source,
+            globalStart: startLocation
+        )
+
+        let textStorage = NSTextStorage(attributedString: remainder)
+        let layoutManager = NSLayoutManager()
+        layoutManager.usesFontLeading = true
+        let container = NSTextContainer(size: size)
+        container.lineFragmentPadding = 0
+        textStorage.addLayoutManager(layoutManager)
+        layoutManager.addTextContainer(container)
+        layoutManager.ensureLayout(for: container)
+
+        let glyphRange = layoutManager.glyphRange(for: container)
+        let localCharacterRange = layoutManager.characterRange(
+            forGlyphRange: glyphRange,
+            actualGlyphRange: nil
+        )
+        guard localCharacterRange.length > 0 else {
+            throw PaginationError.textKitProducedEmptyPage(segmentID)
+        }
+
+        return NSRange(
+            location: startLocation,
+            length: localCharacterRange.length
+        )
+    }
+
+    private func suppressParagraphOpeningGeometryIfContinuing(
+        _ attributedString: NSMutableAttributedString,
+        source: AttributedSource,
+        globalStart: Int
+    ) {
+        guard let record = source.lineRecords.first(where: {
+            globalStart > $0.textRange.location &&
+            globalStart < NSMaxRange($0.textRange)
+        }),
+        attributedString.length > 0 else {
+            return
+        }
+
+        let remainingInRecord = NSMaxRange(record.textRange) - globalStart
+        let localLength = min(remainingInRecord, attributedString.length)
+        guard localLength > 0,
+              let paragraph = attributedString.attribute(
+                .paragraphStyle,
+                at: 0,
+                effectiveRange: nil
+              ) as? NSParagraphStyle,
+              let mutable = paragraph.mutableCopy() as? NSMutableParagraphStyle else {
+            return
+        }
+
+        mutable.paragraphSpacingBefore = 0
+        mutable.firstLineHeadIndent = 0
+        attributedString.addAttribute(
+            .paragraphStyle,
+            value: mutable,
+            range: NSRange(location: 0, length: localLength)
+        )
+    }
+    #endif
+
+    private struct PresentationRecord {
+        let unit: ReadingUnit
+        let block: DocumentBlock
+        let presentation: ReaderLinePresentation
+        let isFirstNonEmptyInBlock: Bool
+    }
+
     private struct LineRecord {
         let readingUnitID: String
         let blockID: String
@@ -268,12 +380,44 @@ public final class PaginationEngine {
         let isOpeningHeader: Bool
         let isFirstOpeningHeader: Bool
         let isLastOpeningHeader: Bool
+        let startsDocument: Bool
     }
 
     private struct AttributedSource {
         let attributedString: NSAttributedString
         let lineRecords: [LineRecord]
     }
+
+    private static let documentOpeningTypes: Set<String> = [
+        "dated_item",
+        "front_matter_title_block",
+        "section_item",
+        "confession_document",
+        "trial_source_section",
+        "historical_work_section",
+        "official_examination_document",
+        "newspaper_item",
+        "periodical_item",
+        "broadside_document",
+        "poem_document",
+        "letter_document",
+        "advertisement_document",
+        "will_document",
+        "genealogical_section",
+        "legal_notice_document",
+        "testimony_document",
+        "farewell_document",
+        "appendix_section",
+        "appendix_people_index",
+        "appendix_timeline",
+        "bibliography_section",
+        "acknowledgments_section",
+        "copyright_section",
+        "back_matter_title",
+        "request_document",
+        "registration_document",
+        "museum_card"
+    ]
 
     private func buildAttributedSource(
         units: [ReadingUnit],
@@ -282,24 +426,38 @@ public final class PaginationEngine {
         let output = NSMutableAttributedString(string: "")
         var records: [LineRecord] = []
 
-        let presentations:
-            [(ReadingUnit, DocumentBlock, ReaderLinePresentation)] =
-            units.flatMap { unit in
-                unit.blocks.flatMap { block in
-                    ReaderLineRoleResolver
-                        .presentations(for: block, in: unit)
-                        .map { (unit, block, $0) }
+        let presentations: [PresentationRecord] = units.flatMap { unit in
+            unit.blocks.flatMap { block in
+                let resolved = ReaderLineRoleResolver.presentations(
+                    for: block,
+                    in: unit
+                )
+                let firstNonEmptyIndex = resolved.firstIndex {
+                    !$0.canonicalLine.text
+                        .trimmingCharacters(in: .whitespacesAndNewlines)
+                        .isEmpty
+                }
+                return resolved.enumerated().map { index, presentation in
+                    PresentationRecord(
+                        unit: unit,
+                        block: block,
+                        presentation: presentation,
+                        isFirstNonEmptyInBlock: index == firstNonEmptyIndex
+                    )
                 }
             }
+        }
 
         let openingIndices = presentations.enumerated()
-            .filter { $0.element.2.usesInkAwakening }
+            .filter { $0.element.presentation.usesInkAwakening }
             .map(\.offset)
         let firstOpeningIndex = openingIndices.first
         let lastOpeningIndex = openingIndices.last
 
         for (index, item) in presentations.enumerated() {
-            let (unit, block, presentation) = item
+            let unit = item.unit
+            let block = item.block
+            let presentation = item.presentation
             guard let resolved = PageTypographyResolver.resolve(
                 text: presentation.canonicalLine.text,
                 canonicalLine: presentation.canonicalLine.number,
@@ -343,7 +501,7 @@ public final class PaginationEngine {
             if index < presentations.count - 1 {
                 separatorLocation = output.length
                 let next = presentations[index + 1]
-                separatorKind = next.0.id == unit.id
+                separatorKind = next.unit.id == unit.id
                     ? .lineBreak
                     : .readingUnitBreak
 
@@ -371,7 +529,12 @@ public final class PaginationEngine {
                     separatorKind: separatorKind,
                     isOpeningHeader: presentation.usesInkAwakening,
                     isFirstOpeningHeader: index == firstOpeningIndex,
-                    isLastOpeningHeader: index == lastOpeningIndex
+                    isLastOpeningHeader: index == lastOpeningIndex,
+                    startsDocument: startsDocument(
+                        presentation: presentation,
+                        block: block,
+                        isFirstNonEmptyInBlock: item.isFirstNonEmptyInBlock
+                    )
                 )
             )
         }
@@ -380,6 +543,27 @@ public final class PaginationEngine {
             attributedString: output,
             lineRecords: records
         )
+    }
+
+    private func startsDocument(
+        presentation: ReaderLinePresentation,
+        block: DocumentBlock,
+        isFirstNonEmptyInBlock: Bool
+    ) -> Bool {
+        let line = presentation.canonicalLine.number
+        if presentation.role == .dateHeading {
+            return true
+        }
+
+        if presentation.role == .sourceHeader,
+           isFirstNonEmptyInBlock {
+            return true
+        }
+
+        return block.semanticSpans.contains { span in
+            span.canonicalAnchor.startLine == line &&
+            Self.documentOpeningTypes.contains(span.type)
+        }
     }
 
     private func fragments(
