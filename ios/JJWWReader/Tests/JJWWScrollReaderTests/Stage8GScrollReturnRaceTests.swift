@@ -18,7 +18,7 @@ struct Stage8GScrollReturnRaceTests {
         )
     }
 
-    @Test("A remount visibility report cannot steal the pending Pages-to-Scroll destination")
+    @Test("A remount visibility report cannot steal or collapse the pending Pages-to-Scroll destination")
     @MainActor
     func remountVisibilityCannotResetReturnTarget() throws {
         let edition = try Stage8ProductionEdition.load(canonicalURL: canonicalURL)
@@ -46,12 +46,16 @@ struct Stage8GScrollReturnRaceTests {
 
         let newlyMountedTopUnit = try #require(edition.orderedReadingUnits.first)
         session.focus(unit: newlyMountedTopUnit)
-
         #expect(session.location == target)
 
         session.focus(unit: targetUnit)
-        #expect(session.location.readingUnitID == targetUnit.id)
-        #expect(session.location.blockID == targetBlock.id)
+        #expect(session.location == target)
+
+        session.focus(unit: targetUnit, canonicalLine: target.canonicalLine)
+        #expect(session.location == target)
+
+        session.focus(unit: targetUnit)
+        #expect(session.location == target)
 
         let laterUnit = edition.orderedReadingUnits[16]
         session.focus(unit: laterUnit)
