@@ -63,16 +63,27 @@ struct Stage8EPresentationClassificationTests {
         try expectFamily(.referenceBackMatter, containerID: "L1-CNT-0079", map: map, ownership: ownership)
     }
 
-    @Test("Stage 9 keeps the proven typography vocabulary and extends only the material vocabulary needed by Book 1.0")
+    @Test("Stage 9 gives the approved Book 1.0 text families independent typography while keeping material vocabulary bounded")
     func profileVocabularyStaysBounded() throws {
         let map = try Stage8EditionMap.load(canonicalURL: canonicalURL)
         let typographyIDs = Set(map.entries.map(\.typographyProfile.id))
         let materialIDs = Set(map.entries.map(\.materialProfile.id))
 
-        #expect(typographyIDs.isSubset(of: [
-            "jjwwEditorial", "newspaper1827", "confessionPamphlet1827",
-            "trialRecord1827", "farewell1827"
-        ]))
+        #expect(typographyIDs == [
+            "jjwwEditorial",
+            "newspaper1827",
+            "newspaper1905",
+            "newspaper1967",
+            "confessionPamphlet1827",
+            "publishedAccountPamphlet",
+            "trialRecord1827",
+            "officialDocument",
+            "historicalBook",
+            "correspondence",
+            "displayArtifact",
+            "farewell1827",
+            "referenceBackMatter"
+        ])
         #expect(materialIDs.isSubset(of: [
             "jjwwEditorial", "argus1827", "dailyAdvertiser1827",
             "confessionPamphlet1827", "trialRecord1827", "farewell1827",
