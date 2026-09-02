@@ -45,13 +45,35 @@ public final class ReaderWorkshopSession: ObservableObject {
         edition.orderedReadingUnits.filter { $0.kind != .cover }
     }
 
-    public func selectUnit(_ id: String) {
-        guard let unit = edition.readingUnit(id: id) else { return }
+    /// Act III-A uses the independent Act II typography profile ID as the
+    /// Workshop treatment key. This is presentation state only, not a new
+    /// documentary taxonomy.
+    public var selectedTreatmentID: String {
+        draftTypography.id
+    }
+
+    public var availableTreatments: [TypographyProfileDefinition] {
+        let usedIDs = Set(availableUnits.map { $0.typographyProfile.id })
+        return TypographyCatalog.all.filter { usedIDs.contains($0.id) }
+    }
+
+    public var availableSpecimens: [ReadingUnit] {
+        availableUnits.filter { $0.typographyProfile.id == selectedTreatmentID }
+    }
+
+    public func selectTreatment(_ id: String) {
+        guard let unit = availableUnits.first(where: { $0.typographyProfile.id == id }) else { return }
+        selectedUnitID = unit.id
+        loadMaterial(for: unit)
+        loadTreatment(for: unit)
+        revision &+= 1
+    }
+
+    public func selectSpecimen(_ id: String) {
+        guard let unit = edition.readingUnit(id: id),
+              unit.typographyProfile.id == selectedTreatmentID else { return }
         selectedUnitID = id
-        draftMaterial = materialStore.profile(id: unit.materialProfile.id) ?? materialStore.profiles[0]
-        draftTypography = TypographyCatalog.profile(id: unit.typographyProfile.id) ?? TypographyCatalog.editorial
-        draftComposition = ReaderCompositionCatalog.profile(for: unit)
-        selectedRole = draftTypography.tokens.first?.role ?? .body
+        loadMaterial(for: unit)
         revision &+= 1
     }
 
@@ -89,7 +111,7 @@ public final class ReaderWorkshopSession: ObservableObject {
     public func resetSelected() {
         let unit = selectedUnit
         MaterialTuningRegistry.shared.remove(id: unit.materialProfile.id)
-        TypographyTuningRegistry.shared.remove(id: unit.typographyProfile.id)
+        TypographyTuningRegistry.shared.remove(id: selectedTreatmentID)
         let baseComposition = ReaderCompositionCatalog.bundledProfile(for: unit)
         ReaderCompositionTuningRegistry.shared.remove(id: baseComposition.id)
 
@@ -104,7 +126,13 @@ public final class ReaderWorkshopSession: ObservableObject {
         MaterialTuningRegistry.shared.removeAll()
         TypographyTuningRegistry.shared.removeAll()
         ReaderCompositionTuningRegistry.shared.removeAll()
-        selectUnit(selectedUnitID)
+
+        let unit = selectedUnit
+        draftMaterial = materialStore.bundledProfile(id: unit.materialProfile.id) ?? draftMaterial
+        draftTypography = TypographyCatalog.bundledProfile(id: unit.typographyProfile.id) ?? TypographyCatalog.editorial
+        draftComposition = ReaderCompositionCatalog.bundledProfile(for: unit)
+        selectedRole = draftTypography.tokens.first?.role ?? .body
+        revision &+= 1
     }
 
     public func exportCurrent() {
@@ -120,6 +148,16 @@ public final class ReaderWorkshopSession: ObservableObject {
         if let data = try? encoder.encode(payload) {
             transferText = String(decoding: data, as: UTF8.self)
         }
+    }
+
+    private func loadMaterial(for unit: ReadingUnit) {
+        draftMaterial = materialStore.profile(id: unit.materialProfile.id) ?? materialStore.profiles[0]
+    }
+
+    private func loadTreatment(for unit: ReadingUnit) {
+        draftTypography = TypographyCatalog.profile(id: unit.typographyProfile.id) ?? TypographyCatalog.editorial
+        draftComposition = ReaderCompositionCatalog.profile(for: unit)
+        selectedRole = draftTypography.tokens.first?.role ?? .body
     }
 }
 
@@ -164,16 +202,29 @@ public struct ReaderWorkshopView: View {
             .padding(.horizontal, 14)
             .padding(.top, 12)
 
-            Picker("Reading unit", selection: Binding(
-                get: { session.selectedUnitID },
-                set: { session.selectUnit($0) }
-            )) {
-                ForEach(session.availableUnits) { unit in
-                    Text(unit.displayTitle)
-                        .tag(unit.id)
+            VStack(alignment: .leading, spacing: 4) {
+                Picker("Type", selection: Binding(
+                    get: { session.selectedTreatmentID },
+                    set: { session.selectTreatment($0) }
+                )) {
+                    ForEach(session.availableTreatments) { treatment in
+                        Text(treatment.displayName)
+                            .tag(treatment.id)
+                    }
                 }
+                .pickerStyle(.menu)
+
+                Picker("Specimen", selection: Binding(
+                    get: { session.selectedUnitID },
+                    set: { session.selectSpecimen($0) }
+                )) {
+                    ForEach(session.availableSpecimens) { unit in
+                        Text(unit.displayTitle)
+                            .tag(unit.id)
+                    }
+                }
+                .pickerStyle(.menu)
             }
-            .pickerStyle(.menu)
             .padding(.horizontal, 14)
             .padding(.top, 8)
 
