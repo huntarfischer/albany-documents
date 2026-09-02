@@ -28,7 +28,7 @@ struct Stage9ActIIdentityTests {
         #expect(argus.displayTitle == "The Albany Argus & City Gazette")
 
         let mayTen = try #require(edition.readingUnit(id: "unit-l1-cnt-0005"))
-        #expect(mayTen.displayTitle == "Thursday May 10, 1827")
+        #expect(mayTen.displayTitle == "PROCLAMATION")
 
         let opening = try #require(edition.readingUnit(id: "unit-l1-cnt-0001"))
         #expect(opening.displayTitle == "REAL GOOD stories + stuff")
