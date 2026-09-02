@@ -156,7 +156,10 @@ enum DocumentPaginationPlanner {
                 enclosing.minimumEndLocation >= zone.minimumEndLocation
             }
         }
-        if let retreat = effectiveViolations.max(by: {
+        // When a physical edge violates nested keep-zones at once, preserve the
+        // outermost opening gesture. If the leaf already starts inside that outer
+        // gesture, it is not eligible above and the nested zone may still retreat.
+        if let retreat = effectiveViolations.min(by: {
             $0.startLocation < $1.startLocation
         })?.startLocation {
             return retreat
