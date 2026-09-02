@@ -169,7 +169,7 @@ public struct ReaderWorkshopView: View {
                 set: { session.selectUnit($0) }
             )) {
                 ForEach(session.availableUnits) { unit in
-                    Text(unit.sourcePresentation?.displayTitle ?? unit.id)
+                    Text(unit.displayTitle)
                         .tag(unit.id)
                 }
             }
@@ -340,8 +340,8 @@ public struct ReaderWorkshopView: View {
 
                     Toggle("Uppercase", isOn: Binding(
                         get: { token.uppercase },
-                        set: { value in session.updateSelectedToken { $0.uppercase = value } }
-                    ))
+                        set: { value in session.updateSelectedToken { $0.uppercase = value }
+                    }))
                 }
             }
 
