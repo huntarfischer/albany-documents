@@ -10,6 +10,34 @@ public struct MaterialLabView: View {
     }
 
     public var body: some View {
+        GeometryReader { proxy in
+            if proxy.size.width < 1000 {
+                compactLayout
+            } else {
+                regularLayout
+            }
+        }
+        .foregroundStyle(Color.white.opacity(0.92))
+        .background(Color(red: 0.075, green: 0.07, blue: 0.062))
+        .preferredColorScheme(.dark)
+    }
+
+    private var compactLayout: some View {
+        ScrollView {
+            VStack(spacing: 0) {
+                preview
+                    .frame(height: 500)
+                Divider()
+                    .overlay(Color.white.opacity(0.12))
+                controlStack
+                    .padding(16)
+                    .background(Color.black.opacity(0.16))
+            }
+        }
+        .scrollIndicators(.visible)
+    }
+
+    private var regularLayout: some View {
         HStack(spacing: 0) {
             preview
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -20,10 +48,6 @@ public struct MaterialLabView: View {
                 .frame(maxHeight: .infinity)
                 .background(Color.black.opacity(0.16))
         }
-        .frame(minWidth: 1100, minHeight: 720)
-        .foregroundStyle(Color.white.opacity(0.92))
-        .background(Color(red: 0.075, green: 0.07, blue: 0.062))
-        .preferredColorScheme(.dark)
     }
 
     private var preview: some View {
@@ -79,89 +103,93 @@ public struct MaterialLabView: View {
 
     private var controls: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 18) {
-                profileControls
-                controlGroup("PAPER") {
-                    slider("Warmth", value: Binding(
-                        get: { session.draftProfile.effectivePaperTuning.warmth },
-                        set: { session.setPaperWarmth($0) }
-                    ), range: -0.35...0.35)
-                    slider("Brightness", value: Binding(
-                        get: { session.draftProfile.effectivePaperTuning.brightness },
-                        set: { session.setPaperBrightness($0) }
-                    ), range: -0.25...0.25)
-                }
-
-                controlGroup("MOTTLING") {
-                    slider("Amount", value: profileBinding(\.mottling.amount), range: 0...0.5)
-                    slider("Scale", value: profileBinding(\.mottling.scale), range: 0.2...2.0)
-                    intStepper("Count", value: profileBinding(\.mottling.count), range: 0...40)
-                }
-
-                controlGroup("GRAIN") {
-                    slider("Amount", value: profileBinding(\.grain.amount), range: 0...0.4)
-                    slider("Scale", value: profileBinding(\.grain.scale), range: 0.25...2.0)
-                    intStepper("Resolution", value: profileBinding(\.grain.resolution), range: 64...512, step: 32)
-                }
-
-                controlGroup("FIBERS") {
-                    slider("Density", value: profileBinding(\.fibers.density), range: 0...1.0)
-                    slider("Min length", value: profileBinding(\.fibers.minLength), range: 0.002...0.12)
-                    slider("Max length", value: profileBinding(\.fibers.maxLength), range: 0.005...0.16)
-                    slider("Opacity", value: profileBinding(\.fibers.opacity), range: 0...0.4)
-                    slider("Width", value: profileBinding(\.fibers.width), range: 0.2...1.4)
-                }
-
-                controlGroup("FLECKS") {
-                    slider("Density", value: profileBinding(\.flecks.density), range: 0...0.6)
-                    slider("Min radius", value: profileBinding(\.flecks.minRadius), range: 0.0002...0.01)
-                    slider("Max radius", value: profileBinding(\.flecks.maxRadius), range: 0.0005...0.018)
-                    slider("Opacity", value: profileBinding(\.flecks.opacity), range: 0...0.4)
-                }
-
-                controlGroup("FOXING") {
-                    slider("Amount", value: profileBinding(\.foxing.amount), range: 0...0.25)
-                    slider("Min radius", value: profileBinding(\.foxing.minRadius), range: 0.002...0.08)
-                    slider("Max radius", value: profileBinding(\.foxing.maxRadius), range: 0.004...0.14)
-                    intStepper("Count", value: profileBinding(\.foxing.count), range: 0...24)
-                }
-
-                controlGroup("EDGES") {
-                    slider("Wear", value: profileBinding(\.edgeVariation.amount), range: 0...0.3)
-                    slider("Width", value: profileBinding(\.edgeVariation.width), range: 0.01...0.16)
-                }
-
-                controlGroup("SCAN SLOT") {
-                    slider("Opacity", value: profileBinding(\.scanOverlay.opacity), range: 0...1)
-                    slider("Scale / crop", value: profileBinding(\.scanOverlay.scale), range: 0.5...2.5)
-                    slider("Offset X", value: profileBinding(\.scanOverlay.offsetX), range: -240...240, decimals: 1)
-                    slider("Offset Y", value: profileBinding(\.scanOverlay.offsetY), range: -240...240, decimals: 1)
-                }
-
-                controlGroup("CLOTH") {
-                    Toggle("Enabled", isOn: profileBinding(\.clothWeave.enabled))
-                    slider("Vertical density", value: profileBinding(\.clothWeave.verticalDensity), range: 0...1.5)
-                    slider("Horizontal density", value: profileBinding(\.clothWeave.horizontalDensity), range: 0...1.5)
-                    slider("Opacity", value: profileBinding(\.clothWeave.opacity), range: 0...0.5)
-                    slider("Thread width", value: profileBinding(\.clothWeave.width), range: 0.2...1.4)
-                }
-
-                controlGroup("INK · STAGE 3 READY") {
-                    slider("Density", value: Binding(
-                        get: { session.draftProfile.effectiveInk.density },
-                        set: { session.setInkDensity($0) }
-                    ), range: 0.45...1.0)
-                    slider("Future bleed", value: Binding(
-                        get: { session.draftProfile.effectiveInk.bleed },
-                        set: { session.setInkBleed($0) }
-                    ), range: 0...1.0)
-                }
-
-                exportControls
-            }
-            .padding(20)
+            controlStack
+                .padding(20)
         }
         .scrollIndicators(.visible)
+    }
+
+    private var controlStack: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            profileControls
+            controlGroup("PAPER") {
+                slider("Warmth", value: Binding(
+                    get: { session.draftProfile.effectivePaperTuning.warmth },
+                    set: { session.setPaperWarmth($0) }
+                ), range: -0.35...0.35)
+                slider("Brightness", value: Binding(
+                    get: { session.draftProfile.effectivePaperTuning.brightness },
+                    set: { session.setPaperBrightness($0) }
+                ), range: -0.25...0.25)
+            }
+
+            controlGroup("MOTTLING") {
+                slider("Amount", value: profileBinding(\.mottling.amount), range: 0...0.5)
+                slider("Scale", value: profileBinding(\.mottling.scale), range: 0.2...2.0)
+                intStepper("Count", value: profileBinding(\.mottling.count), range: 0...40)
+            }
+
+            controlGroup("GRAIN") {
+                slider("Amount", value: profileBinding(\.grain.amount), range: 0...0.4)
+                slider("Scale", value: profileBinding(\.grain.scale), range: 0.25...2.0)
+                intStepper("Resolution", value: profileBinding(\.grain.resolution), range: 64...512, step: 32)
+            }
+
+            controlGroup("FIBERS") {
+                slider("Density", value: profileBinding(\.fibers.density), range: 0...1.0)
+                slider("Min length", value: profileBinding(\.fibers.minLength), range: 0.002...0.12)
+                slider("Max length", value: profileBinding(\.fibers.maxLength), range: 0.005...0.16)
+                slider("Opacity", value: profileBinding(\.fibers.opacity), range: 0...0.4)
+                slider("Width", value: profileBinding(\.fibers.width), range: 0.2...1.4)
+            }
+
+            controlGroup("FLECKS") {
+                slider("Density", value: profileBinding(\.flecks.density), range: 0...0.6)
+                slider("Min radius", value: profileBinding(\.flecks.minRadius), range: 0.0002...0.01)
+                slider("Max radius", value: profileBinding(\.flecks.maxRadius), range: 0.0005...0.018)
+                slider("Opacity", value: profileBinding(\.flecks.opacity), range: 0...0.4)
+            }
+
+            controlGroup("FOXING") {
+                slider("Amount", value: profileBinding(\.foxing.amount), range: 0...0.25)
+                slider("Min radius", value: profileBinding(\.foxing.minRadius), range: 0.002...0.08)
+                slider("Max radius", value: profileBinding(\.foxing.maxRadius), range: 0.004...0.14)
+                intStepper("Count", value: profileBinding(\.foxing.count), range: 0...24)
+            }
+
+            controlGroup("EDGES") {
+                slider("Wear", value: profileBinding(\.edgeVariation.amount), range: 0...0.3)
+                slider("Width", value: profileBinding(\.edgeVariation.width), range: 0.01...0.16)
+            }
+
+            controlGroup("SCAN SLOT") {
+                slider("Opacity", value: profileBinding(\.scanOverlay.opacity), range: 0...1)
+                slider("Scale / crop", value: profileBinding(\.scanOverlay.scale), range: 0.5...2.5)
+                slider("Offset X", value: profileBinding(\.scanOverlay.offsetX), range: -240...240, decimals: 1)
+                slider("Offset Y", value: profileBinding(\.scanOverlay.offsetY), range: -240...240, decimals: 1)
+            }
+
+            controlGroup("CLOTH") {
+                Toggle("Enabled", isOn: profileBinding(\.clothWeave.enabled))
+                slider("Vertical density", value: profileBinding(\.clothWeave.verticalDensity), range: 0...1.5)
+                slider("Horizontal density", value: profileBinding(\.clothWeave.horizontalDensity), range: 0...1.5)
+                slider("Opacity", value: profileBinding(\.clothWeave.opacity), range: 0...0.5)
+                slider("Thread width", value: profileBinding(\.clothWeave.width), range: 0.2...1.4)
+            }
+
+            controlGroup("INK · STAGE 3 READY") {
+                slider("Density", value: Binding(
+                    get: { session.draftProfile.effectiveInk.density },
+                    set: { session.setInkDensity($0) }
+                ), range: 0.45...1.0)
+                slider("Future bleed", value: Binding(
+                    get: { session.draftProfile.effectiveInk.bleed },
+                    set: { session.setInkBleed($0) }
+                ), range: 0...1.0)
+            }
+
+            exportControls
+        }
     }
 
     private var profileControls: some View {
@@ -182,35 +210,41 @@ public struct MaterialLabView: View {
             }
             .pickerStyle(.segmented)
 
-            HStack {
-                Text("Seed")
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Text("Seed")
+                    Spacer()
+                    Button("+1") { session.seed &+= 1 }
+                    Button("Reset") { session.resetSelectedProfile() }
+                }
                 TextField("Seed", text: Binding(
                     get: { String(session.seed) },
                     set: { if let value = UInt64($0) { session.seed = value } }
                 ))
                 .textFieldStyle(.roundedBorder)
-                Button("+1") { session.seed &+= 1 }
-                Button("Reset") { session.resetSelectedProfile() }
+                .font(.system(.body, design: .monospaced))
             }
         }
     }
 
     private var exportControls: some View {
         controlGroup("PROFILE DATA") {
-            HStack {
-                Button("Export Profile") {
-                    do { _ = try session.exportProfile() }
-                    catch { session.transferText = "EXPORT ERROR: \(error)" }
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Button("Export Profile") {
+                        do { _ = try session.exportProfile() }
+                        catch { session.transferText = "EXPORT ERROR: \(error)" }
+                    }
+                    Button("Import JSON") {
+                        do { try session.importProfile() }
+                        catch { session.transferText = "IMPORT ERROR: \(error)" }
+                    }
                 }
-                Button("Import JSON") {
-                    do { try session.importProfile() }
-                    catch { session.transferText = "IMPORT ERROR: \(error)" }
-                }
-                Spacer()
                 if let message = session.message {
                     Text(message)
                         .font(.system(size: 10, design: .monospaced))
                         .foregroundStyle(Color.white.opacity(0.55))
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
             TextEditor(text: $session.transferText)
@@ -233,6 +267,7 @@ public struct MaterialLabView: View {
             content()
         }
         .padding(12)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(.white.opacity(0.045), in: RoundedRectangle(cornerRadius: 8))
     }
 
