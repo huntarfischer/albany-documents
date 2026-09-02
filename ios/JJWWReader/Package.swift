@@ -133,7 +133,7 @@ let package = Package(
         ),
         .testTarget(
             name: "JJWWMaterialLabTests",
-            dependencies: ["JJWWMaterials", "JJWWMaterialLab", "JJWWTypography"]
+            dependencies: ["JJWWReaderCore", "JJWWMaterials", "JJWWMaterialLab", "JJWWTypography"]
         )
     ]
 )
