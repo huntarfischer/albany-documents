@@ -54,6 +54,8 @@ public enum Stage8ProductionEdition {
                 kind: .section,
                 canonicalAnchor: entry.canonicalAnchor,
                 sourcePresentation: entry.sourcePresentation,
+                presentationFamily: entry.presentationFamily,
+                presentationVariant: entry.presentationVariant,
                 typographyProfile: entry.typographyProfile,
                 materialProfile: entry.materialProfile,
                 blocks: blocks
