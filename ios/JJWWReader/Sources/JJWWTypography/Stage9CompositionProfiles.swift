@@ -129,9 +129,9 @@ public extension ReaderCompositionCatalog {
         )
     )
 
-    /// Retains the Daily Advertiser's quieter geometry while keeping the same
-    /// family profile ID. Workshop overrides therefore affect every 1827 paper,
-    /// and this remains only a source-specific refinement.
+    /// Retains the Daily Advertiser's existing publication character while keeping
+    /// the shared family composition ID. Values are expressed as deltas from the
+    /// tunable 1827 baseline, so family Workshop changes still flow through.
     static func applyingSourceVariant(
         to profile: ReaderCompositionProfile,
         for unit: ReadingUnit
@@ -157,6 +157,31 @@ public extension ReaderCompositionCatalog {
         adjusted.ruleThickness -= 0.05
         adjusted.ruleLengthFraction -= 0.02
         adjusted.ruleGap += 3
+
+        let baseWear = profile.printWear
+        let dailyStroke = baseWear.strokeStarvation + 0.10
+        let dailyErosion = baseWear.edgeErosion + 0.08
+        adjusted.printWear = PrintWearProfile(
+            id: "wear.dailyAdvertiser1827.v0.1",
+            headerWear: baseWear.headerWear + 0.04,
+            bodyWear: baseWear.bodyWear,
+            strokeStarvation: dailyStroke,
+            edgeErosion: dailyErosion,
+            darkDeposit: baseWear.darkDeposit + 0.09,
+            seedSalt: baseWear.seedSalt &+ 6,
+            wearScale: (baseWear.wearScale ?? 0.48) + 0.52,
+            starvationCap: dailyStroke,
+            erosionCap: dailyErosion,
+            inkOpacity: min(1, (baseWear.inkOpacity ?? 0.94) + 0.06),
+            usesMultiplyBlend: false,
+            datePointScale: (baseWear.datePointScale ?? 0.68) + 0.32,
+            sourceHeaderPointScale: baseWear.sourceHeaderPointScale ?? 1.0,
+            sectionTitlePointScale: (baseWear.sectionTitlePointScale ?? 0.88) + 0.12,
+            dateTrackingAdjustment: (baseWear.dateTrackingAdjustment ?? -0.25) + 0.25,
+            sourceHeaderTrackingAdjustment: (baseWear.sourceHeaderTrackingAdjustment ?? -0.20) + 0.20,
+            sectionTitleTrackingAdjustment: (baseWear.sectionTitleTrackingAdjustment ?? -0.45) + 0.45,
+            sourceHeaderLineSpacingOverride: (baseWear.sourceHeaderLineSpacingOverride ?? -1.5) + 1.5
+        )
         return adjusted
     }
 }
