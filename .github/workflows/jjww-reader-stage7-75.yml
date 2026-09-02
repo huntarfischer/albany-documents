@@ -3,7 +3,7 @@ name: JJWW Reader Stage 7.75 Simulator Host
 on:
   push:
     branches:
-      - feature/jjww-reader-stage7-75
+      - ci/jjww-stage8c-act2
   workflow_dispatch:
 
 jobs:
