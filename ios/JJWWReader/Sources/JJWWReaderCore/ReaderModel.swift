@@ -57,6 +57,8 @@ public struct ReadingUnit: Codable, Equatable, Sendable, Identifiable {
     public let kind: ReadingUnitKind
     public let canonicalAnchor: ReadingAnchor
     public let sourcePresentation: SourcePresentation?
+    public let presentationFamily: Stage8PresentationFamily?
+    public let presentationVariant: String?
     public let typographyProfile: TypographyProfile
     public let materialProfile: MaterialProfile
     public let blocks: [DocumentBlock]
@@ -67,6 +69,8 @@ public struct ReadingUnit: Codable, Equatable, Sendable, Identifiable {
         kind: ReadingUnitKind,
         canonicalAnchor: ReadingAnchor,
         sourcePresentation: SourcePresentation?,
+        presentationFamily: Stage8PresentationFamily? = nil,
+        presentationVariant: String? = nil,
         typographyProfile: TypographyProfile,
         materialProfile: MaterialProfile,
         blocks: [DocumentBlock]
@@ -76,6 +80,8 @@ public struct ReadingUnit: Codable, Equatable, Sendable, Identifiable {
         self.kind = kind
         self.canonicalAnchor = canonicalAnchor
         self.sourcePresentation = sourcePresentation
+        self.presentationFamily = presentationFamily
+        self.presentationVariant = presentationVariant
         self.typographyProfile = typographyProfile
         self.materialProfile = materialProfile
         self.blocks = blocks
