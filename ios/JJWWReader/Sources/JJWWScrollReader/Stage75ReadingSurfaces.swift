@@ -82,7 +82,6 @@ public struct PeriodicalStackReadingUnitSurface: View {
                 }
             }
             .padding(.vertical, CGFloat(staging.stackVerticalPadding))
-            .background(JJWWCoverClothTexture(seed: 0x4A4A5757))
             .dynamicTypeSize(textScale.dynamicTypeSize)
             .accessibilityElement(children: .contain)
         } else {
