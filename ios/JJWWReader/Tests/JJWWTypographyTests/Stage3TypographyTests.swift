@@ -2,10 +2,24 @@ import XCTest
 @testable import JJWWTypography
 
 final class Stage3TypographyTests: XCTestCase {
-    func testFiveTypographyProfilesExist() {
+    func testBookOneTypographyProfilesExist() {
         XCTAssertEqual(
             Set(TypographyCatalog.all.map(\.id)),
-            Set(["jjwwEditorial", "newspaper1827", "confessionPamphlet1827", "trialRecord1827", "farewell1827"])
+            Set([
+                "jjwwEditorial",
+                "newspaper1827",
+                "newspaper1905",
+                "newspaper1967",
+                "confessionPamphlet1827",
+                "publishedAccountPamphlet",
+                "trialRecord1827",
+                "officialDocument",
+                "historicalBook",
+                "correspondence",
+                "displayArtifact",
+                "farewell1827",
+                "referenceBackMatter"
+            ])
         )
     }
 
