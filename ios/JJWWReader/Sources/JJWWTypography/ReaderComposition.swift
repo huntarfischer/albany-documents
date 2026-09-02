@@ -267,12 +267,188 @@ public enum ReaderCompositionCatalog {
         )
     )
 
+    // Stage 9 Book 1.0 keeps the established renderer and adds only the missing
+    // documentary character required by the approved visual map.
+    public static let historicalBook = ReaderCompositionProfile(
+        id: "composition.historicalBook.v0.1",
+        displayName: "Historical Book Excerpt",
+        openingInsets: ReaderCompositionInsets(top: 72, leading: 36, bottom: 56, trailing: 36),
+        continuationInsets: ReaderCompositionInsets(top: 46, leading: 36, bottom: 52, trailing: 36),
+        bodyLeadingMultiplier: 1.10,
+        paragraphIndent: 14,
+        paragraphGap: 2.5,
+        headerScale: 1.18,
+        headerTrackingDelta: 0.18,
+        headerLineSpacingMultiplier: 1.04,
+        headerTopSpace: 18,
+        headerBottomSpace: 24,
+        runningHeaderPointSize: 8.5,
+        ruleThickness: 0.45,
+        ruleLengthFraction: 0.42,
+        ruleGap: 10,
+        printWear: PrintWearProfile(
+            id: "wear.historicalBook.v0.1",
+            headerWear: 0.06,
+            bodyWear: 0.014,
+            strokeStarvation: 0.04,
+            edgeErosion: 0.03,
+            darkDeposit: 0.02,
+            seedSalt: 853
+        )
+    )
+
+    public static let officialDocument = ReaderCompositionProfile(
+        id: "composition.officialDocument.v0.1",
+        displayName: "Official Document",
+        openingInsets: ReaderCompositionInsets(top: 70, leading: 34, bottom: 54, trailing: 34),
+        continuationInsets: ReaderCompositionInsets(top: 46, leading: 34, bottom: 50, trailing: 34),
+        bodyLeadingMultiplier: 1.06,
+        paragraphIndent: 10,
+        paragraphGap: 2,
+        headerScale: 1.16,
+        headerTrackingDelta: 0.22,
+        headerLineSpacingMultiplier: 1.03,
+        headerTopSpace: 16,
+        headerBottomSpace: 22,
+        runningHeaderPointSize: 8.5,
+        ruleThickness: 0.55,
+        ruleLengthFraction: 0.72,
+        ruleGap: 9,
+        printWear: PrintWearProfile(
+            id: "wear.officialDocument.v0.1",
+            headerWear: 0.05,
+            bodyWear: 0.012,
+            strokeStarvation: 0.035,
+            edgeErosion: 0.025,
+            darkDeposit: 0.015,
+            seedSalt: 857
+        )
+    )
+
+    public static let correspondence = ReaderCompositionProfile(
+        id: "composition.correspondence.v0.1",
+        displayName: "Correspondence",
+        openingInsets: ReaderCompositionInsets(top: 76, leading: 40, bottom: 60, trailing: 40),
+        continuationInsets: ReaderCompositionInsets(top: 52, leading: 40, bottom: 56, trailing: 40),
+        bodyLeadingMultiplier: 1.12,
+        paragraphIndent: 0,
+        paragraphGap: 4,
+        headerScale: 1.08,
+        headerTrackingDelta: 0.08,
+        headerLineSpacingMultiplier: 1.03,
+        headerTopSpace: 18,
+        headerBottomSpace: 24,
+        runningHeaderPointSize: 8.5,
+        ruleThickness: 0,
+        ruleLengthFraction: 0.40,
+        ruleGap: 10,
+        printWear: PrintWearProfile(
+            id: "wear.correspondence.v0.1",
+            headerWear: 0.035,
+            bodyWear: 0.010,
+            strokeStarvation: 0.025,
+            edgeErosion: 0.020,
+            darkDeposit: 0.010,
+            seedSalt: 859
+        )
+    )
+
+    public static let newspaper1905 = ReaderCompositionProfile(
+        id: "composition.newspaper1905.v0.1",
+        displayName: "Newspaper 1905",
+        openingInsets: ReaderCompositionInsets(top: 60, leading: 30, bottom: 50, trailing: 30),
+        continuationInsets: ReaderCompositionInsets(top: 42, leading: 30, bottom: 46, trailing: 30),
+        bodyLeadingMultiplier: 1.06,
+        paragraphIndent: 10,
+        paragraphGap: 1.5,
+        headerScale: 1.18,
+        headerTrackingDelta: 0.20,
+        headerLineSpacingMultiplier: 1.03,
+        headerTopSpace: 12,
+        headerBottomSpace: 18,
+        runningHeaderPointSize: 9,
+        ruleThickness: 0.65,
+        ruleLengthFraction: 0.80,
+        ruleGap: 8,
+        printWear: PrintWearProfile(
+            id: "wear.newspaper1905.v0.1",
+            headerWear: 0.08,
+            bodyWear: 0.022,
+            strokeStarvation: 0.06,
+            edgeErosion: 0.05,
+            darkDeposit: 0.02,
+            seedSalt: 863
+        )
+    )
+
+    public static let newspaper1967 = ReaderCompositionProfile(
+        id: "composition.newspaper1967.v0.1",
+        displayName: "Newspaper 1967",
+        openingInsets: ReaderCompositionInsets(top: 56, leading: 30, bottom: 48, trailing: 30),
+        continuationInsets: ReaderCompositionInsets(top: 40, leading: 30, bottom: 44, trailing: 30),
+        bodyLeadingMultiplier: 1.04,
+        paragraphIndent: 10,
+        paragraphGap: 2,
+        headerScale: 1.12,
+        headerTrackingDelta: 0.12,
+        headerLineSpacingMultiplier: 1.02,
+        headerTopSpace: 10,
+        headerBottomSpace: 16,
+        runningHeaderPointSize: 9,
+        ruleThickness: 0.50,
+        ruleLengthFraction: 0.78,
+        ruleGap: 7,
+        printWear: PrintWearProfile(
+            id: "wear.newspaper1967.v0.1",
+            headerWear: 0.025,
+            bodyWear: 0.006,
+            strokeStarvation: 0.018,
+            edgeErosion: 0.012,
+            darkDeposit: 0.006,
+            seedSalt: 877
+        )
+    )
+
+    public static let referenceBackMatter = ReaderCompositionProfile(
+        id: "composition.referenceBackMatter.v0.1",
+        displayName: "Reference Back Matter",
+        openingInsets: ReaderCompositionInsets(top: 58, leading: 36, bottom: 48, trailing: 36),
+        continuationInsets: ReaderCompositionInsets(top: 40, leading: 36, bottom: 44, trailing: 36),
+        bodyLeadingMultiplier: 1.06,
+        paragraphIndent: 0,
+        paragraphGap: 3,
+        headerScale: 1.12,
+        headerTrackingDelta: 0.12,
+        headerLineSpacingMultiplier: 1.02,
+        headerTopSpace: 14,
+        headerBottomSpace: 18,
+        runningHeaderPointSize: 8.5,
+        ruleThickness: 0.35,
+        ruleLengthFraction: 0.48,
+        ruleGap: 8,
+        printWear: PrintWearProfile(
+            id: "wear.referenceBackMatter.v0.1",
+            headerWear: 0.015,
+            bodyWear: 0.004,
+            strokeStarvation: 0.010,
+            edgeErosion: 0.008,
+            darkDeposit: 0.004,
+            seedSalt: 881
+        )
+    )
+
     public static let all: [ReaderCompositionProfile] = [
         argus,
         dailyAdvertiser,
         confession,
         trial,
-        farewell
+        farewell,
+        historicalBook,
+        officialDocument,
+        correspondence,
+        newspaper1905,
+        newspaper1967,
+        referenceBackMatter
     ]
 
     public static func bundledProfile(id: String) -> ReaderCompositionProfile? {
@@ -290,6 +466,12 @@ public enum ReaderCompositionCatalog {
         case MaterialProfile.confessionPamphlet1827.id: return confession
         case MaterialProfile.trialRecord1827.id: return trial
         case MaterialProfile.farewell1827.id: return farewell
+        case "historicalBook": return historicalBook
+        case "officialDocument": return officialDocument
+        case "correspondence": return correspondence
+        case "newspaper1905": return newspaper1905
+        case "newspaper1967": return newspaper1967
+        case "referenceBackMatter": return referenceBackMatter
         default: return trial
         }
     }
