@@ -34,7 +34,7 @@ jobs:
             --output /tmp/jjww-stage2/material-lab-stage2.png \
             --export-dir /tmp/jjww-stage2/profiles
           file /tmp/jjww-stage2/material-lab-stage2.png
-          test "$(find /tmp/jjww-stage2/profiles -name '*.json' | wc -l | tr -d ' ')" = "6"
+          test "$(find /tmp/jjww-stage2/profiles -name '*.json' | wc -l | tr -d ' ')" = "12"
 
       - name: Verify production material target builds without Material Lab
         working-directory: ios/JJWWReader
