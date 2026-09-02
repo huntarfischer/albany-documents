@@ -95,21 +95,21 @@
       "containerIDs": ["L1-CNT-0053"],
       "presentationFamily": "periodical",
       "presentationVariant": "newspaper1967",
-      "typographyProfileID": "newspaper1827",
+      "typographyProfileID": "newspaper1967",
       "materialProfileID": "newspaper1967"
     },
     {
       "containerIDs": ["L1-CNT-0073"],
       "presentationFamily": "periodical",
       "presentationVariant": "newspaper1905",
-      "typographyProfileID": "newspaper1827",
+      "typographyProfileID": "newspaper1905",
       "materialProfileID": "newspaper1905"
     },
     {
       "containerIDs": ["L1-CNT-0045", "L1-CNT-0046"],
       "presentationFamily": "pamphlet",
       "presentationVariant": "publishedAccountPamphlet",
-      "typographyProfileID": "confessionPamphlet1827",
+      "typographyProfileID": "publishedAccountPamphlet",
       "materialProfileID": "confessionPamphlet1827"
     },
     {
@@ -130,35 +130,35 @@
       "containerIDs": ["L1-CNT-0023", "L1-CNT-0031", "L1-CNT-0042", "L1-CNT-0043", "L1-CNT-0055", "L1-CNT-0057", "L1-CNT-0058", "L1-CNT-0059", "L1-CNT-0060", "L1-CNT-0062", "L1-CNT-0063", "L1-CNT-0068", "L1-CNT-0070", "L1-CNT-0074"],
       "presentationFamily": "bookExcerpt",
       "presentationVariant": "historicalBookExcerpt",
-      "typographyProfileID": "jjwwEditorial",
+      "typographyProfileID": "historicalBook",
       "materialProfileID": "historicalBook"
     },
     {
       "containerIDs": ["L1-CNT-0041", "L1-CNT-0048", "L1-CNT-0061", "L1-CNT-0069"],
       "presentationFamily": "standaloneDocument",
       "presentationVariant": "officialDocument",
-      "typographyProfileID": "trialRecord1827",
+      "typographyProfileID": "officialDocument",
       "materialProfileID": "officialDocument"
     },
     {
       "containerIDs": ["L1-CNT-0066", "L1-CNT-0071", "L1-CNT-0072"],
       "presentationFamily": "standaloneDocument",
       "presentationVariant": "correspondence",
-      "typographyProfileID": "jjwwEditorial",
+      "typographyProfileID": "correspondence",
       "materialProfileID": "correspondence"
     },
     {
       "containerIDs": ["L1-CNT-0054", "L1-CNT-0056"],
       "presentationFamily": "displayArtifact",
       "presentationVariant": "displayDocument",
-      "typographyProfileID": "farewell1827",
+      "typographyProfileID": "displayArtifact",
       "materialProfileID": "farewell1827"
     },
     {
       "containerIDs": ["L1-CNT-0076", "L1-CNT-0077", "L1-CNT-0078", "L1-CNT-0079", "L1-CNT-0080", "L1-CNT-0081", "L1-CNT-0082"],
       "presentationFamily": "referenceBackMatter",
       "presentationVariant": "referenceBackMatter",
-      "typographyProfileID": "jjwwEditorial",
+      "typographyProfileID": "referenceBackMatter",
       "materialProfileID": "referenceBackMatter"
     }
   ]

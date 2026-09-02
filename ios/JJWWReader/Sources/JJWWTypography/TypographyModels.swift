@@ -260,7 +260,21 @@ public enum TypographyCatalog {
         ]
     )
 
-    public static let all: [TypographyProfileDefinition] = [editorial, newspaper, confession, trial, farewell]
+    public static let all: [TypographyProfileDefinition] = [
+        editorial,
+        newspaper,
+        newspaper1905,
+        newspaper1967,
+        confession,
+        publishedAccount,
+        trial,
+        officialDocument,
+        historicalBook,
+        correspondence,
+        displayArtifact,
+        farewell,
+        referenceBackMatter
+    ]
 
     public static func bundledProfile(id: String) -> TypographyProfileDefinition? {
         all.first { $0.id == id }

@@ -438,17 +438,21 @@ public enum ReaderCompositionCatalog {
     )
 
     public static let all: [ReaderCompositionProfile] = [
-        argus,
-        dailyAdvertiser,
+        editorial,
+        newspaper1827,
         confession,
+        publishedAccount,
         trial,
-        farewell,
-        historicalBook,
         officialDocument,
+        historicalBook,
         correspondence,
         newspaper1905,
         newspaper1967,
-        referenceBackMatter
+        displayArtifact,
+        farewell,
+        referenceBackMatter,
+        argus,
+        dailyAdvertiser
     ]
 
     public static func bundledProfile(id: String) -> ReaderCompositionProfile? {
@@ -460,24 +464,37 @@ public enum ReaderCompositionCatalog {
     }
 
     public static func bundledProfile(for unit: ReadingUnit) -> ReaderCompositionProfile {
-        switch unit.materialProfile.id {
-        case MaterialProfile.argus1827.id: return argus
-        case MaterialProfile.dailyAdvertiser1827.id: return dailyAdvertiser
-        case MaterialProfile.confessionPamphlet1827.id: return confession
-        case MaterialProfile.trialRecord1827.id: return trial
-        case MaterialProfile.farewell1827.id: return farewell
-        case "historicalBook": return historicalBook
-        case "officialDocument": return officialDocument
-        case "correspondence": return correspondence
+        switch unit.presentationVariant {
+        case "argus1827", "dailyAdvertiser1827", "periodicalSource": return newspaper1827
         case "newspaper1905": return newspaper1905
         case "newspaper1967": return newspaper1967
+        case "confessionPamphlet1827": return confession
+        case "publishedAccountPamphlet": return publishedAccount
+        case "trialPamphlet1827", "trialRecord": return trial
+        case "officialDocument": return officialDocument
+        case "historicalBookExcerpt": return historicalBook
+        case "correspondence": return correspondence
+        case "displayDocument": return displayArtifact
+        case "farewellBroadside": return farewell
         case "referenceBackMatter": return referenceBackMatter
-        default: return trial
+        default:
+            switch unit.presentationFamily {
+            case .editorialInterior: return editorial
+            case .periodical: return newspaper1827
+            case .pamphlet: return confession
+            case .courtLegal: return trial
+            case .bookExcerpt: return historicalBook
+            case .standaloneDocument: return officialDocument
+            case .displayArtifact: return displayArtifact
+            case .referenceBackMatter: return referenceBackMatter
+            case .unclassified, .none: return editorial
+            }
         }
     }
 
     public static func profile(for unit: ReadingUnit) -> ReaderCompositionProfile {
         let base = bundledProfile(for: unit)
-        return ReaderCompositionTuningRegistry.shared.profile(id: base.id) ?? base
+        let tuned = ReaderCompositionTuningRegistry.shared.profile(id: base.id) ?? base
+        return applyingSourceVariant(to: tuned, for: unit)
     }
 }
