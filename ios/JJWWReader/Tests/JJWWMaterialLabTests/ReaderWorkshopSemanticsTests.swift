@@ -44,6 +44,29 @@ struct ReaderWorkshopSemanticsTests {
         #expect(session.availableSpecimens.allSatisfy { !$0.displayTitle.hasPrefix("unit-l1-cnt-") })
     }
 
+    @Test("Every Workshop specimen belongs to exactly one treatment and has a readable title")
+    func allSpecimensAreAccountedForAndReadable() throws {
+        resetRegistries()
+        defer { resetRegistries() }
+
+        let session = try makeSession()
+        var specimenIDs: [String] = []
+
+        for treatment in session.availableTreatments {
+            session.selectTreatment(treatment.id)
+            let specimens = session.availableSpecimens
+
+            #expect(!specimens.isEmpty)
+            #expect(specimens.allSatisfy { $0.typographyProfile.id == treatment.id })
+            #expect(specimens.allSatisfy { !$0.displayTitle.hasPrefix("unit-l1-cnt-") })
+            #expect(specimens.allSatisfy { !$0.displayTitle.hasPrefix("[ Image:") })
+            specimenIDs.append(contentsOf: specimens.map(\.id))
+        }
+
+        #expect(specimenIDs.count == session.availableUnits.count)
+        #expect(Set(specimenIDs).count == session.availableUnits.count)
+    }
+
     @Test("Switching specimen preserves the treatment typography and composition draft")
     func specimenSwitchKeepsTreatmentDraft() throws {
         resetRegistries()
@@ -114,6 +137,31 @@ struct ReaderWorkshopSemanticsTests {
         #expect(session.selectedTreatmentID == "newspaper1827")
         #expect(session.draftTypography.id == "newspaper1827")
         #expect(session.draftComposition.id == compositionID)
+    }
+
+    @Test("Workshop export identifies the treatment, preview specimen, and profile owners")
+    func exportCarriesCockpitContext() throws {
+        resetRegistries()
+        defer { resetRegistries() }
+
+        let session = try makeSession()
+        session.selectTreatment("historicalBook")
+        let specimen = try #require(session.availableSpecimens.dropFirst().first)
+        session.selectSpecimen(specimen.id)
+        session.exportCurrent()
+
+        let data = try #require(session.transferText.data(using: .utf8))
+        let payload = try JSONDecoder().decode(ReaderWorkshopExport.self, from: data)
+
+        #expect(payload.version == "stage9-act3c-v0.1")
+        #expect(payload.treatmentID == "historicalBook")
+        #expect(payload.treatmentName == session.draftTypography.displayName)
+        #expect(payload.specimenID == specimen.id)
+        #expect(payload.specimenTitle == specimen.displayTitle)
+        #expect(payload.typographyProfileID == session.draftTypography.id)
+        #expect(payload.compositionProfileID == session.draftComposition.id)
+        #expect(payload.typography.id == payload.typographyProfileID)
+        #expect(payload.composition.id == payload.compositionProfileID)
     }
 
     private func makeSession() throws -> ReaderWorkshopSession {
