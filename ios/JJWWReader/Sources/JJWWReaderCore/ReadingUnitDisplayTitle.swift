@@ -74,35 +74,38 @@ public extension ReadingUnit {
     }
 }
 
+/// Typed documentary titles are stronger identity than a generic typographic
+/// display line. A display line is still stronger than a date, which is handled
+/// only after structural and direct-source identity have been exhausted.
 private let navigationTitleSemanticPriorities: [String: Int] = [
-    "uppercase_display_line": 0,
-    "front_matter_title_block": 1,
-    "section_item": 1,
-    "confession_document": 1,
-    "trial_source_section": 1,
-    "historical_work_section": 1,
-    "official_examination_document": 1,
-    "newspaper_item": 1,
-    "periodical_item": 1,
-    "broadside_document": 1,
-    "poem_document": 1,
-    "letter_document": 1,
-    "advertisement_document": 1,
-    "will_document": 1,
-    "genealogical_section": 1,
-    "legal_notice_document": 1,
-    "testimony_document": 1,
-    "farewell_document": 1,
-    "appendix_section": 1,
-    "appendix_people_index": 1,
-    "appendix_timeline": 1,
-    "bibliography_section": 1,
-    "acknowledgments_section": 1,
-    "copyright_section": 1,
-    "back_matter_title": 1,
-    "request_document": 1,
-    "registration_document": 1,
-    "museum_card": 1
+    "front_matter_title_block": 0,
+    "section_item": 0,
+    "confession_document": 0,
+    "trial_source_section": 0,
+    "historical_work_section": 0,
+    "official_examination_document": 0,
+    "newspaper_item": 0,
+    "periodical_item": 0,
+    "broadside_document": 0,
+    "poem_document": 0,
+    "letter_document": 0,
+    "advertisement_document": 0,
+    "will_document": 0,
+    "genealogical_section": 0,
+    "legal_notice_document": 0,
+    "testimony_document": 0,
+    "farewell_document": 0,
+    "appendix_section": 0,
+    "appendix_people_index": 0,
+    "appendix_timeline": 0,
+    "bibliography_section": 0,
+    "acknowledgments_section": 0,
+    "copyright_section": 0,
+    "back_matter_title": 0,
+    "request_document": 0,
+    "registration_document": 0,
+    "museum_card": 0,
+    "uppercase_display_line": 1
 ]
 
 private func navigationLabel(_ raw: String?) -> String? {
