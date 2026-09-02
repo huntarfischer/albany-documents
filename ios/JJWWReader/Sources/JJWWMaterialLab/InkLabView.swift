@@ -8,19 +8,44 @@ public struct InkLabView: View {
     public init() {}
 
     public var body: some View {
+        GeometryReader { proxy in
+            if proxy.size.width < 1000 {
+                compactLayout
+            } else {
+                regularLayout
+            }
+        }
+        .foregroundStyle(Color.white.opacity(0.92))
+        .background(Color(red: 0.075, green: 0.07, blue: 0.062))
+        .preferredColorScheme(.dark)
+    }
+
+    private var compactLayout: some View {
+        ScrollView {
+            VStack(spacing: 0) {
+                preview
+                    .frame(height: 500)
+                Divider()
+                    .overlay(Color.white.opacity(0.12))
+                controlStack
+                    .padding(16)
+                    .background(Color.black.opacity(0.16))
+            }
+        }
+        .scrollIndicators(.visible)
+    }
+
+    private var regularLayout: some View {
         HStack(spacing: 0) {
             preview
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-            Divider().overlay(Color.white.opacity(0.12))
+            Divider()
+                .overlay(Color.white.opacity(0.12))
             controls
                 .frame(width: 540)
                 .frame(maxHeight: .infinity)
                 .background(Color.black.opacity(0.16))
         }
-        .frame(minWidth: 1100, minHeight: 720)
-        .foregroundStyle(Color.white.opacity(0.92))
-        .background(Color(red: 0.075, green: 0.07, blue: 0.062))
-        .preferredColorScheme(.dark)
     }
 
     private var preview: some View {
@@ -62,13 +87,16 @@ public struct InkLabView: View {
                     .foregroundStyle(Color.black.opacity(0.84))
                     .padding(34)
                 }
-                .frame(minHeight: 380)
+                .frame(minHeight: 300)
 
-            HStack {
-                Text("Preview")
+            VStack(alignment: .leading, spacing: 6) {
+                HStack {
+                    Text("Preview")
+                    Spacer()
+                    Text(session.previewProgress.formatted(.number.precision(.fractionLength(2))))
+                        .font(.system(size: 10, design: .monospaced))
+                }
                 Slider(value: $session.previewProgress, in: 0...1)
-                Text(session.previewProgress.formatted(.number.precision(.fractionLength(2))))
-                    .font(.system(size: 10, design: .monospaced))
             }
 
             Text("At 1.00 the text is ordinary semantic SwiftUI text. The mask never changes the string, reading order, or accessibility label.")
@@ -80,50 +108,62 @@ public struct InkLabView: View {
 
     private var controls: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 18) {
-                group("INK PROFILE") {
-                    Picker("Section", selection: Binding(
-                        get: { session.selectedProfileID },
-                        set: { session.selectProfile(id: $0) }
-                    )) {
-                        ForEach(session.profiles) { profile in
-                            Text(profile.id.replacingOccurrences(of: "ink.", with: "")).tag(profile.id)
-                        }
-                    }
+            controlStack
+                .padding(20)
+        }
+        .scrollIndicators(.visible)
+    }
 
+    private var controlStack: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            group("INK PROFILE") {
+                Picker("Section", selection: Binding(
+                    get: { session.selectedProfileID },
+                    set: { session.selectProfile(id: $0) }
+                )) {
+                    ForEach(session.profiles) { profile in
+                        Text(profile.id.replacingOccurrences(of: "ink.", with: "")).tag(profile.id)
+                    }
+                }
+
+                VStack(alignment: .leading, spacing: 8) {
                     HStack {
                         Text("Seed")
-                        TextField("Seed", text: Binding(
-                            get: { String(session.seed) },
-                            set: { if let value = UInt64($0) { session.seed = value } }
-                        ))
-                        .textFieldStyle(.roundedBorder)
+                        Spacer()
                         Button("+1") { session.seed &+= 1 }
                     }
+                    TextField("Seed", text: Binding(
+                        get: { String(session.seed) },
+                        set: { if let value = UInt64($0) { session.seed = value } }
+                    ))
+                    .textFieldStyle(.roundedBorder)
+                    .font(.system(.body, design: .monospaced))
                 }
+            }
 
-                group("AWAKENING") {
-                    slider("Duration", value: binding(\.duration), range: 0.15...2.5)
-                    slider("Irregularity", value: binding(\.irregularity), range: 0...1)
-                    slider("Blot scale", value: binding(\.blotScale), range: 0.25...1.5)
-                    slider("Reveal threshold", value: binding(\.revealThreshold), range: 0...0.5)
-                    slider("Feather / bleed", value: binding(\.feather), range: 0...0.8)
-                    Stepper(value: binding(\.traceCount), in: 12...140, step: 2) {
-                        HStack {
-                            Text("Trace count")
-                            Spacer()
-                            Text("\(session.draftProfile.traceCount)")
-                                .font(.system(size: 10, design: .monospaced))
-                        }
-                    }
-                    Picker("Opacity curve", selection: binding(\.opacityCurve)) {
-                        ForEach(InkOpacityCurve.allCases, id: \.self) { curve in
-                            Text(curve.rawValue).tag(curve)
-                        }
+            group("AWAKENING") {
+                slider("Duration", value: binding(\.duration), range: 0.15...2.5)
+                slider("Irregularity", value: binding(\.irregularity), range: 0...1)
+                slider("Blot scale", value: binding(\.blotScale), range: 0.25...1.5)
+                slider("Reveal threshold", value: binding(\.revealThreshold), range: 0...0.5)
+                slider("Feather / bleed", value: binding(\.feather), range: 0...0.8)
+                Stepper(value: binding(\.traceCount), in: 12...140, step: 2) {
+                    HStack {
+                        Text("Trace count")
+                        Spacer()
+                        Text("\(session.draftProfile.traceCount)")
+                            .font(.system(size: 10, design: .monospaced))
                     }
                 }
+                Picker("Opacity curve", selection: binding(\.opacityCurve)) {
+                    ForEach(InkOpacityCurve.allCases, id: \.self) { curve in
+                        Text(curve.rawValue).tag(curve)
+                    }
+                }
+            }
 
-                group("PROFILE DATA") {
+            group("PROFILE DATA") {
+                VStack(alignment: .leading, spacing: 8) {
                     HStack {
                         Button("Export Ink") {
                             do { _ = try session.exportProfile() }
@@ -133,22 +173,21 @@ public struct InkLabView: View {
                             do { try session.importProfile() }
                             catch { session.transferText = "IMPORT ERROR: \(error)" }
                         }
-                        Spacer()
-                        if let message = session.message {
-                            Text(message)
-                                .font(.system(size: 10, design: .monospaced))
-                                .foregroundStyle(Color.white.opacity(0.55))
-                        }
                     }
-                    TextEditor(text: $session.transferText)
-                        .font(.system(size: 10, design: .monospaced))
-                        .frame(minHeight: 180)
-                        .scrollContentBackground(.hidden)
-                        .padding(6)
-                        .background(.black.opacity(0.28), in: RoundedRectangle(cornerRadius: 6))
+                    if let message = session.message {
+                        Text(message)
+                            .font(.system(size: 10, design: .monospaced))
+                            .foregroundStyle(Color.white.opacity(0.55))
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                 }
+                TextEditor(text: $session.transferText)
+                    .font(.system(size: 10, design: .monospaced))
+                    .frame(minHeight: 180)
+                    .scrollContentBackground(.hidden)
+                    .padding(6)
+                    .background(.black.opacity(0.28), in: RoundedRectangle(cornerRadius: 6))
             }
-            .padding(20)
         }
     }
 
@@ -188,6 +227,7 @@ public struct InkLabView: View {
             content()
         }
         .padding(12)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(.white.opacity(0.045), in: RoundedRectangle(cornerRadius: 8))
     }
 
