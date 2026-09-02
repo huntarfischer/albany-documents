@@ -3,34 +3,64 @@ import Foundation
 public extension ReadingUnit {
     /// Human-readable identity for reader navigation and Workshop selection.
     ///
-    /// Source-authored titles remain authoritative for grouped documentary works.
-    /// Ordinary ReadingUnits use their canonical opening heading/date. When the
-    /// canonical opening is an image placeholder, fall through to the existing
-    /// Layer 1 structural label rather than surfacing a filename or debug ID.
+    /// Explicit grouped source titles remain authoritative. Ordinary ReadingUnits
+    /// prefer their authored structural header, then direct source attribution,
+    /// then date/opening text. Debug IDs remain the last-resort fallback only.
     var displayTitle: String {
         if let sourceTitle = navigationLabel(sourcePresentation?.displayTitle) {
             return sourceTitle
         }
 
-        if let opening = blocks.first?.lines.first,
-           let canonicalLabel = navigationLabel(opening.text) {
-            return canonicalLabel
-        }
-
         let structuralCandidates = blocks
             .flatMap(\.semanticSpans)
-            .filter { navigationSemanticTypes.contains($0.type) }
+            .filter { navigationTitleSemanticPriorities[$0.type] != nil }
             .sorted { lhs, rhs in
+                let lhsPriority = navigationTitleSemanticPriorities[lhs.type] ?? Int.max
+                let rhsPriority = navigationTitleSemanticPriorities[rhs.type] ?? Int.max
+                if lhsPriority != rhsPriority {
+                    return lhsPriority < rhsPriority
+                }
                 if lhs.canonicalAnchor.startLine == rhs.canonicalAnchor.startLine {
                     return lhs.canonicalAnchor.endLine < rhs.canonicalAnchor.endLine
                 }
                 return lhs.canonicalAnchor.startLine < rhs.canonicalAnchor.startLine
             }
 
-        if let semanticLabel = structuralCandidates.lazy
+        if let structuralTitle = structuralCandidates.lazy
             .compactMap({ navigationLabel($0.labelAsWritten) })
             .first {
-            return semanticLabel
+            return structuralTitle
+        }
+
+        let directSourceTitles = blocks
+            .flatMap(\.sourceOccurrences)
+            .filter { $0.role == "direct_attribution" }
+            .sorted { lhs, rhs in
+                lhs.attributionAnchor.startLine < rhs.attributionAnchor.startLine
+            }
+
+        if let directSourceTitle = directSourceTitles.lazy
+            .compactMap({ navigationLabel($0.source.titleAsWritten) })
+            .first {
+            return directSourceTitle
+        }
+
+        let datedCandidates = blocks
+            .flatMap(\.semanticSpans)
+            .filter { $0.type == "dated_item" }
+            .sorted { lhs, rhs in
+                lhs.canonicalAnchor.startLine < rhs.canonicalAnchor.startLine
+            }
+
+        if let dateTitle = datedCandidates.lazy
+            .compactMap({ navigationLabel($0.labelAsWritten) })
+            .first {
+            return dateTitle
+        }
+
+        if let opening = blocks.first?.lines.first,
+           let canonicalLabel = navigationLabel(opening.text) {
+            return canonicalLabel
         }
 
         if let firstCanonicalLabel = blocks.lazy
@@ -44,36 +74,38 @@ public extension ReadingUnit {
     }
 }
 
-private let navigationSemanticTypes: Set<String> = [
-    "front_matter_title_block",
-    "dated_item",
-    "section_item",
-    "confession_document",
-    "trial_source_section",
-    "historical_work_section",
-    "official_examination_document",
-    "newspaper_item",
-    "periodical_item",
-    "broadside_document",
-    "poem_document",
-    "letter_document",
-    "advertisement_document",
-    "will_document",
-    "genealogical_section",
-    "legal_notice_document",
-    "testimony_document",
-    "farewell_document",
-    "appendix_section",
-    "appendix_people_index",
-    "appendix_timeline",
-    "bibliography_section",
-    "acknowledgments_section",
-    "copyright_section",
-    "back_matter_title",
-    "request_document",
-    "registration_document",
-    "museum_card",
-    "uppercase_display_line"
+/// Typed documentary titles are stronger identity than a generic typographic
+/// display line. A display line is still stronger than a date, which is handled
+/// only after structural and direct-source identity have been exhausted.
+private let navigationTitleSemanticPriorities: [String: Int] = [
+    "front_matter_title_block": 0,
+    "section_item": 0,
+    "confession_document": 0,
+    "trial_source_section": 0,
+    "historical_work_section": 0,
+    "official_examination_document": 0,
+    "newspaper_item": 0,
+    "periodical_item": 0,
+    "broadside_document": 0,
+    "poem_document": 0,
+    "letter_document": 0,
+    "advertisement_document": 0,
+    "will_document": 0,
+    "genealogical_section": 0,
+    "legal_notice_document": 0,
+    "testimony_document": 0,
+    "farewell_document": 0,
+    "appendix_section": 0,
+    "appendix_people_index": 0,
+    "appendix_timeline": 0,
+    "bibliography_section": 0,
+    "acknowledgments_section": 0,
+    "copyright_section": 0,
+    "back_matter_title": 0,
+    "request_document": 0,
+    "registration_document": 0,
+    "museum_card": 0,
+    "uppercase_display_line": 1
 ]
 
 private func navigationLabel(_ raw: String?) -> String? {

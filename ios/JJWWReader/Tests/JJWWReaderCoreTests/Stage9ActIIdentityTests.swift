@@ -20,7 +20,7 @@ struct Stage9ActIIdentityTests {
         )
     }
 
-    @Test("Reader display titles prefer source identity, then canonical headings")
+    @Test("Reader display titles follow authored document identity")
     func displayTitleResolution() throws {
         let edition = try Stage8ProductionEdition.load(canonicalURL: canonicalURL)
 
@@ -28,13 +28,27 @@ struct Stage9ActIIdentityTests {
         #expect(argus.displayTitle == "The Albany Argus & City Gazette")
 
         let mayTen = try #require(edition.readingUnit(id: "unit-l1-cnt-0005"))
-        #expect(mayTen.displayTitle == "Thursday May 10, 1827")
+        #expect(mayTen.displayTitle == "PROCLAMATION")
 
         let opening = try #require(edition.readingUnit(id: "unit-l1-cnt-0001"))
         #expect(opening.displayTitle == "REAL GOOD stories + stuff")
 
         let delayedTitle = try #require(edition.readingUnit(id: "unit-l1-cnt-0013"))
         #expect(delayedTitle.displayTitle == "ALBANY, NEW YORK")
+    }
+
+    @Test("Authored section headers beat dates in ordinary newspaper units")
+    func newspaperSectionHeadersBeatDates() throws {
+        let edition = try Stage8ProductionEdition.load(canonicalURL: canonicalURL)
+
+        let shockingAffair = try #require(edition.readingUnit(id: "unit-l1-cnt-0018"))
+        #expect(shockingAffair.displayTitle == "SHOCKING AFFAIR")
+
+        let abolition = try #require(edition.readingUnit(id: "unit-l1-cnt-0021"))
+        #expect(abolition.displayTitle == "CELEBRATION OF THE ABOLITION OF SLAVERY IN THE STATE OF NEW YORK")
+
+        let matrimonialMaxims = try #require(edition.readingUnit(id: "unit-l1-cnt-0022"))
+        #expect(matrimonialMaxims.displayTitle == "MATRIMONIAL MAXIMS")
     }
 
     @Test("Every production ReadingUnit has human-readable backend identity")
