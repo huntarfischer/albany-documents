@@ -340,8 +340,8 @@ public struct ReaderWorkshopView: View {
 
                     Toggle("Uppercase", isOn: Binding(
                         get: { token.uppercase },
-                        set: { value in session.updateSelectedToken { $0.uppercase = value }
-                    }))
+                        set: { value in session.updateSelectedToken { $0.uppercase = value } }
+                    ))
                 }
             }
 
