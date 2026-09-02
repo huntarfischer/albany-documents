@@ -125,7 +125,13 @@ public enum PageCompositionCatalog {
     ]
 
     public static func profile(id: String) -> PageCompositionProfile? {
-        all.first { $0.id == id }
+        if let existing = all.first(where: { $0.id == id }) {
+            return existing
+        }
+        guard let shared = ReaderCompositionCatalog.profile(id: id) else {
+            return nil
+        }
+        return PageCompositionProfile(shared: shared)
     }
 
     public static func profile(for unit: ReadingUnit) -> PageCompositionProfile {
