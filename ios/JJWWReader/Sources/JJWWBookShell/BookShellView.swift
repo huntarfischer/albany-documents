@@ -316,7 +316,7 @@ private struct BookShellChrome: View {
 
     private var currentLabel: String {
         guard let unit = edition.readingUnit(id: reader.location.readingUnitID) else { return "" }
-        return unit.sourcePresentation?.displayTitle ?? unit.id
+        return unit.displayTitle
     }
 
     private var textScaleMenu: some View {

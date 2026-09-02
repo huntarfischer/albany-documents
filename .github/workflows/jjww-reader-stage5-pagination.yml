@@ -34,7 +34,7 @@ jobs:
             /tmp/jjww-stage5/pagination-transitions-stage5.png \
             ../../jesse-james-and-the-widow-whipple-canonical-v1.1.json
           file /tmp/jjww-stage5/pagination-transitions-stage5.png
-          cat /tmp/jjww-stage5/pagination-summary-stage5.json
+          cat /tmp/jjww-stage5/page-composition-summary-stage5-5.json
 
       - name: Verify production pagination builds
         working-directory: ios/JJWWReader

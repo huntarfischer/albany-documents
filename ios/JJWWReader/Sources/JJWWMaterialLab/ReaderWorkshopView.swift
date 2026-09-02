@@ -169,7 +169,7 @@ public struct ReaderWorkshopView: View {
                 set: { session.selectUnit($0) }
             )) {
                 ForEach(session.availableUnits) { unit in
-                    Text(unit.sourcePresentation?.displayTitle ?? unit.id)
+                    Text(unit.displayTitle)
                         .tag(unit.id)
                 }
             }

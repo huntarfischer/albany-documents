@@ -9,10 +9,16 @@ struct MaterialEngineTests {
         "dailyAdvertiser1827",
         "confessionPamphlet1827",
         "trialRecord1827",
-        "farewell1827"
+        "farewell1827",
+        "historicalBook",
+        "officialDocument",
+        "correspondence",
+        "newspaper1905",
+        "newspaper1967",
+        "referenceBackMatter"
     ]
 
-    @Test("Exactly six provisional material profiles are bundled")
+    @Test("Bundled material catalog includes the prototype and Book 1.0 documentary papers")
     func bundledProfiles() throws {
         let store = try MaterialProfileStore.bundled()
         #expect(store.profiles.map(\.id) == expectedProfileIDs)
