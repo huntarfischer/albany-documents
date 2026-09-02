@@ -27,19 +27,19 @@ struct Stage8CAct3NavigationTests {
         let starts = [24, 1_023, 1_892]
 
         for canonicalLine in starts {
-            let location = try #require(location(for: canonicalLine, in: edition))
+            let target = try #require(readerLocation(for: canonicalLine, in: edition))
             let session = ScrollReaderSession(
                 edition: edition,
                 persistence: MemoryReaderLocationPersistence()
             )
-            session.move(to: location, requestScrollNavigation: false)
+            session.move(to: target, requestScrollNavigation: false)
             let coordinator = try ReaderLocationCoordinator(
                 edition: edition,
                 scrollSession: session
             )
 
             coordinator.enterPages()
-            #expect(coordinator.currentPage?.contains(location) == true)
+            #expect(coordinator.currentPage?.contains(target) == true)
 
             let originPage = coordinator.currentPageIndex
             if coordinator.canTurnForward {
@@ -61,7 +61,7 @@ struct Stage8CAct3NavigationTests {
     @MainActor
     func productionTurnsRemainSynchronized() throws {
         let edition = try Stage8ProductionEdition.load(canonicalURL: canonicalURL)
-        let origin = try #require(location(for: 1_174, in: edition))
+        let origin = try #require(readerLocation(for: 1_174, in: edition))
         let session = ScrollReaderSession(
             edition: edition,
             persistence: MemoryReaderLocationPersistence()
@@ -83,7 +83,7 @@ struct Stage8CAct3NavigationTests {
         }
     }
 
-    private func location(
+    private func readerLocation(
         for canonicalLine: Int,
         in edition: Edition
     ) -> ReaderLocation? {
