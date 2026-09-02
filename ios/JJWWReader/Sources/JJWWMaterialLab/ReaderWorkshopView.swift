@@ -137,8 +137,13 @@ public final class ReaderWorkshopSession: ObservableObject {
 
     public func exportCurrent() {
         let payload = ReaderWorkshopExport(
-            version: "stage7.75-v0.1",
-            unitID: selectedUnit.id,
+            version: "stage9-act3c-v0.1",
+            treatmentID: selectedTreatmentID,
+            treatmentName: draftTypography.displayName,
+            specimenID: selectedUnit.id,
+            specimenTitle: selectedUnit.displayTitle,
+            typographyProfileID: draftTypography.id,
+            compositionProfileID: draftComposition.id,
             material: draftMaterial,
             typography: draftTypography,
             composition: draftComposition
@@ -163,7 +168,12 @@ public final class ReaderWorkshopSession: ObservableObject {
 
 public struct ReaderWorkshopExport: Codable, Sendable {
     public let version: String
-    public let unitID: String
+    public let treatmentID: String
+    public let treatmentName: String
+    public let specimenID: String
+    public let specimenTitle: String
+    public let typographyProfileID: String
+    public let compositionProfileID: String
     public let material: MaterialProfileDefinition
     public let typography: TypographyProfileDefinition
     public let composition: ReaderCompositionProfile
