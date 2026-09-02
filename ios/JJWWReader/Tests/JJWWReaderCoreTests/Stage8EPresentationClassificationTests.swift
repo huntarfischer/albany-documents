@@ -29,24 +29,24 @@ struct Stage8EPresentationClassificationTests {
         #expect(map.entries.allSatisfy { $0.isClassified })
     }
 
-    @Test("The eight production families cover the complete Edition with stable counts")
+    @Test("The eight production families cover the Stage 9 Book 1.0 map with stable counts")
     func familyCountsAreStable() throws {
         let map = try Stage8EditionMap.load(canonicalURL: canonicalURL)
         let counts = Dictionary(grouping: map.entries, by: \.presentationFamily).mapValues(\.count)
 
-        #expect(counts[.editorialInterior] == 4)
+        #expect(counts[.editorialInterior] == 2)
         #expect(counts[.periodical] == 28)
         #expect(counts[.pamphlet] == 5)
-        #expect(counts[.courtLegal] == 10)
-        #expect(counts[.bookExcerpt] == 13)
-        #expect(counts[.standaloneDocument] == 5)
+        #expect(counts[.courtLegal] == 9)
+        #expect(counts[.bookExcerpt] == 14)
+        #expect(counts[.standaloneDocument] == 7)
         #expect(counts[.displayArtifact] == 3)
         #expect(counts[.referenceBackMatter] == 7)
         #expect(counts[.unclassified] == nil)
         #expect(counts.values.reduce(0, +) == 75)
     }
 
-    @Test("Classification follows Layer 1 source evidence without inventing a source for unattributed matter")
+    @Test("Classification preserves Layer 1 evidence while applying the approved Stage 9 document refinements")
     func representativeLayer1EvidenceIsRespected() throws {
         let map = try Stage8EditionMap.load(canonicalURL: canonicalURL)
         let ownership = try Stage8CanonicalOwnership.load(canonicalURL: canonicalURL)
@@ -58,13 +58,13 @@ struct Stage8EPresentationClassificationTests {
         try expectFamily(.pamphlet, containerID: "L1-CNT-0052", map: map, ownership: ownership)
         try expectFamily(.displayArtifact, containerID: "L1-CNT-0054", map: map, ownership: ownership)
         try expectFamily(.standaloneDocument, containerID: "L1-CNT-0061", map: map, ownership: ownership)
-        try expectFamily(.editorialInterior, containerID: "L1-CNT-0063", map: map, ownership: ownership)
-        try expectFamily(.editorialInterior, containerID: "L1-CNT-0066", map: map, ownership: ownership)
+        try expectFamily(.bookExcerpt, containerID: "L1-CNT-0063", map: map, ownership: ownership)
+        try expectFamily(.standaloneDocument, containerID: "L1-CNT-0066", map: map, ownership: ownership)
         try expectFamily(.referenceBackMatter, containerID: "L1-CNT-0079", map: map, ownership: ownership)
     }
 
-    @Test("8E reuses the already-proven typography and material profile vocabulary")
-    func noNewProfileIDsAreIntroduced() throws {
+    @Test("Stage 9 keeps the proven typography vocabulary and extends only the material vocabulary needed by Book 1.0")
+    func profileVocabularyStaysBounded() throws {
         let map = try Stage8EditionMap.load(canonicalURL: canonicalURL)
         let typographyIDs = Set(map.entries.map(\.typographyProfile.id))
         let materialIDs = Set(map.entries.map(\.materialProfile.id))
@@ -75,11 +75,13 @@ struct Stage8EPresentationClassificationTests {
         ]))
         #expect(materialIDs.isSubset(of: [
             "jjwwEditorial", "argus1827", "dailyAdvertiser1827",
-            "confessionPamphlet1827", "trialRecord1827", "farewell1827"
+            "confessionPamphlet1827", "trialRecord1827", "farewell1827",
+            "historicalBook", "officialDocument", "correspondence",
+            "newspaper1905", "newspaper1967", "referenceBackMatter"
         ]))
     }
 
-    @Test("8E changes taxonomy only: ownership and canonical text remain exact")
+    @Test("Presentation refinement leaves ownership and canonical text exact")
     func classificationDoesNotChangeCanonicalMatter() throws {
         let ownership = try Stage8CanonicalOwnership.load(canonicalURL: canonicalURL)
         let edition = try Stage8ProductionEdition.load(canonicalURL: canonicalURL)
