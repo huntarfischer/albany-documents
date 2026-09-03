@@ -8,9 +8,9 @@ import AppKit
 
 /// The actual orange book cloth supplied from the current JJWW cover.
 ///
-/// Stage 7.5a treats this as the continuous reading table underneath the papers.
-/// The supplied crop is tiled at a reduced physical scale so its weave remains
-/// legible without becoming a graphic pattern at phone size.
+/// This is the continuous reading table underneath the papers. The larger
+/// supplied cloth crop is tiled at its native scale so the weave reads as cloth
+/// rather than exposing the cadence of the old 128-point repeat tile.
 public struct JJWWCoverClothTexture: View {
     public let seed: UInt64
 
@@ -24,10 +24,9 @@ public struct JJWWCoverClothTexture: View {
                 fallback
                 texture
                     .frame(
-                        width: geometry.size.width / 0.62 + 180,
-                        height: geometry.size.height / 0.62 + 180
+                        width: geometry.size.width + 48,
+                        height: geometry.size.height + 48
                     )
-                    .scaleEffect(0.62)
                     .offset(x: xDrift, y: yDrift)
                     .contrast(1.03)
                     .saturation(0.96)
@@ -43,8 +42,8 @@ public struct JJWWCoverClothTexture: View {
     @ViewBuilder
     private var texture: some View {
         if let url = Bundle.module.url(
-            forResource: "jjww-cover-cloth-tile-128",
-            withExtension: "jpg"
+            forResource: "jjww-cover-cloth-texture",
+            withExtension: "jpeg"
         ) {
             #if canImport(UIKit)
             if let image = UIImage(contentsOfFile: url.path) {
