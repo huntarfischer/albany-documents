@@ -95,6 +95,7 @@ public struct ScrollReaderView: View {
                         }
                     }
                     .padding(.bottom, 90)
+                    .background(JJWWCoverClothTexture(seed: 0x4A4A5757))
                 }
                 .coordinateSpace(name: "JJWW_SCROLL_READER")
                 .background(Color(red: 0.08, green: 0.072, blue: 0.058))
@@ -196,8 +197,7 @@ public struct ReadingUnitSurface: View {
     @ViewBuilder
     public var body: some View {
         if lineLimit == nil,
-           unit.sourcePresentation?.sourceKind == .periodical,
-           unit.blocks.count > 1 {
+           unit.presentationFamily == .periodical {
             PeriodicalStackReadingUnitSurface(
                 unit: unit,
                 materialStore: materialStore,
