@@ -95,9 +95,10 @@ public struct ScrollReaderView: View {
                         }
                     }
                     .padding(.bottom, 90)
+                    .background(JJWWCoverClothTexture(seed: 0x4A4A5757))
                 }
                 .coordinateSpace(name: "JJWW_SCROLL_READER")
-                .background(JJWWCoverClothTexture(seed: 0x4A4A5757))
+                .background(Color(red: 0.08, green: 0.072, blue: 0.058))
                 .dynamicTypeSize(session.textScale.dynamicTypeSize)
                 .textSelection(.enabled)
                 .onPreferenceChange(ReaderUnitOffsetPreferenceKey.self) { offsets in
